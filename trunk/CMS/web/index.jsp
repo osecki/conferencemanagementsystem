@@ -4,7 +4,10 @@
     Class      : CS575, Spring 2009
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -83,7 +86,7 @@ body  {
     <h1> Conference Management System</h1>
     <p>The Conference Management System will allow  research paper authors to submit multiple papers to many different conferences.  The papers will be reviewed by different reviewers that will provide some  feedback on their content for the authors to see. The conferences and reviewer  assignments will be managed and moderated by different editors, one for each  conference.</p>
     <h2>&nbsp;</h2>
-    <!-- end #mainContent -->Please enter <a href="login.jsp">here...</a></div>
+    <!-- end #mainContent -->Please enter <a href="<c:url value='LoginRedirectServlet'/>">here...</a></div>
 	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
 <!-- end #container --></div>
 </body>
