@@ -7,5 +7,72 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-        </welcome-file-list>
-    </web-app>
+    </welcome-file-list>
+    
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/projectDB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    
+    <security-role>
+        <description>Advisors</description>
+        <role-name>Advisor</role-name>
+    </security-role>
+
+    <security-role>
+        <description>Students</description>
+        <role-name>Student</role-name>
+    </security-role>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/includes/ErrorPage.jsp</location>
+    </error-page>
+
+    <!-- Restrict access to all files in the /studentApp folder -->
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Login Pages</web-resource-name>
+            <url-pattern>/LoginRedirectServlet</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize student and advisor roles -->
+        <auth-constraint>
+            <role-name>Student</role-name>
+            <role-name>Advisor</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Student Application</web-resource-name>
+            <url-pattern>/studentApp/*</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize the student role -->
+        <auth-constraint>
+            <role-name>Student</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Advisor Application</web-resource-name>
+            <url-pattern>/advisorApp/*</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize the advisor role -->
+        <auth-constraint>
+            <role-name>Advisor</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+        <form-login-page>/login/loginPage.jsp</form-login-page>
+        <form-error-page>/login/login_error.jsp</form-error-page>
+    </form-login-config>
+    </login-config>
+
+ </web-app>
