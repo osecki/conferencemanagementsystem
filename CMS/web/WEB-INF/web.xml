@@ -17,53 +17,84 @@
     </resource-ref>
     
     <security-role>
-        <description>Advisors</description>
-        <role-name>Advisor</role-name>
+        <description>Administrator Account</description>
+        <role-name>Administrator</role-name>
     </security-role>
 
     <security-role>
-        <description>Students</description>
-        <role-name>Student</role-name>
+        <description>Author Account</description>
+        <role-name>Author</role-name>
     </security-role>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/includes/ErrorPage.jsp</location>
-    </error-page>
+    <security-role>
+        <description>Reviewer Account</description>
+        <role-name>Reviewer</role-name>
+    </security-role>
 
-    <!-- Restrict access to all files in the /studentApp folder -->
+    <security-role>
+        <description>Editor Account</description>
+        <role-name>Editor</role-name>
+    </security-role>
+
+    <!-- Restrict access to all files other than index and register -->
 
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Login Pages</web-resource-name>
             <url-pattern>/LoginRedirectServlet</url-pattern>
-            </web-resource-collection>
-        <!-- Authorize student and advisor roles -->
+        </web-resource-collection>
+    
+    <!-- Authorize admin, author, editor and reviewer roles -->
+
         <auth-constraint>
-            <role-name>Student</role-name>
-            <role-name>Advisor</role-name>
+            <role-name>Administrator</role-name>
+            <role-name>Author</role-name>
+            <role-name>Editor</role-name>
+            <role-name>Reviewer</role-name>
         </auth-constraint>
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Student Application</web-resource-name>
-            <url-pattern>/studentApp/*</url-pattern>
+            <web-resource-name>Administrator Application</web-resource-name>
+            <url-pattern>/Admin/*</url-pattern>
             </web-resource-collection>
-        <!-- Authorize the student role -->
+        <!-- Authorize the Administrator role -->
         <auth-constraint>
-            <role-name>Student</role-name>
+            <role-name>Administrator</role-name>
         </auth-constraint>
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Advisor Application</web-resource-name>
-            <url-pattern>/advisorApp/*</url-pattern>
+            <web-resource-name>Author Application</web-resource-name>
+            <url-pattern>/Author/*</url-pattern>
             </web-resource-collection>
         <!-- Authorize the advisor role -->
         <auth-constraint>
-            <role-name>Advisor</role-name>
+            <role-name>Author</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Editor Application</web-resource-name>
+            <url-pattern>/Editor/*</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize the Editor role -->
+        <auth-constraint>
+            <role-name>Editor</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Reviewer Application</web-resource-name>
+            <url-pattern>/Editor/*</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize the Reviewer role -->
+        <auth-constraint>
+            <role-name>Reviewer</role-name>
         </auth-constraint>
     </security-constraint>
 
