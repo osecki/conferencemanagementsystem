@@ -9,7 +9,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Login Page</title>
 <style type="text/css">
 <!--
 body {
@@ -39,15 +39,18 @@ body {
   <div id="mainContent">
     <h1> Conference Management System</h1>
     <h2>Login</h2>
-    <form id="form1" name="form1" method="post" action="">
+    <form action="j_security_check" method="post">
       <label>Username
-      <input type="text" name="username" id="username" />
+      <input type="text" name="j_username">
       </label>
         <p>
           <label>Password
-          <input type="text" name="password" id="password" />
+          <input type="password" name="j_password">
           </label>
       </p>
+      <label>
+          <input type="submit" value="Log In">
+      </label>
     </form>
     <p>Register <a href="register.jsp">here</a></p>
   <!-- end #mainContent --></div>
