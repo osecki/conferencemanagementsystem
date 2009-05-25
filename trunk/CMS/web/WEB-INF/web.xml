@@ -4,9 +4,17 @@
         <servlet-name>LoginRedirectServlet</servlet-name>
         <servlet-class>cms.servlets.LoginRedirectServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>cms.servlets.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -98,7 +106,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Reviewer Application</web-resource-name>
-            <url-pattern>/Editor/*</url-pattern>
+            <url-pattern>/Reviewer/*</url-pattern>
             </web-resource-collection>
         <!-- Authorize the Reviewer role -->
         <auth-constraint>
