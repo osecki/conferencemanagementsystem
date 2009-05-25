@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class User implements Serializable
 {
     private String username;
-    //private String password;
     private String userType;
 
     public void User()
@@ -25,17 +24,8 @@ public class User implements Serializable
     public void User(String username, String userType)
     {
         this.username = username;
-        //this.password = password;
         this.userType = userType;
     }
-    
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     public String getUserType() {
         return userType;

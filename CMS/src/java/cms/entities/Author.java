@@ -7,7 +7,7 @@ import java.util.Vector;
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
-public class Author
+public class Author extends User
 {
     private String username;
     private String password;

@@ -6,7 +6,7 @@ package cms.entities;
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
-public class Editor
+public class Editor extends User
 {
     private String username;
     private String password;
