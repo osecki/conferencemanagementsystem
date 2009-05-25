@@ -37,7 +37,7 @@ public class Logout extends HttpServlet {
         try {
             out.println("<html>");
             out.println("<head>");
-            out.println("<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=/LoginRedirectServlet\">");
+            out.println("<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=LoginRedirectServlet\">");
             out.println("<title>Logging Out..</title>");
             out.println("</head>");
             out.println("</html>");
