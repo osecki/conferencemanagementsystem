@@ -40,24 +40,24 @@ public class LoginRedirectServlet extends HttpServlet {
 
         String url = "";
 
-        if(loggedInUser.getUserType().equals("Administrator"))
+        if(loggedInUser.getUserType().equalsIgnoreCase("Administrator"))
         {
             url = "/Admin/adminportal.jsp";
 //            To-DO: Replace this with the servlet call and add logged in user to session
 //            Student student = StudentDB.getStudent(loggedInUser);
 //            session.setAttribute("loggedInStudent", student);
         }
-        else if((loggedInUser.getUserType().equals("Author")))
+        else if((loggedInUser.getUserType().equalsIgnoreCase("Author")))
         {
             url = "/Author/authorportal.jsp";
 //            Same changes as above need to be added
         }
-        else if((loggedInUser.getUserType().equals("Editor")))
+        else if((loggedInUser.getUserType().equalsIgnoreCase("Editor")))
         {
             url = "/Editor/editorportal.jsp";
 //            Same changes as above need to be added
         }
-        else if((loggedInUser.getUserType().equals("Reviewer")))
+        else if((loggedInUser.getUserType().equalsIgnoreCase("Reviewer")))
         {
             url = "/Reviewer/reviewerportal.jsp";
 //            Same changes as above need to be added

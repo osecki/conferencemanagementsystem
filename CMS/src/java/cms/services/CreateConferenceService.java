@@ -1,4 +1,5 @@
 package cms.services;
+import cms.data.ConferenceDB;
 import cms.entities.*;
 
 /*
@@ -19,7 +20,6 @@ public class CreateConferenceService implements CreateConference
     */
     public boolean addConference (Conference c)
     {
-        // TODO
-        return true;
+        return ConferenceDB.addConference(c);
     }
 }

@@ -1,5 +1,11 @@
 package cms.services;
 
+import cms.data.ConferenceDB;
+import cms.data.UserDB;
+import cms.data.UserPassDB;
+import cms.entities.Conference;
+import cms.entities.User;
+
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
@@ -17,10 +23,12 @@ public class AccountService implements Account
      * the correct User database table to create an author account. It will return a
      * boolean based on whether it is successful or not.
     */
-    public boolean createAccount (String username, String password, String fullname, String emailaddress, String UserRole)
+    public boolean createAccount (String username, String userRole, String fullName, String emailAddress, String password)
     {
-        // TODO
-        return true;
+        User user = new User(username, userRole, fullName, emailAddress);
+        boolean a = UserDB.addUser(user);
+        boolean b = UserPassDB.setUserPass(user, password);
+        return (a && b);
     }
 
     /*
@@ -33,11 +41,11 @@ public class AccountService implements Account
      * "Error" if there was a problem and "Incorrect" if the credentials don't
      * exist.
     */
-    public String login (String username, String password)
-    {
-        // TODO
-        return "";
-    }
+//    public String login (String username, String password)
+//    {
+//        // TODO
+//        return "";
+//    }
 
     /*
      * Method:  resetPassword
@@ -63,10 +71,9 @@ public class AccountService implements Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean assignEditor (String conferenceName, String editorName)
+    public boolean assignEditor (Conference conference, String editorName)
     {
-        // TODO
-        return true;
+        return ConferenceDB.assignEditorToConference(conference, UserDB.getUser(editorName));
     }
 
     /*

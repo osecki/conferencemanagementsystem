@@ -13,33 +13,55 @@ import java.io.Serializable;
  */
 public class User implements Serializable
 {
-    private String username;
-    private String userType;
+    private String userName;
+    private UserRole userType;
+    private String fullName;
+    private String emailAddress;
 
-    public void User()
+    public User()
     {
         
     }
     
-    public void User(String username, String userType)
+    public User(String userName, String userType, String fullName, String emailAddress)
     {
-        this.username = username;
-        this.userType = userType;
+        this.userName = userName;
+        this.userType = UserRole.valueOf(userType.toUpperCase());
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
     }
 
     public String getUserType() {
-        return userType;
+        return userType.toString();
     }
 
     public void setUserType(String userType) {
-        this.userType = userType;
+        this.userType = UserRole.valueOf(userType.toUpperCase());
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }    
+    public void setUsername(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
 }

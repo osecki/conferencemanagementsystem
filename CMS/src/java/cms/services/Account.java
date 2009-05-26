@@ -1,5 +1,7 @@
 package cms.services;
 
+import cms.entities.Conference;
+
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
@@ -17,8 +19,8 @@ public interface Account
      * the correct User database table to create an author account. It will return a
      * boolean based on whether it is successful or not.
     */
-    public boolean createAccount (String username, String password, String fullname, String emailaddress, String UserRole);
-
+    public boolean createAccount (String username, String userRole, String fullname, String emailaddress, String password);
+    
     /*
      * Method:  login
      * Input:  A user's username and password
@@ -29,7 +31,7 @@ public interface Account
      * "Error" if there was a problem and "Incorrect" if the credentials don't
      * exist.
     */
-    public String login (String username, String password);
+//    public String login (String username, String password);
 
     /*
      * Method:  resetPassword
@@ -51,7 +53,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean assignEditor (String conferenceName, String editorName);
+    public boolean assignEditor (Conference conference, String editorName);
 
     /*
      * Method:  assignReviewer
