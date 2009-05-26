@@ -63,10 +63,10 @@
     <!-- Authorize admin, author, editor and reviewer roles -->
 
         <auth-constraint>
-            <role-name>Administrator</role-name>
-            <role-name>Author</role-name>
-            <role-name>Editor</role-name>
-            <role-name>Reviewer</role-name>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>AUTHOR</role-name>
+            <role-name>EDITOR</role-name>
+            <role-name>REVIEWER</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -77,7 +77,7 @@
             </web-resource-collection>
         <!-- Authorize the Administrator role -->
         <auth-constraint>
-            <role-name>Administrator</role-name>
+            <role-name>ADMINISTRATOR</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -88,7 +88,7 @@
             </web-resource-collection>
         <!-- Authorize the advisor role -->
         <auth-constraint>
-            <role-name>Author</role-name>
+            <role-name>AUTHOR</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -99,7 +99,7 @@
             </web-resource-collection>
         <!-- Authorize the Editor role -->
         <auth-constraint>
-            <role-name>Editor</role-name>
+            <role-name>EDITOR</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -110,7 +110,7 @@
             </web-resource-collection>
         <!-- Authorize the Reviewer role -->
         <auth-constraint>
-            <role-name>Reviewer</role-name>
+            <role-name>REVIEWER</role-name>
         </auth-constraint>
     </security-constraint>
 

@@ -5,82 +5,6 @@ import java.sql.*;
 
 public class UserDB
 {
-//    public static boolean checkUserNamePassword(String userName, String passWord)
-//    {
-//        ConnectionPool pool = ConnectionPool.getInstance();
-//        Connection connection = pool.getConnection();
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//
-//        String query =
-//                "SELECT * FROM User " +
-//                "WHERE UserName = ? " +
-//                "AND Password = ? ";
-//        try
-//        {
-//            ps = connection.prepareStatement(query);
-//            ps.setString(1, userName);
-//            ps.setString(2, passWord);
-//            rs = ps.executeQuery();
-//            return rs.next();
-//        }
-//        catch(SQLException e)
-//        {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        finally
-//        {
-//            DBUtil.closeResultSet(rs);
-//            DBUtil.closePreparedStatement(ps);
-//            pool.freeConnection(connection);
-//        }
-//    }
-    
-//    public static User getUser(String userName, String passWord)
-//    {
-//        if(checkUserNamePassword(userName,passWord))
-//        {
-//            ConnectionPool pool = ConnectionPool.getInstance();
-//            Connection connection = pool.getConnection();
-//            PreparedStatement ps = null;
-//            ResultSet rs = null;
-//            User user = new User();
-//
-//            String query = "SELECT UserTypeID FROM User WHERE UserName = ?";
-//
-//            try
-//            {
-//                ps = connection.prepareStatement(query);
-//                ps.setString(1,userName);
-//                rs = ps.executeQuery();
-//
-//                if(rs.next())
-//                {
-//                    user.setUsername(userName);
-//                    user.setPassword(passWord);
-//                    user.setUserType(rs.getString(1));
-//                }
-//                return user;
-//            }
-//            catch(SQLException e)
-//            {
-//                e.printStackTrace();
-//                return null;
-//            }
-//            finally
-//            {
-//                DBUtil.closeResultSet(rs);
-//                DBUtil.closePreparedStatement(ps);
-//                pool.freeConnection(connection);
-//            }
-//        }
-//        else
-//        {
-//            return null;
-//        }
-//    }
-
 
     public static User getUser(String userName)
     {
@@ -90,7 +14,7 @@ public class UserDB
         ResultSet rs = null;
         User user = new User();
 
-        String query = "SELECT UserTypeName FROM User WHERE UserName = ?";
+        String query = "SELECT * FROM User WHERE UserName = ?";
 
         try
         {
@@ -100,8 +24,10 @@ public class UserDB
 
             if(rs.next())
             {
-                user.setUsername(userName);
+                user.setUsername(rs.getString(1));
                 user.setUserType(rs.getString(1));
+                user.setFullName(rs.getString(3));
+                user.setEmailAddress(rs.getString(4));
             }
             return user;
         }
@@ -118,5 +44,32 @@ public class UserDB
         }
     }
 
+    public static boolean addUser(User user)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        String preparedQuery = "INSERT INTO User VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = null;
+
+        try
+        {            
+            ps = connection.prepareStatement(preparedQuery);
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserType());
+            ps.setString(3, user.getFullName());
+            ps.setString(4, user.getEmailAddress());
+            return ps.executeUpdate()==1;
+        }
+         catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
   
 }

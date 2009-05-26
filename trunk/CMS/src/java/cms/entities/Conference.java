@@ -1,5 +1,7 @@
 package cms.entities;
 
+import java.sql.Date;
+
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
@@ -10,10 +12,16 @@ public class Conference
 {
     private String name;
     private String location;
-    private int eventDate;
-    private int dueDate;
+    private Date eventDate;
+    private Date dueDate;
+    private User editor;
 
-    public Conference (String n, String l, int ed, int dd)
+    public Conference()
+    {
+        
+    }
+
+    public Conference (String n, String l, Date ed, Date dd)
     {
         name = n;
         location = l;
@@ -52,28 +60,37 @@ public class Conference
     /**
      * @return the eventDate
      */
-    public int getEventDate() {
+    public Date getEventDate() {
         return eventDate;
     }
 
     /**
      * @param eventDate the eventDate to set
      */
-    public void setEventDate(int eventDate) {
+    public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
     /**
      * @return the dueDate
      */
-    public int getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
     /**
      * @param dueDate the dueDate to set
      */
-    public void setDueDate(int dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
+
+    public User getEditor() {
+        return editor;
+    }
+
+    public void setEditor(User editor) {
+        this.editor = editor;
+    }
+
 }
