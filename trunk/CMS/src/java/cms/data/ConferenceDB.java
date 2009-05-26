@@ -152,7 +152,6 @@ public class ConferenceDB
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-        boolean isNullEditor = false;
         String preparedQuery;        
 
         preparedQuery = "UPDATE conference SET EditorUserName = ? WHERE ConferenceName = ?";
