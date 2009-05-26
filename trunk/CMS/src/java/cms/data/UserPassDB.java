@@ -6,6 +6,7 @@
 package cms.data;
 
 import cms.entities.User;
+import cms.services.PwGen;
 import java.sql.*;
 
 
@@ -84,6 +85,31 @@ public class UserPassDB
         }
     }
 
+    public static String setRandomPassword(User user)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        String preparedQuery = "UPDATE UserPass SET Password = ? WHERE UserName = ?";
+        PreparedStatement ps = null;
+        String password = PwGen.getPassword(8);
 
+        try
+        {
+            ps = connection.prepareStatement(preparedQuery);
+            ps.setString(1, password);
+            ps.setString(2, user.getUserName());
+            return password;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
 
 }

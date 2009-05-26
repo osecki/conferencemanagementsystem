@@ -57,10 +57,19 @@ public class AccountService implements Account
      * new password will be returned in this String. It will return "Error" if
      * there was a problem.
     */
-    public String resetPassword (String username, String emailaddress)
+    public String resetPassword (String userName, String fullName, String emailAddress)
     {
-        // TODO
-        return "";
+        User user = null;
+        try
+        {
+            user = UserDB.checkUser(userName, fullName, emailAddress);
+        }
+        catch(NullPointerException e)
+        {
+            return null;
+        }
+        
+        return UserPassDB.setRandomPassword(user);
     }
 
     /*
