@@ -44,6 +44,46 @@ public class UserDB
         }
     }
 
+    public static User checkUser(String userName, String fullName, String emailAddress)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User user = new User();
+
+        String query = "SELECT * FROM User WHERE UserName = ? AND fullName = ? AND emailAddress = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setString(1,userName);
+            ps.setString(2, fullName);
+            ps.setString(3, emailAddress);
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                user.setUsername(rs.getString(1));
+                user.setUserType(rs.getString(1));
+                user.setFullName(rs.getString(3));
+                user.setEmailAddress(rs.getString(4));
+            }
+            return user;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
     public static boolean addUser(User user)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
