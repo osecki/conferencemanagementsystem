@@ -12,6 +12,18 @@
         <servlet-name>AdminPortalCreateEditorServlet</servlet-name>
         <servlet-class>cms.servlets.AdminPortalCreateEditorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminPortalMainServlet</servlet-name>
+        <servlet-class>cms.servlets.AdminPortalMainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminPortalCreateConferenceServlet</servlet-name>
+        <servlet-class>cms.servlets.AdminPortalCreateConferenceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminPortalAssignEditorServlet</servlet-name>
+        <servlet-class>cms.servlets.AdminPortalAssignEditorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>AdminPortalCreateEditorServlet</servlet-name>
         <url-pattern>/AdminPortalCreateEditorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminPortalMainServlet</servlet-name>
+        <url-pattern>/AdminPortalMainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminPortalCreateConferenceServlet</servlet-name>
+        <url-pattern>/AdminPortalCreateConferenceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminPortalAssignEditorServlet</servlet-name>
+        <url-pattern>/AdminPortalAssignEditorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -42,22 +66,22 @@
 
     <security-role>
         <description>Administrator Account</description>
-        <role-name>Administrator</role-name>
+        <role-name>ADMINISTRATOR</role-name>
     </security-role>
 
     <security-role>
         <description>Author Account</description>
-        <role-name>Author</role-name>
+        <role-name>AUTHOR</role-name>
     </security-role>
 
     <security-role>
         <description>Reviewer Account</description>
-        <role-name>Reviewer</role-name>
+        <role-name>REVIEWER</role-name>
     </security-role>
 
     <security-role>
         <description>Editor Account</description>
-        <role-name>Editor</role-name>
+        <role-name>EDITOR</role-name>
     </security-role>
 
     <!-- Restrict access to all files other than index and register -->

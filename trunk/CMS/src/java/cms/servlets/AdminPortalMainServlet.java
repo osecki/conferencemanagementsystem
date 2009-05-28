@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Piyush
  */
-public class AdminPortalCreateEditorServlet extends HttpServlet {
+public class AdminPortalMainServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,50 +30,16 @@ public class AdminPortalCreateEditorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String errMsg;
-        boolean badData = false;
 
-        //TODO Replace with dynamic binding
+        //TODO replace with dynamic binding
         AccountService a = new AccountService();
         ConferenceSystemService c = new ConferenceSystemService();
 
-        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0)
-        {
-            badData = true;
-        }
-
+        HttpSession session = request.getSession();
         synchronized(session)
         {
-             if(!badData)
-             {
-                if(a.createAccount(request.getParameter("userName"), "EDITOR", request.getParameter("fullName"), request.getParameter("emailAddress"), request.getParameter("password")))
-                {
-                    errMsg = "<font color=\"blue\">New Editor account successfully created.";
-                }
-                else
-                {
-                    errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
-                }
-            }
-            else
-            {
-                 errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
-            }
-
-            session.setAttribute("errMsg",errMsg);
             session.setAttribute("availableEditors", a.getAvailableEditors());
             session.setAttribute("availableConferences", c.getAvailableConferences());
-
-            session.setAttribute("fullName", request.getParameter("fullName"));
-            session.setAttribute("userName", request.getParameter("userName"));
-            session.setAttribute("password", request.getParameter("password"));
-            session.setAttribute("emailAddress", request.getParameter("emailAddress"));
-            session.setAttribute("name", request.getParameter("name"));
-            session.setAttribute("location", request.getParameter("location"));
-            session.setAttribute("eventDate", request.getParameter("eventDate"));
-            session.setAttribute("dueDate", request.getParameter("dueDate"));
-
         }
 
         String url = "/Admin/adminportal.jsp";

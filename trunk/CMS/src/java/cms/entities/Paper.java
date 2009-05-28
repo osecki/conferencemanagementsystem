@@ -1,12 +1,14 @@
 package cms.entities;
 
+import java.io.Serializable;
+
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
-public class Paper
+public class Paper implements Serializable
 {
     private String name;
     private String authorName;

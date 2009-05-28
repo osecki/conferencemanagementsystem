@@ -1,5 +1,6 @@
 package cms.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /*
@@ -8,7 +9,7 @@ import java.sql.Date;
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
-public class Conference
+public class Conference implements Serializable
 {
     private int conferenceID;
     private String name;

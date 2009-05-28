@@ -39,7 +39,8 @@ public class User implements Serializable
         this.userType = UserRole.valueOf(userType.toUpperCase());
     }
 
-    public String getUserName() {
+    public String getUserName()
+    {
         return userName;
     }
 
