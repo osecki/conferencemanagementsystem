@@ -1,6 +1,8 @@
 package cms.services;
 
 import cms.entities.Conference;
+import cms.entities.User;
+import java.util.ArrayList;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -74,4 +76,6 @@ public interface Account
      * It will return a boolean signifying how it turned out.
     */
     public boolean releaseToAuthor (String paperName, String authorName);
+
+    public ArrayList<User> getAvailableEditors();
 }

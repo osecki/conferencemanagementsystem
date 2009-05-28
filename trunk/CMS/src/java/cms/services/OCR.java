@@ -18,5 +18,5 @@ public interface OCR
      * which will be opened and parsed for its keywords and abstract. This
      * information will be put into the Paper object and that one will be returned.
     */
-    public Paper createAccount (Paper p);
+    public Paper invokeOCR(Paper p);
 }

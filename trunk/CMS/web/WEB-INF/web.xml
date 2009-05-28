@@ -8,6 +8,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>cms.servlets.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminPortalCreateEditorServlet</servlet-name>
+        <servlet-class>cms.servlets.AdminPortalCreateEditorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminPortalCreateEditorServlet</servlet-name>
+        <url-pattern>/AdminPortalCreateEditorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -121,7 +129,5 @@
         <form-error-page>/login/login_error.jsp</form-error-page>
     </form-login-config>
     </login-config>
-
-
 
     -</web-app>

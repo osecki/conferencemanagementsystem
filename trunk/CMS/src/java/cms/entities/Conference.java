@@ -10,6 +10,7 @@ import java.sql.Date;
 
 public class Conference
 {
+    private int conferenceID;
     private String name;
     private String location;
     private Date eventDate;
@@ -28,6 +29,18 @@ public class Conference
         eventDate = ed;
         dueDate = dd;
     }
+
+    public int getConferenceID()
+    {
+        return conferenceID;
+    }
+
+    public void setConferenceID(int conferenceID)
+    {
+        this.conferenceID = conferenceID;
+    }
+
+
 
     /**
      * @return the name
