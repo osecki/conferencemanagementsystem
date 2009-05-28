@@ -28,4 +28,9 @@ public class ConferenceSystemService implements ConferenceSystem
     {
         return ConferenceDB.getAvailableConferences();
     }
+
+    public Conference getConferenceByID(int conferenceID)
+    {
+        return ConferenceDB.getConference(conferenceID);
+    }
 }

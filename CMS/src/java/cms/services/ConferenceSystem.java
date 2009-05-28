@@ -22,4 +22,6 @@ public interface ConferenceSystem
     public boolean addConference (Conference c);
 
     public ArrayList<Conference> getAvailableConferences();
+
+    public Conference getConferenceByID(int conferenceID);
 }

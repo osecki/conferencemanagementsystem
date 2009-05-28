@@ -65,7 +65,7 @@ public class UserDB
                 User user = new User();
 
                 user.setUsername(rs.getString(1));
-                user.setUserType(rs.getString(1));
+                user.setUserType(rs.getString(2));
                 user.setFullName(rs.getString(3));
                 user.setEmailAddress(rs.getString(4));
 
@@ -147,6 +147,7 @@ public class UserDB
          catch(SQLException e)
         {
             e.printStackTrace();
+            System.out.println("addUser is throwing an exception");
             return false;
         }
         finally

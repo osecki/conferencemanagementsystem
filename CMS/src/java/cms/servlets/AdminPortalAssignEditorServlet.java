@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Piyush
  */
-public class AdminPortalCreateEditorServlet extends HttpServlet {
+public class AdminPortalAssignEditorServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,40 +30,44 @@ public class AdminPortalCreateEditorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String errMsg;
-        boolean badData = false;
+         HttpSession session = request.getSession();
+        String errMsg = null;
 
         //TODO Replace with dynamic binding
         AccountService a = new AccountService();
         ConferenceSystemService c = new ConferenceSystemService();
 
-        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0)
+        boolean badData = false;
+
+        if(request.getParameter("selectedEditor").length()==0 || request.getParameter("selectedConference").length()==0)
         {
             badData = true;
         }
 
+        System.out.println("Selected Editor: "+request.getParameter("selectedEditor")+", Selected Conference: "+request.getParameter("selectedConference"));
+
         synchronized(session)
         {
-             if(!badData)
-             {
-                if(a.createAccount(request.getParameter("userName"), "EDITOR", request.getParameter("fullName"), request.getParameter("emailAddress"), request.getParameter("password")))
+            if(!badData)
+            {
+                if(a.assignEditor(c.getConferenceByID(Integer.parseInt(request.getParameter("selectedConference"))), request.getParameter("selectedEditor")))
                 {
-                    errMsg = "<font color=\"blue\">New Editor account successfully created.";
+                    errMsg = "<font color=\"blue\">Editor successfully assigned to selected conference.";
                 }
                 else
                 {
-                    errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
+                    errMsg = "<font color=\"red\">There was a problem with the selection of Editor/Conference.";
                 }
             }
             else
             {
-                 errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
+                errMsg = "<font color=\"red\">There was a problem with the selection of Editor/Conference.";
             }
 
             session.setAttribute("errMsg",errMsg);
             session.setAttribute("availableEditors", a.getAvailableEditors());
             session.setAttribute("availableConferences", c.getAvailableConferences());
+
 
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));
@@ -73,7 +77,6 @@ public class AdminPortalCreateEditorServlet extends HttpServlet {
             session.setAttribute("location", request.getParameter("location"));
             session.setAttribute("eventDate", request.getParameter("eventDate"));
             session.setAttribute("dueDate", request.getParameter("dueDate"));
-
         }
 
         String url = "/Admin/adminportal.jsp";

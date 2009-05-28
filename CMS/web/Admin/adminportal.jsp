@@ -47,27 +47,28 @@ body {
     <table width="100%" border="0">
       <tr>
         <td valign="top"><h3>Create Editor</h3>
-    <form id="form1" name="form1" method="post" action="">
+    <form id="form1" name="form1" method="post" action="<c:url value='/AdminPortalCreateEditorServlet'/>">
         <p>
-          <label>Student Name
-          <input type="text" name="studentName" id="studentName" />
+          <label>Full Name
+          <input type="text" name="fullName" id="studentName" value="${fullName}"/>
+          
 
           </label>
      	</p>
         <p>
           <label>Username
-          <input type="text" name="userName" id="username" />
+          <input type="text" name="userName" id="username" value="${userName}"/>
           </label>
      	</p>
         <p>
           <label>Initial Password
-          <input type="text" name="password" id="password" />
+          <input type="text" name="password" id="password" value="${password}"/>
 
           </label>
      	</p>
         <p>
           <label>E-Mail
-          <input type="text" name="emailAddress" id="eMail" />
+          <input type="text" name="emailAddress" id="eMail" value="${emailAddress}"/>
           </label>
      	</p>
         <p>
@@ -78,23 +79,23 @@ body {
     <br />
         </td>
        <td valign="top"><h3>Create Conference</h3>
-            <form id="createConference" name="createConference" method="post" action="">
+            <form id="createConference" name="createConference" method="post" action="<c:url value='/AdminPortalCreateConferenceServlet'/>">
 	        <p>
     	      <label>Conference  Name
-        	  <input type="text" name="conference" id="conference" />
+        	  <input type="text" name="name" id="conference" value="${name}"/>
 	          </label>
     	 	</p>
 	        <p>
     	      <label>Location
-        	  <input type="text" name="location" id="location" />
+        	  <input type="text" name="location" id="location" value="${location}"/>
 	          </label>
 	        </p>
 	        <label>Event Date
-        	  <input id="datetime2" size="10" maxlength="10" name="eventDate" type="text" /><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime2', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
+        	  <input id="eventDate" size="10" maxlength="10" name="eventDate" type="text" value="${eventDate}"/><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime2', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
 			  <div id="chooserSpan3" class="dateChooser select-free" style="display: none; visibility: hidden; width: 160px;"></div>
 	          </label>
     	      <label>Due Date
-        	  <input id="datetime3" size="10" maxlength="10" name="dueDate" type="text" /><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime3', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
+        	  <input id="dueDate" size="10" maxlength="10" name="dueDate" type="text" value="${dueDate}"/><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime3', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
 			  <div id="chooserSpan3" class="dateChooser select-free" style="display: none; visibility: hidden; width: 160px;"></div>
 	          </label>
 	        <p>
@@ -106,7 +107,7 @@ body {
       <tr valign="top">
 
         <td><h3>Assign Editor to Conference</h3>
-            <form action="">
+            <form action="<c:url value='/AdminPortalAssignEditorServlet'/>">
             <label>Editor :
             <select name="selectedEditor">
             <c:forEach var="currEditor" items="${availableEditors}">
@@ -114,7 +115,7 @@ body {
             </c:forEach>
             </select>
             </label>
-
+            <br />
             <br />
             <label>Conference :
             <select name="selectedConference">

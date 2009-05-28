@@ -35,6 +35,7 @@ public class ConferenceDB
 
             if(rs.next())
             {
+                conference.setConferenceID(rs.getInt(1));
                 conference.setName(rs.getString(2));
                 conference.setLocation(rs.getString(3));
                 conference.setEventDate(rs.getDate(4));
@@ -138,10 +139,12 @@ public class ConferenceDB
         boolean isNullEditor = false;
         String preparedQuery;
         User editor = null;
+        String editorUserName = null;
 
         try
         {
             editor = conference.getEditor();
+            editorUserName = editor.getUserName();
         }
         catch(NullPointerException e)
         {
@@ -166,7 +169,7 @@ public class ConferenceDB
             ps.setDate(4, conference.getDueDate());
             if(!isNullEditor)
             {
-                ps.setString(5, editor.getUserName());
+                ps.setString(5, editorUserName);
             }
             return ps.executeUpdate()==1;
         }
@@ -227,9 +230,8 @@ public class ConferenceDB
             ArrayList<Conference> conferences = new ArrayList<Conference>();
             while (rs.next())
             {
-                //Create a User object
                 Conference conference = new Conference();
-
+                conference.setConferenceID(rs.getInt(1));
                 conference.setName(rs.getString(2));
                 conference.setLocation(rs.getString(3));
                 conference.setEventDate(rs.getDate(4));
