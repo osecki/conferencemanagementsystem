@@ -5,6 +5,7 @@ import cms.data.UserDB;
 import cms.data.UserPassDB;
 import cms.entities.Conference;
 import cms.entities.User;
+import java.util.ArrayList;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -111,5 +112,10 @@ public class AccountService implements Account
     {
         // TODO
         return true;
+    }
+
+    public ArrayList<User> getAvailableEditors()
+    {
+        return UserDB.getAvailableEditors();
     }
 }

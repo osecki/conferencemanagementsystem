@@ -1,5 +1,7 @@
 package cms.services;
 
+import cms.entities.Feedback;
+
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
@@ -16,7 +18,7 @@ public interface FeedbackSystem
      * the Feedback database table to create a Feedback entry. It will return a
      * boolean based on whether it is successful or not.
     */
-    public boolean send (FeedbackSystem f);
+    public boolean send (Feedback f);
 
     /*
      * Method:  edit
@@ -26,7 +28,7 @@ public interface FeedbackSystem
      * what is already stored for this feedback entry, and update any fields if
      * necessary. It will return a boolean reflecting the operation's success.
     */
-    public boolean edit (FeedbackSystem Object);
+    public boolean edit (Feedback Object);
 
     /*
      * Method:  receive

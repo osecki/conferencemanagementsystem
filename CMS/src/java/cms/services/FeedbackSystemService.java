@@ -17,7 +17,7 @@ public class FeedbackSystemService implements FeedbackSystem
      * the Feedback database table to create a Feedback entry. It will return a
      * boolean based on whether it is successful or not.
     */
-    public boolean send (FeedbackSystem f)
+    public boolean send (Feedback f)
     {
         // TODO
         return true;
@@ -31,7 +31,7 @@ public class FeedbackSystemService implements FeedbackSystem
      * what is already stored for this feedback entry, and update any fields if
      * necessary. It will return a boolean reflecting the operation's success.
     */
-    public boolean edit (FeedbackSystem Object)
+    public boolean edit (Feedback Object)
     {
         // TODO
         return true;

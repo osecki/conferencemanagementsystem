@@ -2,6 +2,7 @@ package cms.data;
 
 import cms.entities.User;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDB
 {
@@ -25,7 +26,7 @@ public class UserDB
             if(rs.next())
             {
                 user.setUsername(rs.getString(1));
-                user.setUserType(rs.getString(1));
+                user.setUserType(rs.getString(2));
                 user.setFullName(rs.getString(3));
                 user.setEmailAddress(rs.getString(4));
             }
@@ -42,6 +43,49 @@ public class UserDB
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
+    }
+
+    public static ArrayList<User> getAvailableEditors()
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM User U WHERE UserTypeName='EDITOR' AND NOT EXISTS(SELECT * FROM Conference C WHERE C.EditorUserName = U.UserName)";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            ArrayList<User> users = new ArrayList<User>();
+            while (rs.next())
+            {
+                //Create a User object
+                User user = new User();
+
+                user.setUsername(rs.getString(1));
+                user.setUserType(rs.getString(1));
+                user.setFullName(rs.getString(3));
+                user.setEmailAddress(rs.getString(4));
+
+                users.add(user);
+            }
+            return users;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+
     }
 
     public static User checkUser(String userName, String fullName, String emailAddress)
