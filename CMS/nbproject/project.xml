@@ -8,21 +8,6 @@
             <web-module-libraries>
                 <library>
                     <file>${libs.GlassFish_V3_Prelude.classpath}</file>
-                </library>
-                <library>
-                    <file>${file.reference.jstl.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library>
-                    <file>${file.reference.mail.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library>
-                    <file>${file.reference.mysql-connector-java-5.0.5-bin.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library>
-                    <file>${file.reference.standard.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
