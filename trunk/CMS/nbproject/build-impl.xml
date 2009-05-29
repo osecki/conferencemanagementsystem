@@ -521,12 +521,20 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.mail.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mail.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.0.5-bin.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mysql-connector-java-5.0.5-bin.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.standard.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.standard.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.jstl.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.jstl.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.mail.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mail.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.mysql-connector-java-5.0.5-bin.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.mysql-connector-java-5.0.5-bin.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.standard.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.standard.jar" todir="${dist.ear.dir}"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.jstl.jar} ${manifest.file.reference.mail.jar} ${manifest.file.reference.mysql-connector-java-5.0.5-bin.jar} ${manifest.file.reference.standard.jar} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.jstl.jar} ${manifest.file.reference.mail.jar} ${manifest.file.reference.mysql-connector-java-5.0.5-bin.jar} ${manifest.file.reference.standard.jar} ${manifest.file.reference.jstl.jar} ${manifest.file.reference.mail.jar} ${manifest.file.reference.mysql-connector-java-5.0.5-bin.jar} ${manifest.file.reference.standard.jar} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
+        <copyfiles files="${file.reference.jstl.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.mysql-connector-java-5.0.5-bin.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.standard.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.jstl.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.0.5-bin.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
