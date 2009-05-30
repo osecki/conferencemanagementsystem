@@ -52,7 +52,7 @@ body {
           <input type="submit" value="Log In">
       </label>
     </form>
-    <p>Register <a href="register.jsp">here</a></p>
+    <p>Register for a new author account <a href="register.jsp">here</a></p>
   <!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>

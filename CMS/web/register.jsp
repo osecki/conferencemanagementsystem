@@ -4,6 +4,7 @@
     Class      : CS575, Spring 2009
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,31 +39,41 @@ body {
 <div id="container">
   <div id="mainContent">
     <h1> Conference Management System</h1>
-    <h2>Login</h2>
-    <form id="form1" name="form1" method="post" action="">
+    <h2>Author Registration</h2>
+    <form id="form1" name="form1" method="post" action="<c:url value='/RegisterAuthorServlet'/>">
+      <lable>Full Name
+          <input type="text" name="r_fullName" id="r_fullName" value="${r_fullName}" />
+      </lable>
+      
+      <p>
       <label>Username
-      <input type="text" name="username" id="username" />
+      <input type="text" name="r_userName" id="r_userName" value="${r_userName}"/>
       </label>
+      </p>
         <p>
           <label>Password
-          <input type="text" name="password" id="password" />
+          <input type="password" name="r_password" id="r_password" value="${r_password}"/>
           </label>
       </p>
         <p>
           <label>Re-Type Password
-          <input type="text" name="repeatPassword" id="repeatPassword" />
+          <input type="password" name="r_repeatPassword" id="r_repeatPassword" value="${r_repeatPassword}"/>
           </label>
         </p>
         <p>
           <label>E-Mail Address
-          <input type="text" name="eMail" id="eMail" />
+          <input type="text" name="r_emailAddress" id="r_emailAddress" value="${r_emailAddress}"/>
           </label>
 </p>
         <p>
-          <input type="submit" name="submit" id="submit" value="Submit" />
+          <input type="submit" name="Register" id="submit" value="Submit" />
         </p>
     </form>
     <p>&nbsp;</p>
+    <p align="center"><h4>${registerErrMsg}</h4></p>
+    <form action="<c:url value='/Logout'/>">
+    <p align="center"><h4><font color="black">Click here to return to the login screen: <input type="submit" value="Return"></font></h4></p>
+    </form>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>
