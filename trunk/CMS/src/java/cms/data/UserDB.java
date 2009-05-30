@@ -144,7 +144,7 @@ public class UserDB
             ps.setString(4, user.getEmailAddress());
             return ps.executeUpdate()==1;
         }
-         catch(SQLException e)
+        catch(SQLException e)
         {
             e.printStackTrace();
             System.out.println("addUser is throwing an exception");

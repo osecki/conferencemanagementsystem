@@ -24,6 +24,10 @@
         <servlet-name>AdminPortalAssignEditorServlet</servlet-name>
         <servlet-class>cms.servlets.AdminPortalAssignEditorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterAuthorServlet</servlet-name>
+        <servlet-class>cms.servlets.RegisterAuthorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>AdminPortalAssignEditorServlet</servlet-name>
         <url-pattern>/AdminPortalAssignEditorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterAuthorServlet</servlet-name>
+        <url-pattern>/RegisterAuthorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
