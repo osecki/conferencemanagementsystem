@@ -1,18 +1,18 @@
 package cms.services;
-
 import cms.data.ConferenceDB;
 import cms.data.UserDB;
 import cms.data.UserPassDB;
 import cms.entities.Conference;
 import cms.entities.User;
 import java.util.ArrayList;
+import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-
+@WebService(endpointInterface = "cms.services.Account")
 public class AccountService implements Account
 {
     /*
@@ -114,6 +114,12 @@ public class AccountService implements Account
         return true;
     }
 
+    /*
+     * Method:  getAvailableEditors()
+     * Input:  None
+     * Output:  Arraylist
+     * Algorithm:  The method return an arraylist of editors that do not have a conference
+    */
     public ArrayList<User> getAvailableEditors()
     {
         return UserDB.getAvailableEditors();
