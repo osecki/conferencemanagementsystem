@@ -24,4 +24,6 @@ public interface ConferenceSystem
     public ArrayList<Conference> getAvailableConferences();
 
     public Conference getConferenceByID(int conferenceID);
+
+    public ArrayList<Conference> getAllConferences();
 }

@@ -5,7 +5,7 @@
 
 package cms.servlets;
 
-import cms.services.AccountService;
+import cms.services.ConferenceSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Piyush
  */
-public class RegisterAuthorServlet extends HttpServlet {
+public class AuthorPortalMainServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,53 +29,17 @@ public class RegisterAuthorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        //TODO replace with dynamic binding
+        ConferenceSystemService c = new ConferenceSystemService();
+
         HttpSession session = request.getSession();
-        String registerErrMsg = null;
-        boolean badData = false;
-
-        //TODO Replace with dynamic binding
-        AccountService a = new AccountService();
-
-        if(request.getParameter("r_userName").length()==0 || request.getParameter("r_password").length()==0)
-        {
-            badData = true;
-        }
-
         synchronized(session)
         {
-            if(!request.getParameter("r_password").equals(request.getParameter("r_repeatPassword")))
-            {
-                registerErrMsg = "<font color=\"red\">The two entered passwords do not match.";
-                badData = true;
-            }
-
-            if(!badData)
-             {
-                if(a.createAccount(request.getParameter("r_userName"), "AUTHOR", request.getParameter("r_fullName"), request.getParameter("r_emailAddress"), request.getParameter("r_password")))
-                {
-                    registerErrMsg = "<font color=\"blue\">New Author account successfully created.";
-                }
-                else
-                {
-                    registerErrMsg = "<font color=\"red\">There was a problem. Author account could not be created.";
-                }
-            }
-            else if(request.getParameter("r_password").equals(request.getParameter("r_repeatPassword")))
-            {
-                 registerErrMsg = "<font color=\"red\">There was a problem. Author account could not be created.";
-            }
-            
-            session.setAttribute("registerErrMsg",registerErrMsg);
-
-            session.setAttribute("r_fullName", request.getParameter("r_fullName"));
-            session.setAttribute("r_userName", request.getParameter("r_userName"));
-            session.setAttribute("r_password", request.getParameter("r_password"));
-            session.setAttribute("r_repeatPassword", request.getParameter("r_repeatPassword"));
-            session.setAttribute("r_emailAddress", request.getParameter("r_emailAddress"));
-
+            session.setAttribute("allConferences", c.getAllConferences());
         }
 
-        String url = "/register.jsp";
+        String url = "/Author/authorportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);

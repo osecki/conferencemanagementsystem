@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : authorportal
     Group      : 3, Java Team Hunger Force
     Class      : CS575, Spring 2009
@@ -10,7 +10,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>CMS - Author Portal</title>
+
 <style type="text/css">
 <!--
 body {
@@ -31,6 +32,7 @@ body {
 .oneColFixCtr #mainContent {
 	padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
 }
+.style1 {color: #FF0000}
 -->
 </style></head>
 
@@ -41,6 +43,41 @@ body {
     <h1> Conference Management System</h1>
     <h2>Author Portal</h2>
     <h3><a href="<c:url value='/Logout'/>"><font color="red">Logout</font></a></h3>
+
+    <table width="100%" border="0">
+
+    <tr>
+        <td colspan="2">
+            <h3>Add New Paper</h3>
+            <form action="<c:url value='/AuthorPortalUploadFileServlet'/>" method="post">
+                <table>
+                    <tr>
+                        <td width="25%">Paper Name</td>
+                        <td width="25%">Conference</td>
+                        <td width="25%">PDF Upload</td>
+                        <td width="25%"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><input type="text" name="paperName" id="paperName" value="${paperName}"></td>
+                        <td width="25%">
+                        <select name="selectedConference">
+                            <c:forEach var="currConference" items="${allConferences}">
+                                <option value="${currConference.conferenceID}">${currConference.name}</option>
+                            </c:forEach>
+                        </select>
+                        </td>
+                        <td width="25%"><input type="file" name="dataFile" size="40" value="${dataFile}"></td>
+                        <td width="25%"><input type="submit" value="Upload"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><p>${au_errMsg}</p></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+
+    </table>
     <p>&nbsp;</p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>

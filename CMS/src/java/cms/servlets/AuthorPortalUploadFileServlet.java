@@ -6,6 +6,7 @@
 package cms.servlets;
 
 import cms.services.AccountService;
+import cms.services.ConferenceSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Piyush
  */
-public class RegisterAuthorServlet extends HttpServlet {
+public class AuthorPortalUploadFileServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,57 +29,55 @@ public class RegisterAuthorServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException
+    {
+
+        //TODO: Put an if condition here to check if all variables were filled in, check fileType if PDF. If error, url is calling page, else new servlet.
+
         HttpSession session = request.getSession();
-        String registerErrMsg = null;
-        boolean badData = false;
 
         //TODO Replace with dynamic binding
-        AccountService a = new AccountService();
 
-        if(request.getParameter("r_userName").length()==0 || request.getParameter("r_password").length()==0)
+        String au_errMsg = null;
+        String url = null;
+        boolean badData = false;
+
+        try
+        {
+            if(request.getParameter("paperName").length()==0 || request.getParameter("dataFile").length()==0)
+            {
+                au_errMsg="<font color=\"red\">One or more fields were left blank. " + request.getParameter("paperName")+" " +request.getParameter("dataFile");
+                badData = true;
+            }
+        }
+        catch(NullPointerException e)
         {
             badData = true;
+            au_errMsg="<font color=\"red\">One or more fields were left blank. "+ request.getParameter("paperName")+" " +request.getParameter("dataFile");
         }
+      
+
 
         synchronized(session)
         {
-            if(!request.getParameter("r_password").equals(request.getParameter("r_repeatPassword")))
+            session.setAttribute("au_errMsg",au_errMsg);
+            session.setAttribute("paperName",request.getParameter("paperName"));
+            session.setAttribute("dataFile",request.getParameter("dataFile"));
+
+            if(badData)
             {
-                registerErrMsg = "<font color=\"red\">The two entered passwords do not match.";
-                badData = true;
+                url = "/Author/authorportal.jsp";
             }
-
-            if(!badData)
-             {
-                if(a.createAccount(request.getParameter("r_userName"), "AUTHOR", request.getParameter("r_fullName"), request.getParameter("r_emailAddress"), request.getParameter("r_password")))
-                {
-                    registerErrMsg = "<font color=\"blue\">New Author account successfully created.";
-                }
-                else
-                {
-                    registerErrMsg = "<font color=\"red\">There was a problem. Author account could not be created.";
-                }
-            }
-            else if(request.getParameter("r_password").equals(request.getParameter("r_repeatPassword")))
+            else
             {
-                 registerErrMsg = "<font color=\"red\">There was a problem. Author account could not be created.";
+                url = "/PaperOCRServlet";
             }
-            
-            session.setAttribute("registerErrMsg",registerErrMsg);
-
-            session.setAttribute("r_fullName", request.getParameter("r_fullName"));
-            session.setAttribute("r_userName", request.getParameter("r_userName"));
-            session.setAttribute("r_password", request.getParameter("r_password"));
-            session.setAttribute("r_repeatPassword", request.getParameter("r_repeatPassword"));
-            session.setAttribute("r_emailAddress", request.getParameter("r_emailAddress"));
-
         }
 
-        String url = "/register.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
