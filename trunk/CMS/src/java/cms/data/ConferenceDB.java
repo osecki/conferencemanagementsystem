@@ -257,4 +257,48 @@ public class ConferenceDB
 
     }
 
+    public static ArrayList<Conference> getAllConferences()
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        //TODO Apply logic for Date here: Author can upload only til a certain date
+        String query = "SELECT * FROM Conference";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            ArrayList<Conference> conferences = new ArrayList<Conference>();
+            while (rs.next())
+            {
+                Conference conference = new Conference();
+                conference.setConferenceID(rs.getInt(1));
+                conference.setName(rs.getString(2));
+                conference.setLocation(rs.getString(3));
+                conference.setEventDate(rs.getDate(4));
+                conference.setDueDate(rs.getDate(5));
+//                conference.setEditor(UserDB.getUser(rs.getString(6)));
+
+                conferences.add(conference);
+            }
+            return conferences;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+
+    }
+
 }

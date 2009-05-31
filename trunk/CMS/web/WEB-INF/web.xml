@@ -28,6 +28,18 @@
         <servlet-name>RegisterAuthorServlet</servlet-name>
         <servlet-class>cms.servlets.RegisterAuthorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AuthorPortalMainServlet</servlet-name>
+        <servlet-class>cms.servlets.AuthorPortalMainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthorPortalUploadFileServlet</servlet-name>
+        <servlet-class>cms.servlets.AuthorPortalUploadFileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaperOCRServlet</servlet-name>
+        <servlet-class>cms.servlets.PaperOCRServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -55,6 +67,18 @@
     <servlet-mapping>
         <servlet-name>RegisterAuthorServlet</servlet-name>
         <url-pattern>/RegisterAuthorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthorPortalMainServlet</servlet-name>
+        <url-pattern>/AuthorPortalMainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthorPortalUploadFileServlet</servlet-name>
+        <url-pattern>/AuthorPortalUploadFileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaperOCRServlet</servlet-name>
+        <url-pattern>/PaperOCRServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
