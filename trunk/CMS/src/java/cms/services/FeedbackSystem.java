@@ -1,15 +1,13 @@
 package cms.services;
+
 import cms.entities.Feedback;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-@WebService(targetNamespace = "http://localhost:8080")
+
 public interface FeedbackSystem
 {
     /*
@@ -20,8 +18,7 @@ public interface FeedbackSystem
      * the Feedback database table to create a Feedback entry. It will return a
      * boolean based on whether it is successful or not.
     */
-    @WebMethod
-    public boolean send (@WebParam Feedback f);
+    public boolean send (Feedback f);
 
     /*
      * Method:  edit
@@ -31,8 +28,7 @@ public interface FeedbackSystem
      * what is already stored for this feedback entry, and update any fields if
      * necessary. It will return a boolean reflecting the operation's success.
     */
-    @WebMethod
-    public boolean edit (@WebParam Feedback Object);
+    public boolean edit (Feedback Object);
 
     /*
      * Method:  receive
@@ -42,6 +38,5 @@ public interface FeedbackSystem
      * entry in the database, it will grab the information from this entry, build
      * a Feedback object, and return it.
     */
-    @WebMethod
-    public Feedback receive (@WebParam String paperName, @WebParam String reviewerName);
+    public FeedbackSystem receive (String paperName, String reviewerName);
 }

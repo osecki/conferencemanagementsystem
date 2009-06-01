@@ -1,14 +1,13 @@
 package cms.services;
 import java.util.Vector;
 import cms.entities.*;
-import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-@WebService(endpointInterface = "cms.services.ListPaper")
+
 public class ListPaperService implements ListPaper
 {
     /*
