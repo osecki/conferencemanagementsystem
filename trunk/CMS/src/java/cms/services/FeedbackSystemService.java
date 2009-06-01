@@ -1,12 +1,13 @@
 package cms.services;
 import cms.entities.*;
+import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-
+@WebService(endpointInterface = "cms.services.FeedbackSystem")
 public class FeedbackSystemService implements FeedbackSystem
 {
     /*
@@ -45,7 +46,7 @@ public class FeedbackSystemService implements FeedbackSystem
      * entry in the database, it will grab the information from this entry, build
      * a Feedback object, and return it.
     */
-    public FeedbackSystem receive (String paperName, String reviewerName)
+    public Feedback receive (String paperName, String reviewerName)
     {
         // TODO
         return null;
