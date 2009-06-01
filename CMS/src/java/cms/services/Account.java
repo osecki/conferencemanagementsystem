@@ -1,17 +1,15 @@
 package cms.services;
+
 import cms.entities.Conference;
 import cms.entities.User;
 import java.util.ArrayList;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-@WebService(targetNamespace = "http://localhost:8080")
+
 public interface Account
 {
     /*
@@ -23,8 +21,7 @@ public interface Account
      * the correct User database table to create an author account. It will return a
      * boolean based on whether it is successful or not.
     */
-    @WebMethod
-    public boolean createAccount (@WebParam String username, @WebParam String userRole, @WebParam String fullname, @WebParam String emailaddress, @WebParam String password);
+    public boolean createAccount (String username, String userRole, String fullname, String emailaddress, String password);
     
     /*
      * Method:  login
@@ -48,8 +45,7 @@ public interface Account
      * new password will be returned in this String. It will return "Error" if
      * there was a problem.
     */
-    @WebMethod
-    public String resetPassword (@WebParam String userName, @WebParam String fullName, @WebParam String emailAddress);
+    public String resetPassword (String userName, String fullName, String emailAddress);
 
     /*
      * Method:  assignEditor
@@ -59,8 +55,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    @WebMethod
-    public boolean assignEditor (@WebParam Conference conference, @WebParam String editorName);
+    public boolean assignEditor (Conference conference, String editorName);
 
     /*
      * Method:  assignReviewer
@@ -70,8 +65,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    @WebMethod
-    public boolean assignReviewer (@WebParam String editorName, @WebParam String paperName);
+    public boolean assignReviewer (String editorName, String paperName);
 
     /*
      * Method:  releaseToAuthor
@@ -81,15 +75,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    @WebMethod
-    public boolean releaseToAuthor (@WebParam String paperName, @WebParam String authorName);
+    public boolean releaseToAuthor (String paperName, String authorName);
 
-    /*
-     * Method:  getAvailableEditors()
-     * Input:  None
-     * Output:  Arraylist
-     * Algorithm:  The method return an arraylist of editors that do not have a conference
-    */
-    @WebMethod
     public ArrayList<User> getAvailableEditors();
 }

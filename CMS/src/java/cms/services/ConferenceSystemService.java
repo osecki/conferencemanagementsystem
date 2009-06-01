@@ -2,14 +2,13 @@ package cms.services;
 import cms.data.ConferenceDB;
 import cms.entities.Conference;
 import java.util.ArrayList;
-import javax.jws.WebService;
-
+ 
 /*
  * Project:  ConferenceSystem Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-@WebService(endpointInterface = "cms.services.ConferenceSystem")
+
 public class ConferenceSystemService implements ConferenceSystem
 {
     /*

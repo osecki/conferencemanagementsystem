@@ -1,15 +1,12 @@
 package cms.services;
 import cms.entities.*;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-@WebService(targetNamespace = "http://localhost:8080")
+
 public interface FileSystem
 {
     /*
@@ -21,8 +18,7 @@ public interface FileSystem
      * the Paper database. It will return a boolean signifying if it was a
      * success or not.
     */
-    @WebMethod
-    public boolean uploadPaper (@WebParam Paper p);
+    public boolean uploadPaper (Paper p);
 
     /*
      * Method:  downloadPaper
@@ -32,6 +28,5 @@ public interface FileSystem
      * table for a paper with this name. It will return a Paper object with all
      * of its information.
     */
-    @WebMethod
-    public Paper downloadPaper (@WebParam String paperName);
+    public Paper downloadPaper (String paperName);
 }
