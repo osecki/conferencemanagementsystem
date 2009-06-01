@@ -1,12 +1,15 @@
 package cms.services;
 import cms.entities.*;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-
+@WebService(targetNamespace = "http://localhost:8080")
 public interface OCR
 {
     /*
@@ -18,5 +21,6 @@ public interface OCR
      * which will be opened and parsed for its keywords and abstract. This
      * information will be put into the Paper object and that one will be returned.
     */
-    public Paper invokeOCR(Paper p);
+    @WebMethod
+    public Paper invokeOCR(@WebParam Paper p);
 }

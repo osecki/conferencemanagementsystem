@@ -1,14 +1,16 @@
 package cms.services;
-
 import cms.entities.Conference;
 import java.util.ArrayList;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 
 /*
  * Project:  ConferenceSystem Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
-
+@WebService(targetNamespace = "http://localhost:8080")
 public interface ConferenceSystem
 {
     /*
@@ -19,11 +21,15 @@ public interface ConferenceSystem
      * the ConferenceSystem database table to create a ConferenceSystem. It will return a
      * boolean based on whether it is successful or not.
     */
-    public boolean addConference (Conference c);
+    @WebMethod
+    public boolean addConference (@WebParam Conference c);
 
+    @WebMethod
     public ArrayList<Conference> getAvailableConferences();
 
-    public Conference getConferenceByID(int conferenceID);
+    @WebMethod
+    public Conference getConferenceByID(@WebParam int conferenceID);
 
+    @WebMethod
     public ArrayList<Conference> getAllConferences();
 }
