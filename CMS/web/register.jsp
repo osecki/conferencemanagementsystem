@@ -41,9 +41,9 @@ body {
     <h1> Conference Management System</h1>
     <h2>Author Registration</h2>
     <form id="form1" name="form1" method="post" action="<c:url value='/RegisterAuthorServlet'/>">
-      <lable>Full Name
+      <label>Full Name
           <input type="text" name="r_fullName" id="r_fullName" value="${r_fullName}" />
-      </lable>
+      </label>
       
       <p>
       <label>Username
@@ -64,7 +64,7 @@ body {
           <label>E-Mail Address
           <input type="text" name="r_emailAddress" id="r_emailAddress" value="${r_emailAddress}"/>
           </label>
-</p>
+        </p>
         <p>
           <input type="submit" name="Register" id="submit" value="Submit" />
         </p>

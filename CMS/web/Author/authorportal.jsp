@@ -48,7 +48,7 @@ body {
 
     <tr>
         <td colspan="2">
-            <h3>Add New Paper</h3>
+            <h3>Upload Paper</h3>
             <form action="<c:url value='/AuthorPortalUploadFileServlet'/>" method="post">
                 <table>
                     <tr>
@@ -76,9 +76,45 @@ body {
             </form>
         </td>
     </tr>
-
     </table>
+
+      <table width="100%" border="0">      
+      <tr>
+        <td valign="top">
+        <h3>View Submitted Papers</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="submittedPapers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+        <td>
+        <h3>View Paper Feedback</h3>
+                <form id="assign" name="assign" method="post" action="">
+            <label>Paper :
+            <select name="feedbackPapers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+      </tr>
+    </table>
+
     <p>&nbsp;</p>
+    <p align="center"><h4>${errMsg}</h4></p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>

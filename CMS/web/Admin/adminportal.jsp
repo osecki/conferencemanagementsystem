@@ -51,8 +51,6 @@ body {
         <p>
           <label>Full Name
           <input type="text" name="fullName" id="studentName" value="${fullName}"/>
-          
-
           </label>
      	</p>
         <p>
@@ -63,7 +61,6 @@ body {
         <p>
           <label>Initial Password
           <input type="text" name="password" id="password" value="${password}"/>
-
           </label>
      	</p>
         <p>

@@ -41,7 +41,114 @@ body {
     <h1> Conference Management System</h1>
     <h2>Editor Portal</h2>
     <h3><a href="<c:url value='/Logout'/>"><font color="red">Logout</font></a></h3>
+
+    <table width="100%" border="0">
+      <tr>
+        <td>
+        <h3>Create Reviewer</h3>
+    <form id="createEditor" name="createEditor" method="post" action="">
+        <p>
+          <label>Student Name
+          <input type="text" name="studentName" id="studentName" />
+          </label>
+     	</p>
+        <p>
+          <label>Username
+          <input type="text" name="username" id="username" />
+          </label>
+     	</p>
+        <p>
+          <label>Initial Password
+          <input type="text" name="password" id="password" />
+          </label>
+     	</p>
+        <p>
+          <label>E-Mail
+          <input type="text" name="eMail" id="eMail" />
+          </label>
+     	</p>
+        <p>
+          <input type="submit" name="submit" id="submit" value="Submit" />
+        </p>
+    </form>
+        </td>
+        <td valign="top">
+        <h3>View Conference Papers</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+        <h3>Match Papers &amp; Reviewers</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+            <label>Conference :
+            <select name="reviewers">
+            <option value="robinson">Robinson, Uri</option>
+            <option value="osecki">Osecki, Jordan</option>
+            </select>
+            </label>
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </p>
+        </td>
+        <td valign="top">
+        <h3>View Papers With Feedback</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <h3>Release Papers With Feedback</h3>
+                <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+
     <p>&nbsp;</p>
+    <p align="center"><h4>${errMsg}</h4></p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>

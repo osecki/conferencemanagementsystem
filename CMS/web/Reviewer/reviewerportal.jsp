@@ -41,7 +41,127 @@ body {
     <h1> Conference Management System</h1>
     <h2>Reviewer Portal</h2>
     <h3><a href="<c:url value='/Logout'/>"><font color="red">Logout</font></a></h3>
+
+    <table width="100%" border="0">
+      <tr>
+        <td width="50%" valign="top">
+        <h3>View Assigned Papers</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+        <td width="50%" valign="top">
+        <h3>Submit Feedback For Paper</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <p>Content: <br />
+          <input type="radio" name="cRanking" id="veryBad" value="1" />
+          1
+          <input type="radio" name="cRanking" id="bad" value="2" />
+          2
+          <input type="radio" name="rRanking" id="okay" value="3" />
+          3
+          <input type="radio" name="cRanking" id="good" value="4" />
+          4
+          <input type="radio" name="cRanking" id="veryGood" value="5" />
+          5</p>
+        <p>Innovation: <br />
+            <input type="radio" name="iRanking" id="veryBad" value="1" />
+          1
+          <input type="radio" name="iRanking" id="bad" value="2" />
+          2
+          <input type="radio" name="iRanking" id="okay" value="3" />
+          3
+          <input type="radio" name="iRanking" id="good" value="4" />
+          4
+          <input type="radio" name="iRanking" id="veryGood" value="5" />
+          5</p>
+        <p>Quality: <br />
+            <input type="radio" name="qRanking" id="veryBad" value="1" />
+          1
+          <input type="radio" name="qRranking" id="bad" value="2" />
+          2
+          <input type="radio" name="qRanking" id="okay" value="3" />
+          3
+          <input type="radio" name="qRanking" id="good" value="4" />
+          4
+          <input type="radio" name="qRanking" id="veryGood" value="5" />
+          5</p>
+          <p>Depth: <br />
+            <input type="radio" name="dRanking" id="veryBad" value="1" />
+          1
+          <input type="radio" name="dRanking" id="bad" value="2" />
+          2
+          <input type="radio" name="dRanking" id="okay" value="3" />
+          3
+          <input type="radio" name="dRanking" id="good" value="4" />
+          4
+          <input type="radio" name="dRanking" id="veryGood" value="5" />
+          5</p>
+        <label>Feedback :
+        <textarea name="giveFeedback" id="giveFeedback" cols="45" rows="5"></textarea>
+        <br />
+        Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+        </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </p></td>
+      </tr>
+      <tr>
+        <td valign="top">
+        <h3>View Paper Feedback        </h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </p>
+        </td>
+        <td valign="top">
+        <h3>Edit Paper Feedback</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Feedback :
+        <textarea name="giveFeedback" id="giveFeedback" cols="45" rows="5"></textarea>
+        <br />
+        Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+        </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+        </td>
+      </tr>
+    </table>
+
     <p>&nbsp;</p>
+    <p align="center"><h4>${errMsg}</h4></p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>
