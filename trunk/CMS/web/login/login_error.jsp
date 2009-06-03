@@ -1,5 +1,5 @@
 <%-- 
-    Document   : login
+    Document   : login_error
     Group      : 3, Java Team Hunger Force
     Class      : CS575, Spring 2009
 --%>
@@ -40,15 +40,14 @@ body {
   <div id="mainContent">
     <h1> Conference Management System</h1>
     <br>
-        <h3>Failed login. Please check your username/password and try again.</h3>
+        <h3>Failed login. Please check your username and password and try again.</h3>
         <h3>Click the 'Back' button to return to the login screen.</h3>
     <br>
 
      <form action="/LoginRedirectServlet">
-         <input type="submit" value="Return">
+         <input type="submit" value="Back">
      </form>
 
-    <p>Register for a new author account <a href="register.jsp">here</a></p>
   <!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>

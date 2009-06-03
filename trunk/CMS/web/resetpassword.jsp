@@ -1,15 +1,16 @@
 <%-- 
-    Document   : login
+    Document   : resetpassword
     Group      : 3, Java Team Hunger Force
     Class      : CS575, Spring 2009
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Login Page</title>
+<title>CMS - Reset Password</title>
 <style type="text/css">
 <!--
 body {
@@ -38,24 +39,35 @@ body {
 <div id="container">
   <div id="mainContent">
     <h1> Conference Management System</h1>
-    <h2>Login</h2>
-    <form action="j_security_check" method="post">
+    <h2>Reset Password</h2>
+    <form id="form1" name="form1" method="post" action="<c:url value='/ResetPasswordServlet'/>">
+      <p>
       <label>Username
-      <input type="text" name="j_username">
+      <input type="text" name="username" id="username" />
       </label>
+        </p>
         <p>
-          <label>Password
-          <input type="password" name="j_password">
+          <label>Full Name
+          <input type="text" name="fullname" id="fullname" />
           </label>
-      </p>
-      <label>
-          <input type="submit" value="Log In">
-      </label>
+        </p>
+	    <p>
+          <label>E-Mail Address
+          <input type="text" name="eMail" id="eMail" />
+          </label>
+		</p>
+        <p>
+          <input type="submit" name="submit" id="submit" value="Submit" />
+        </p>    
     </form>
-    <p>Authors, register for a new account <a href="register.jsp">here...</a></p>
 
-    <p>Authors, reset your password <a href="resetpassword.jsp">here...</a></p>
-  <!-- end #mainContent --></div>
+    <p>&nbsp;</p>
+    <p align="center"><h4>${resetErrMsg}</h4></p>
+    <form action="<c:url value='/Logout'/>">
+    <p align="center"><h4><font color="black">Click here to return to the login screen: <input type="submit" value="Return"></font></h4></p>
+    </form>
+
+    </div> <!-- end #mainContent -->
 <!-- end #container --></div>
 </body>
 </html>
