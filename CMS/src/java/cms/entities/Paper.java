@@ -1,5 +1,4 @@
 package cms.entities;
-
 import java.io.Serializable;
 
 /*
@@ -10,35 +9,21 @@ import java.io.Serializable;
 
 public class Paper implements Serializable
 {
-    private String name;
-    private String authorName;
-    private String filePath;
-    private String conferenceName;
+    private String paperName;
+    private int conferenceID;
     private String paperAbstract;
     private String paperKeywords;
-
-    public Paper (String n, String a, String fp, String c, String pa, String pk)
+    private String authorName;
+    private String fileName;
+    
+    public Paper (String n, String a, String fp, int c, String pa, String pk)
     {
-        name = n;
+        paperName = n;
         authorName = a;
-        filePath = fp;
-        conferenceName = c;
+        fileName = fp;
+        conferenceID = c;
         paperAbstract = pa;
         paperKeywords = pk;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -53,34 +38,6 @@ public class Paper implements Serializable
      */
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
-    }
-
-    /**
-     * @return the filePath
-     */
-    public String getFilePath() {
-        return filePath;
-    }
-
-    /**
-     * @param filePath the filePath to set
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    /**
-     * @return the conferenceName
-     */
-    public String getConferenceName() {
-        return conferenceName;
-    }
-
-    /**
-     * @param conferenceName the conferenceName to set
-     */
-    public void setConferenceName(String conferenceName) {
-        this.conferenceName = conferenceName;
     }
 
     /**
@@ -109,5 +66,47 @@ public class Paper implements Serializable
      */
     public void setPaperKeywords(String paperKeywords) {
         this.paperKeywords = paperKeywords;
+    }
+
+    /**
+     * @return the paperName
+     */
+    public String getPaperName() {
+        return paperName;
+    }
+
+    /**
+     * @param paperName the paperName to set
+     */
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
+
+    /**
+     * @return the conferenceID
+     */
+    public int getConferenceID() {
+        return conferenceID;
+    }
+
+    /**
+     * @param conferenceID the conferenceID to set
+     */
+    public void setConferenceID(int conferenceID) {
+        this.conferenceID = conferenceID;
+    }
+
+    /**
+     * @return the fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * @param fileName the fileName to set
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

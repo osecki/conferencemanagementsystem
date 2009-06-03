@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
 
 package cms.servlets;
 
@@ -15,12 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Piyush
- */
-public class AdminPortalAssignEditorServlet extends HttpServlet {
-   
+public class AdminPortalAssignEditorServlet extends HttpServlet
+{
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -67,7 +63,6 @@ public class AdminPortalAssignEditorServlet extends HttpServlet {
             session.setAttribute("errMsg",errMsg);
             session.setAttribute("availableEditors", a.getAvailableEditors());
             session.setAttribute("availableConferences", c.getAvailableConferences());
-
 
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));

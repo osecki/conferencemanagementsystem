@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
 
 package cms.servlets;
 
@@ -19,13 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-/**
- *
- * @author Piyush
- */
-public class AdminPortalCreateConferenceServlet extends HttpServlet {
-   
+public class AdminPortalCreateConferenceServlet extends HttpServlet
+{   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request

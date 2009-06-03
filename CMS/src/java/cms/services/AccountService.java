@@ -98,7 +98,7 @@ public class AccountService implements Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean assignReviewer (String editorName, String paperName)
+    public boolean assignReviewer (String reviewerName, String paperName)
     {
         // TODO
         return true;
