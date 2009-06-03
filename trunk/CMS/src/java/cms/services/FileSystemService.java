@@ -1,5 +1,6 @@
 package cms.services;
 import cms.entities.*;
+import cms.data.PaperDB;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -20,8 +21,7 @@ public class FileSystemService implements FileSystem
     */
     public boolean uploadPaper (Paper p)
     {
-        // TODO
-        return true;
+        return PaperDB.addPaper(p);
     }
 
     /*

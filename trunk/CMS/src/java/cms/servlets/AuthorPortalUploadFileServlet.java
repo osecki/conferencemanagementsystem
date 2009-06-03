@@ -1,12 +1,15 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
 
 package cms.servlets;
 
-import cms.services.AccountService;
+import cms.services.FileSystemService;
 import cms.services.ConferenceSystemService;
+import cms.services.AccountService;
+import cms.entities.User;
+import cms.entities.Paper;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,12 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Piyush
- */
-public class AuthorPortalUploadFileServlet extends HttpServlet {
-   
+public class AuthorPortalUploadFileServlet extends HttpServlet
+{   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -31,15 +30,14 @@ public class AuthorPortalUploadFileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
-
-        //TODO: Put an if condition here to check if all variables were filled in, check fileType if PDF. If error, url is calling page, else new servlet.
-
         HttpSession session = request.getSession();
 
         //TODO Replace with dynamic binding
+        FileSystemService fs = new FileSystemService();
+        ConferenceSystemService c = new ConferenceSystemService();
+        AccountService as = new AccountService();
 
         String au_errMsg = null;
-        String url = null;
         boolean badData = false;
 
         try
@@ -56,28 +54,36 @@ public class AuthorPortalUploadFileServlet extends HttpServlet {
             au_errMsg="<font color=\"red\">One or more fields were left blank. "+ request.getParameter("paperName")+" " +request.getParameter("dataFile");
         }
       
-
-
         synchronized(session)
         {
-            session.setAttribute("au_errMsg",au_errMsg);
-            session.setAttribute("paperName",request.getParameter("paperName"));
-            session.setAttribute("dataFile",request.getParameter("dataFile"));
+            session.setAttribute("au_errMsg", au_errMsg);
+            session.setAttribute("paperName", request.getParameter("paperName"));
+            session.setAttribute("dataFile", request.getParameter("dataFile"));
 
-            if(badData)
+            if(!badData)
             {
-                url = "/Author/authorportal.jsp";
+                User tempUser = (User)session.getAttribute("loggedInUser");
+                Paper newPaper = new Paper (request.getParameter("paperName"), tempUser.getUserName(), request.getParameter("dataFile"), c.getConferenceByID(Integer.parseInt(request.getParameter("selectedConference"))).getConferenceID(), "", "" );
+
+                if( fs.uploadPaper(newPaper) )
+                {
+                    au_errMsg = "<font color=\"blue\">Paper successfully uploaded to the server..";
+                }
+                else
+                {
+                    au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
+                }
             }
             else
             {
-                url = "/PaperOCRServlet";
+                au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
             }
         }
 
+        String url = "/Author/authorportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
