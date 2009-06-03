@@ -45,7 +45,7 @@ body {
         <h3>Click the 'Return' button to return to the login screen.</h3>
     <br>
 
-     <form action="/LoginRedirectServlet">
+     <form action="<c:url value='/Logout'/>">
          <input type="submit" value="Return">
      </form>
 
