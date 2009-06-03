@@ -48,6 +48,10 @@
         <servlet-name>ReviewerPortalMainServlet</servlet-name>
         <servlet-class>cms.servlets.ReviewerPortalMainServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditorPortalCreateReviewerServlet</servlet-name>
+        <servlet-class>cms.servlets.EditorPortalCreateReviewerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>ReviewerPortalMainServlet</servlet-name>
         <url-pattern>/ReviewerPortalMainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditorPortalCreateReviewerServlet</servlet-name>
+        <url-pattern>/EditorPortalCreateReviewerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

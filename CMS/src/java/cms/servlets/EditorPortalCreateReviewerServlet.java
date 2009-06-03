@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AdminPortalCreateEditorServlet extends HttpServlet
-{
+public class EditorPortalCreateReviewerServlet extends HttpServlet
+{   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -43,18 +43,18 @@ public class AdminPortalCreateEditorServlet extends HttpServlet
         {
              if(!badData)
              {
-                if(a.createAccount(request.getParameter("userName"), "EDITOR", request.getParameter("fullName"), request.getParameter("emailAddress"), request.getParameter("password")))
+                if(a.createAccount(request.getParameter("userName"), "REVIEWER", request.getParameter("fullName"), request.getParameter("emailAddress"), request.getParameter("password")))
                 {
-                    errMsg = "<font color=\"blue\">New Editor account successfully created.";
+                    errMsg = "<font color=\"blue\">New Reviewer account successfully created.";
                 }
                 else
                 {
-                    errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
+                    errMsg = "<font color=\"red\">There was a problem. Reviewer account could not be created.";
                 }
             }
             else
             {
-                 errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
+                 errMsg = "<font color=\"red\">There was a problem. Reviewer account could not be created.";
             }
 
             session.setAttribute("errMsg",errMsg);
@@ -72,7 +72,7 @@ public class AdminPortalCreateEditorServlet extends HttpServlet
 
         }
 
-        String url = "/Admin/adminportal.jsp";
+        String url = "/Editor/editorportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);

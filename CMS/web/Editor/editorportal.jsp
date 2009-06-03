@@ -46,25 +46,25 @@ body {
       <tr>
         <td>
         <h3>Create Reviewer</h3>
-    <form id="createEditor" name="createEditor" method="post" action="">
+    <form id="createEditor" name="createEditor" method="post" action="<c:url value='/EditorPortalCreateReviewerServlet'/>">
         <p>
-          <label>Student Name
-          <input type="text" name="studentName" id="studentName" />
+          <label>Full Name
+          <input type="text" name="fullName" id="fullName" value="${fullName}"/>
           </label>
      	</p>
         <p>
           <label>Username
-          <input type="text" name="username" id="username" />
+          <input type="text" name="userName" id="username" value="${userName}"/>
           </label>
      	</p>
         <p>
           <label>Initial Password
-          <input type="text" name="password" id="password" />
+          <input type="text" name="password" id="password" value="${password}"/>
           </label>
      	</p>
         <p>
           <label>E-Mail
-          <input type="text" name="eMail" id="eMail" />
+          <input type="text" name="emailAddress" id="eMail" value="${emailAddress}"/>
           </label>
      	</p>
         <p>
