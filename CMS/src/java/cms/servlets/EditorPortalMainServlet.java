@@ -5,8 +5,8 @@
 
 package cms.servlets;
 
-import cms.services.AccountService;
-import cms.services.ConferenceSystemService;
+//import cms.services.AccountService;
+//import cms.services.ConferenceSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AdminPortalMainServlet extends HttpServlet
+public class EditorPortalMainServlet extends HttpServlet
 {
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,17 +28,17 @@ public class AdminPortalMainServlet extends HttpServlet
     throws ServletException, IOException {
 
         //TODO replace with dynamic binding
-        AccountService a = new AccountService();
-        ConferenceSystemService c = new ConferenceSystemService();
+        // a = new AccountService();
+        //ConferenceSystemService c = new ConferenceSystemService();
 
         HttpSession session = request.getSession();
         synchronized(session)
         {
-            session.setAttribute("availableEditors", a.getAvailableEditors());
-            session.setAttribute("availableConferences", c.getAvailableConferences());
+            //session.setAttribute("availableEditors", a.getAvailableEditors());
+            //session.setAttribute("availableConferences", c.getAvailableConferences());
         }
 
-        String url = "/Admin/adminportal.jsp";
+        String url = "/Editor/editorportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);

@@ -40,6 +40,14 @@
         <servlet-name>PaperOCRServlet</servlet-name>
         <servlet-class>cms.servlets.PaperOCRServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditorPortalMainServlet</servlet-name>
+        <servlet-class>cms.servlets.EditorPortalMainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReviewerPortalMainServlet</servlet-name>
+        <servlet-class>cms.servlets.ReviewerPortalMainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>PaperOCRServlet</servlet-name>
         <url-pattern>/PaperOCRServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditorPortalMainServlet</servlet-name>
+        <url-pattern>/EditorPortalMainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewerPortalMainServlet</servlet-name>
+        <url-pattern>/ReviewerPortalMainServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
