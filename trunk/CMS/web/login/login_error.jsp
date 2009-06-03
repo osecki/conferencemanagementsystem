@@ -4,6 +4,7 @@
     Class      : CS575, Spring 2009
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,13 +41,14 @@ body {
   <div id="mainContent">
     <h1> Conference Management System</h1>
     <br>
-        <h3>Failed login. Please check your username and password and try again.</h3>
-        <h3>Click the 'Back' button to return to the login screen.</h3>
+        <h3>Failed login. Please check your username/password and try again.</h3>
+        <h3>Click the 'Return' button to return to the login screen.</h3>
     <br>
 
      <form action="/LoginRedirectServlet">
-         <input type="submit" value="Back">
+         <input type="submit" value="Return">
      </form>
+
 
   <!-- end #mainContent --></div>
 <!-- end #container --></div>
