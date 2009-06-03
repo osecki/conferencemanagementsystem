@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>CMS - Reset Password</title>
+<title>CMS - Author Reset Password</title>
 <style type="text/css">
 <!--
 body {
@@ -40,20 +40,20 @@ body {
   <div id="mainContent">
     <h1> Conference Management System</h1>
     <h2>Reset Password</h2>
-    <form id="form1" name="form1" method="post" action="<c:url value='/ResetPasswordServlet'/>">
+    <form id="form1" name="form1" method="post" action="<c:url value='/ResetPasswordAuthorServlet'/>">
       <p>
       <label>Username
-      <input type="text" name="username" id="username" />
+      <input type="text" name="userName" id="userName" value="${userName}"/>
       </label>
         </p>
         <p>
           <label>Full Name
-          <input type="text" name="fullname" id="fullname" />
+          <input type="text" name="fullName" id="fullName" value="${fullName}"/>
           </label>
         </p>
 	    <p>
           <label>E-Mail Address
-          <input type="text" name="eMail" id="eMail" />
+          <input type="text" name="emailAddress" id="emailAddress" value="${emailAddress}"/>
           </label>
 		</p>
         <p>
