@@ -95,15 +95,20 @@ public class UserPassDB
 
         try
         {
+            //System.out.println(user.getUserName() + "|" + password);
             ps = connection.prepareStatement(preparedQuery);
             ps.setString(1, password);
             ps.setString(2, user.getUserName());
-            return password;
+
+            if ( ps.executeUpdate()==1 )
+                return password;
+            else
+                return "Error";
         }
         catch(SQLException e)
         {
             e.printStackTrace();
-            return null;
+            return "Error";
         }
         finally
         {
@@ -111,5 +116,4 @@ public class UserPassDB
             pool.freeConnection(connection);
         }
     }
-
 }

@@ -5,15 +5,17 @@
 
 package cms.servlets;
 
+import cms.services.AccountService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class PaperOCRServlet extends HttpServlet
-{   
+public class ResetPasswordAuthorServlet extends HttpServlet
+{
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -23,20 +25,50 @@ public class PaperOCRServlet extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PaperOCRServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PaperOCRServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally { 
-            out.close();
+        HttpSession session = request.getSession();
+        String resetErrMsg = null;
+        boolean badData = false;
+
+        // TODO Replace with dynamic binding
+        AccountService a = new AccountService();
+
+        if(request.getParameter("userName").length()==0 || request.getParameter("fullName").length()==0 || request.getParameter("emailAddress").length()==0)
+        {
+            badData = true;
         }
+
+        synchronized(session)
+        {
+            if( ! badData )
+             {
+                String newPass = a.resetPassword(request.getParameter("userName"), request.getParameter("fullName"), request.getParameter("emailAddress"));
+
+                if( ! newPass.equals("Error") )
+                {
+                    resetErrMsg = "<font color=\"blue\">New Author password created. It is '" + newPass + "'.";
+                }
+                else
+                {
+                    resetErrMsg = "<font color=\"red\">There was a problem. Author password could not be reset.";
+                }
+            }
+            else
+            {
+                 resetErrMsg = "<font color=\"red\">There was a problem. Author password could not be reset.";
+            }
+            
+            session.setAttribute("resetErrMsg",resetErrMsg);
+
+            session.setAttribute("fullName", request.getParameter("fullName"));
+            session.setAttribute("userName", request.getParameter("userName"));
+            session.setAttribute("emailAddress", request.getParameter("emailAddress"));
+
+        }
+
+        String url = "/resetpassword.jsp";
+        url = response.encodeURL(url);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request,response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

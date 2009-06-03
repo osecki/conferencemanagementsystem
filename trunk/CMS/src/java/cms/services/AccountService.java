@@ -64,13 +64,17 @@ public class AccountService implements Account
         try
         {
             user = UserDB.checkUser(userName, fullName, emailAddress);
+            String newPass = UserPassDB.setRandomPassword(user);
+
+            if ( newPass.equals("Error"))
+                return "Error";
+            else
+                return newPass;
         }
         catch(NullPointerException e)
         {
-            return null;
+            return "Error";
         }
-        
-        return UserPassDB.setRandomPassword(user);
     }
 
     /*

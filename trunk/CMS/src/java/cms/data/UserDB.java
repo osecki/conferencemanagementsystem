@@ -109,7 +109,7 @@ public class UserDB
             if(rs.next())
             {
                 user.setUsername(rs.getString(1));
-                user.setUserType(rs.getString(1));
+                user.setUserType(rs.getString(2));
                 user.setFullName(rs.getString(3));
                 user.setEmailAddress(rs.getString(4));
             }
