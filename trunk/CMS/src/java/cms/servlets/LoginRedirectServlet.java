@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
 
 package cms.servlets;
 
@@ -15,12 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Piyush
- */
-public class LoginRedirectServlet extends HttpServlet {
-
+public class LoginRedirectServlet extends HttpServlet
+{
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -50,13 +46,12 @@ public class LoginRedirectServlet extends HttpServlet {
         }
         else if((loggedInUser.getUserType().equalsIgnoreCase("Editor")))
         {
-            url = "/Editor/editorportal.jsp";
+            url = "/EditorPortalMainServlet";
         }
         else if((loggedInUser.getUserType().equalsIgnoreCase("Reviewer")))
         {
-            url = "/Reviewer/reviewerportal.jsp";
+            url = "/ReviewerPortalMainServlet";
         }
-
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);
