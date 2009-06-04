@@ -39,7 +39,7 @@ body {
 <div id="container">
   <div id="mainContent">
     <h1> Conference Management System</h1>
-    <h2>Editor Portal</h2>
+    <h2>Editor Portal - ${getConferenceName}</h2>
     <h3><a href="<c:url value='/Logout'/>"><font color="red">Logout</font></a></h3>
 
     <table width="100%" border="0">
@@ -77,11 +77,11 @@ body {
         <td valign="top">
 
         <h3>Match Papers and Reviewers</h3>
-        <form id="assign" name="assign" method="post" action="">
+        <form id="assign" name="assign" method="post" action="<c:url value='/EditorPortalAssignReviewerServlet'/>">
         <label>Paper:
             <select name="selectedPapers">
             <c:forEach var="currPaper" items="${papersFromConference}">
-                <option value="${currPaper["keyValue"].paperID}">${currPaper["keyValue"].paperName}</option>
+                <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
             </c:forEach>
             </select>
 
@@ -101,47 +101,12 @@ body {
         </p>
         
         <h3>Release Papers With Feedback</h3>
-                <form id="assign" name="assign" method="post" action="">
+                <form id="assign" name="assign" method="post" action="<c:url value='/EditorPortalReleasePaperServlet'/>">
         <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-
-        </td>
-      </tr>
-      <tr>
-        <td valign="top">
-
-            <h3>View Conference Papers</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-
-        
-        </td>
-        <td valign="top">
-        <h3>View Papers With Feedback</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
+            <select name="selectedPapers2">
+            <c:forEach var="currPaper" items="${papersFromConference}">
+                <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
+            </c:forEach>
             </select>
             </label>
             <br />
@@ -151,6 +116,32 @@ body {
           </form>
         </td>
       </tr>
+    </table>
+
+    <h3>View Conference Papers and their Current Reviewers</h3>
+
+    <table width="100%" border="0">
+    <tr>
+            <td>Paper Name</td>
+            <td>Paper Author</td>
+            <td>File Name</td>
+    </tr>
+
+    <c:forEach var="currPaper" items="${papersFromConference}">
+    <tr>
+         <td>${currPaper.key.paperName}</td>
+         <td>${currPaper.key.authorName}</td>
+         <td><form id="assign" name="assign" method="post" action="<c:url value='/DownloadPaperServlet'/>"><input type="hidden" name="paperID" value="${currPaper.key.paperID}"><input type="submit" name="submit" id="submit" value="Download" /></form></td>
+    </tr>
+
+        <c:forEach var="currFeedback" items="${currPaper.value}">
+                <tr colspan="3".
+                <td>${currFeedback.reviewerName} is currently reviewing this.</td>
+                </tr>
+        </c:forEach>
+
+    </c:forEach>
+
     </table>
 
     <p>&nbsp;</p>

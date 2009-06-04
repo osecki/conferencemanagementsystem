@@ -56,6 +56,18 @@
         <servlet-name>ResetPasswordAuthorServlet</servlet-name>
         <servlet-class>cms.servlets.ResetPasswordAuthorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditorPortalAssignReviewerServlet</servlet-name>
+        <servlet-class>cms.servlets.EditorPortalAssignReviewerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditorPortalReleasePaperServlet</servlet-name>
+        <servlet-class>cms.servlets.EditorPortalReleasePaperServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DownloadPaperServlet</servlet-name>
+        <servlet-class>cms.servlets.DownloadPaperServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -111,6 +123,18 @@
     <servlet-mapping>
         <servlet-name>ResetPasswordAuthorServlet</servlet-name>
         <url-pattern>/ResetPasswordAuthorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditorPortalAssignReviewerServlet</servlet-name>
+        <url-pattern>/EditorPortalAssignReviewerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditorPortalReleasePaperServlet</servlet-name>
+        <url-pattern>/EditorPortalReleasePaperServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadPaperServlet</servlet-name>
+        <url-pattern>/DownloadPaperServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
