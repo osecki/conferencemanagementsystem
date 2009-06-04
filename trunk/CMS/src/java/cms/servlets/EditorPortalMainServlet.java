@@ -5,8 +5,10 @@
 
 package cms.servlets;
 
-//import cms.services.AccountService;
-//import cms.services.ConferenceSystemService;
+import cms.data.ConferenceDB;
+import cms.entities.User;
+import cms.services.ListPaperService;
+import cms.services.AccountService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,14 +30,15 @@ public class EditorPortalMainServlet extends HttpServlet
     throws ServletException, IOException {
 
         //TODO replace with dynamic binding
-        // a = new AccountService();
-        //ConferenceSystemService c = new ConferenceSystemService();
+        AccountService a = new AccountService();
+        ListPaperService lp = new ListPaperService();
 
         HttpSession session = request.getSession();
         synchronized(session)
         {
-            //session.setAttribute("availableEditors", a.getAvailableEditors());
-            //session.setAttribute("availableConferences", c.getAvailableConferences());
+            String editorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 0));
+            session.setAttribute("getReviewers", a.getReviewers());
         }
 
         String url = "/Editor/editorportal.jsp";

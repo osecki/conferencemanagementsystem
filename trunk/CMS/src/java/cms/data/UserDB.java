@@ -86,6 +86,48 @@ public class UserDB
         }
     }
 
+    public static ArrayList<User> getReviewers ()
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM User U WHERE UserTypeName='REVIEWER'";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            ArrayList<User> users = new ArrayList<User>();
+            while (rs.next())
+            {
+                //Create a User object
+                User user = new User();
+
+                user.setUsername(rs.getString(1));
+                user.setUserType(rs.getString(2));
+                user.setFullName(rs.getString(3));
+                user.setEmailAddress(rs.getString(4));
+
+                users.add(user);
+            }
+            return users;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
     public static User checkUser(String userName, String fullName, String emailAddress)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
