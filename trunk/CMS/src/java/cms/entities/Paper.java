@@ -1,4 +1,5 @@
 package cms.entities;
+import java.io.InputStream;
 import java.io.Serializable;
 
 /*
@@ -15,8 +16,10 @@ public class Paper implements Serializable
     private String paperKeywords;
     private String authorName;
     private String fileName;
+    private InputStream inputStream;
+    private int sizeInBytes;
     
-    public Paper (String n, String a, String fp, int c, String pa, String pk)
+    public Paper (String n, String a, String fp, int c, String pa, String pk, InputStream i, int size)
     {
         paperName = n;
         authorName = a;
@@ -24,6 +27,8 @@ public class Paper implements Serializable
         conferenceID = c;
         paperAbstract = pa;
         paperKeywords = pk;
+        inputStream = i;
+        sizeInBytes = size;
     }
 
     /**
@@ -108,5 +113,30 @@ public class Paper implements Serializable
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    /**
+     * @return the is
+     */
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream is) {
+        inputStream = is;
+    }
+
+    /**
+     * @return the sizeInBytes
+     */
+    public int getSizeInBytes() {
+        return sizeInBytes;
+    }
+
+    /**
+     * @param sizeInBytes the sizeInBytes to set
+     */
+    public void setSizeInBytes(int sizeInBytes) {
+        this.sizeInBytes = sizeInBytes;
     }
 }
