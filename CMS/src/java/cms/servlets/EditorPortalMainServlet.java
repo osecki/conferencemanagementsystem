@@ -6,7 +6,6 @@
 package cms.servlets;
 
 import cms.data.ConferenceDB;
-import cms.entities.Paper;
 import cms.entities.User;
 import cms.services.ListPaperService;
 import cms.services.AccountService;
@@ -30,7 +29,7 @@ public class EditorPortalMainServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        //TODO replace with dynamic binding
+        // TODO replace with dynamic binding
         AccountService a = new AccountService();
         ListPaperService lp = new ListPaperService();
 
@@ -39,13 +38,6 @@ public class EditorPortalMainServlet extends HttpServlet
         {
             String editorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
             session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 1));
-
-            Paper p = new Paper();
-            p.setPaperID(1);
-            p.setPaperName("Regli Paper");
-
-            System.out.println(lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 1).get(p).size() + "YO HERE");
-
             session.setAttribute("getReviewers", a.getReviewers());
             session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
         }

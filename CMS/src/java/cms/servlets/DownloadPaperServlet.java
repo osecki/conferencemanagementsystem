@@ -83,16 +83,16 @@ public class DownloadPaperServlet extends HttpServlet
 
 
 
-            String editorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
-            session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 1));
-            session.setAttribute("getReviewers", a.getReviewers());
-            session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
+            //String editorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            //session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 1));
+            //session.setAttribute("getReviewers", a.getReviewers());
+            //session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
         }
 
-        String url = "/Editor/editorportal.jsp";
-        url = response.encodeURL(url);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request,response);
+        //String url = "/Editor/editorportal.jsp";
+        //url = response.encodeURL(url);
+        //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        //dispatcher.forward(request,response);
     }
 
     private static void close(Closeable resource) {
