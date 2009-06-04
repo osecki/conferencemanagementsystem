@@ -70,7 +70,7 @@ public class PaperDB
         ResultSet rs = null;
         Paper paper = new Paper();
 
-        String query = "SELECT * FROM User WHERE PaperName = ?";
+        String query = "SELECT * FROM Paper WHERE PaperName = ?";
 
         try
         {
@@ -141,7 +141,7 @@ public class PaperDB
         ResultSet rs = null;
         Paper paper = new Paper();
 
-        String query = "SELECT * FROM User WHERE PaperID = ?";
+        String query = "SELECT * FROM Paper WHERE PaperID = ?";
 
         try
         {
