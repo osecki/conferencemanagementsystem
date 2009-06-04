@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>CMS - Eidtor Portal</title>
+<title>CMS - Editor Portal</title>
 <style type="text/css">
 <!--
 body {
@@ -71,38 +71,27 @@ body {
           <input type="submit" name="submit" id="submit" value="Submit" />
         </p>
     </form>
+
+    <p>&nbsp;</p>
         </td>
         <td valign="top">
-        <h3>View Conference Papers</h3>
+
+        <h3>Match Papers and Reviewers</h3>
         <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
+        <label>Paper:
+            <select name="selectedPapers">
+            <c:forEach var="currPaper" items="${papersFromConference}">
+                <option value="${currPaper["keyValue"].paperID}">${currPaper["keyValue"].paperName}</option>
+            </c:forEach>
             </select>
+
             </label>
             <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </td>
-      </tr>
-      <tr>
-        <td valign="top">
-        <h3>Match Papers &amp; Reviewers</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-            <label>Conference :
-            <select name="reviewers">
-            <option value="robinson">Robinson, Uri</option>
-            <option value="osecki">Osecki, Jordan</option>
+            <label>Reviewers:
+            <select name="selectedReviewers">
+            <c:forEach var="currReviewer" items="${getReviewers}">
+                <option value="${currReviewer.userName}">${currReviewer.fullName}</option>
+            </c:forEach>
             </select>
             </label>
 	        <p>
@@ -110,6 +99,41 @@ body {
 	        </p>
           </form>
         </p>
+        
+        <h3>Release Papers With Feedback</h3>
+                <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+
+            <h3>View Conference Papers</h3>
+        <form id="assign" name="assign" method="post" action="">
+        <label>Paper :
+            <select name="papers">
+            <option value="paper1">Paper 1</option>
+            <option value="paper2">Paper 2</option>
+            </select>
+            </label>
+            <br />
+	        <p>
+	          <input type="submit" name="submit" id="submit" value="Submit" />
+	        </p>
+          </form>
+
+        
         </td>
         <td valign="top">
         <h3>View Papers With Feedback</h3>
@@ -126,24 +150,6 @@ body {
 	        </p>
           </form>
         </td>
-      </tr>
-      <tr>
-        <td>
-        <h3>Release Papers With Feedback</h3>
-                <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </td>
-        <td>&nbsp;</td>
       </tr>
     </table>
 

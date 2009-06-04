@@ -62,54 +62,44 @@ body {
         <td width="50%" valign="top">
         <h3>Submit Feedback For Paper</h3>
         <form id="assign" name="assign" method="post" action="">
-        <p>Content: <br />
-          <input type="radio" name="cRanking" id="veryBad" value="1" />
-          1
-          <input type="radio" name="cRanking" id="bad" value="2" />
-          2
-          <input type="radio" name="rRanking" id="okay" value="3" />
-          3
-          <input type="radio" name="cRanking" id="good" value="4" />
-          4
-          <input type="radio" name="cRanking" id="veryGood" value="5" />
-          5</p>
-        <p>Innovation: <br />
-            <input type="radio" name="iRanking" id="veryBad" value="1" />
-          1
-          <input type="radio" name="iRanking" id="bad" value="2" />
-          2
-          <input type="radio" name="iRanking" id="okay" value="3" />
-          3
-          <input type="radio" name="iRanking" id="good" value="4" />
-          4
-          <input type="radio" name="iRanking" id="veryGood" value="5" />
-          5</p>
-        <p>Quality: <br />
-            <input type="radio" name="qRanking" id="veryBad" value="1" />
-          1
-          <input type="radio" name="qRranking" id="bad" value="2" />
-          2
-          <input type="radio" name="qRanking" id="okay" value="3" />
-          3
-          <input type="radio" name="qRanking" id="good" value="4" />
-          4
-          <input type="radio" name="qRanking" id="veryGood" value="5" />
-          5</p>
-          <p>Depth: <br />
-            <input type="radio" name="dRanking" id="veryBad" value="1" />
-          1
-          <input type="radio" name="dRanking" id="bad" value="2" />
-          2
-          <input type="radio" name="dRanking" id="okay" value="3" />
-          3
-          <input type="radio" name="dRanking" id="good" value="4" />
-          4
-          <input type="radio" name="dRanking" id="veryGood" value="5" />
-          5</p>
-        <label>Feedback :
-        <textarea name="giveFeedback" id="giveFeedback" cols="45" rows="5"></textarea>
+        <p>Content: 
+          <select name="content">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        Innovation: 
+          <select name="innovative">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        </p>
+        <p>Quality: 
+          <select name="quality">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        Depth:
+          <select name="depth">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        </p>
+        <label>Comments:
+        <textarea name="commentBox" id="commentBox" cols="45" rows="5"></textarea>
         <br />
-        Paper :
+        Paper:
             <select name="papers">
             <option value="paper1">Paper 1</option>
             <option value="paper2">Paper 2</option>
@@ -142,10 +132,44 @@ body {
         <td valign="top">
         <h3>Edit Paper Feedback</h3>
         <form id="assign" name="assign" method="post" action="">
-        <label>Feedback :
-        <textarea name="giveFeedback" id="giveFeedback" cols="45" rows="5"></textarea>
+        <p>Content:
+          <select name="content">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        Innovation:
+          <select name="innovative">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        </p>
+        <p>Quality:
+          <select name="quality">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        Depth:
+          <select name="depth">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="2">3</option>
+            <option value="2">4</option>
+            <option value="2">5</option>
+          </select>
+        </p>
+        <label>Comments:
+        <textarea name="commentBox" id="commentBox" cols="45" rows="5"></textarea>
         <br />
-        Paper :
+        Paper:
             <select name="papers">
             <option value="paper1">Paper 1</option>
             <option value="paper2">Paper 2</option>

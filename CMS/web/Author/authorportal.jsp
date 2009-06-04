@@ -49,7 +49,7 @@ body {
     <tr>
         <td colspan="2">
             <h3>Upload Paper</h3>
-            <form action="<c:url value='/AuthorPortalUploadFileServlet'/>" method="post">
+            <form enctype="multipart/form-data" action="<c:url value='/AuthorPortalUploadFileServlet'/>" method="post">
                 <table>
                     <tr>
                         <td width="25%">Paper Name</td>
@@ -68,9 +68,6 @@ body {
                         </td>
                         <td width="25%"><input type="file" name="dataFile" size="40" value="${dataFile}"></td>
                         <td width="25%"><input type="submit" value="Upload"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"><p>${au_errMsg}</p></td>
                     </tr>
                 </table>
             </form>
@@ -114,7 +111,7 @@ body {
     </table>
 
     <p>&nbsp;</p>
-    <p align="center"><h4>${errMsg}</h4></p>
+    <p align="center"><h4>${au_errMsg}</h4></p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>
