@@ -36,14 +36,14 @@ public class PaperDB
             ps.setString(3, paper.getPaperAbstract());
             ps.setString(4, paper.getPaperKeywords());
 
-            File file = new File(paper.getFileName());
+            //File file = paper.getInputFile();
             InputStream inputStream;
 
             try {
-                inputStream = new FileInputStream(file);
-                ps.setBinaryStream(5, inputStream, (int)(file.length()));
-                ps.setInt(6, (int)file.length());
-            } catch (FileNotFoundException ex) {
+                inputStream = paper.getInputStream();
+                ps.setBinaryStream(5, inputStream, (int)(paper.getSizeInBytes()));
+                ps.setInt(6, (int)paper.getSizeInBytes());
+            } catch (Exception ex) {
                 Logger.getLogger(PaperDB.class.getName()).log(Level.SEVERE, null, ex);
             }
             

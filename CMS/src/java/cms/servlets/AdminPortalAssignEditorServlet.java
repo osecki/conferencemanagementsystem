@@ -26,7 +26,7 @@ public class AdminPortalAssignEditorServlet extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String errMsg = null;
 
         //TODO Replace with dynamic binding
@@ -60,7 +60,7 @@ public class AdminPortalAssignEditorServlet extends HttpServlet
                 errMsg = "<font color=\"red\">There was a problem with the selection of Editor/Conference.";
             }
 
-            session.setAttribute("errMsg",errMsg);
+            session.setAttribute("errMsg", errMsg);
             session.setAttribute("availableEditors", a.getAvailableEditors());
             session.setAttribute("availableConferences", c.getAvailableConferences());
 
