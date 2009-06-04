@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class Paper implements Serializable
 {
+    private int paperID;
     private String paperName;
     private int conferenceID;
     private String paperAbstract;
@@ -18,7 +19,12 @@ public class Paper implements Serializable
     private String fileName;
     private InputStream inputStream;
     private int sizeInBytes;
-    
+
+    public Paper ()
+    {
+        
+    }
+
     public Paper (String n, String a, String fp, int c, String pa, String pk, InputStream i, int size)
     {
         paperName = n;
@@ -138,5 +144,19 @@ public class Paper implements Serializable
      */
     public void setSizeInBytes(int sizeInBytes) {
         this.sizeInBytes = sizeInBytes;
+    }
+
+    /**
+     * @return the paperID
+     */
+    public int getPaperID() {
+        return paperID;
+    }
+
+    /**
+     * @param paperID the paperID to set
+     */
+    public void setPaperID(int paperID) {
+        this.paperID = paperID;
     }
 }

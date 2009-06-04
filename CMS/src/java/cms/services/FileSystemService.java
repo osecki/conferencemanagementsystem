@@ -34,7 +34,6 @@ public class FileSystemService implements FileSystem
     */
     public Paper downloadPaper (String paperName)
     {
-        // TODO
-        return null;
+        return PaperDB.getPaper(paperName);
     }
 }

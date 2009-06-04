@@ -24,16 +24,34 @@ public class ConferenceSystemService implements ConferenceSystem
         return ConferenceDB.addConference(c);
     }
 
+    /*
+     * Method:  getAvailableConferences
+     * Input:  None
+     * Output:  Arraylist of Conferences
+     * Algorithm:  The method will return an arraylist of available conferences
+    */
     public ArrayList<Conference> getAvailableConferences()
     {
         return ConferenceDB.getAvailableConferences();
     }
 
+    /*
+     * Method:  getAllConferences
+     * Input:  None
+     * Output:  Arraylist of Conferences
+     * Algorithm:  The method will return an arraylist of all conferences
+    */
     public ArrayList<Conference> getAllConferences()
     {
         return ConferenceDB.getAllConferences();
     }
 
+    /*
+     * Method:  getConferenceByID
+     * Input:  ConferenceID
+     * Output:  Conference objecct
+     * Algorithm:  The method will take in an id and return a Conference object
+    */
     public Conference getConferenceByID(int conferenceID)
     {
         return ConferenceDB.getConference(conferenceID);

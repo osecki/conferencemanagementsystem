@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 public class Feedback implements Serializable
 {
-    private String paperName;
+    private int feedbackID;
+    private int paperID;
     private String reviewerName;
     private int contentRate;
     private int innovativeRate;
@@ -18,9 +19,14 @@ public class Feedback implements Serializable
     private int depthRate;
     private String commentsBox;
 
-    public Feedback (String pn, String rn, int cr, int ir, int qr, int dr, String cb)
+    public Feedback ()
     {
-        paperName = pn;
+        
+    }
+
+    public Feedback (int pn, String rn, int cr, int ir, int qr, int dr, String cb)
+    {
+        paperID = pn;
         reviewerName = rn;
         contentRate = cr;
         innovativeRate = ir;
@@ -32,15 +38,15 @@ public class Feedback implements Serializable
     /**
      * @return the paperName
      */
-    public String getPaperName() {
-        return paperName;
+    public int getPaperID() {
+        return paperID;
     }
 
     /**
      * @param paperName the paperName to set
      */
-    public void setPaperName(String paperName) {
-        this.paperName = paperName;
+    public void setPaperID(int paperID) {
+        this.paperID = paperID;
     }
 
     /**
@@ -125,5 +131,19 @@ public class Feedback implements Serializable
      */
     public void setCommentsBox(String commentsBox) {
         this.commentsBox = commentsBox;
+    }
+
+    /**
+     * @return the feedbackID
+     */
+    public int getFeedbackID() {
+        return feedbackID;
+    }
+
+    /**
+     * @param feedbackID the feedbackID to set
+     */
+    public void setFeedbackID(int feedbackID) {
+        this.feedbackID = feedbackID;
     }
 }

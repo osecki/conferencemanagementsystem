@@ -4,18 +4,14 @@
 */
 
 package cms.data;
-import cms.entities.Conference;
 import cms.entities.Paper;
-import cms.entities.User;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import cms.entities.Feedback;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class PaperDB
 {
@@ -64,32 +60,35 @@ public class PaperDB
         }
     }
 
-    public static Conference getConference(int conferenceID)
+    public static Paper getPaper(String paperName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Conference conference = new Conference();
+        Paper paper = new Paper();
 
-        String query = "SELECT * FROM Conference WHERE ConferenceID = ?";
+        String query = "SELECT * FROM User WHERE PaperName = ?";
 
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setInt(1,conferenceID);
+            ps.setString(1, paperName);
             rs = ps.executeQuery();
 
             if(rs.next())
             {
-                conference.setConferenceID(rs.getInt(1));
-                conference.setName(rs.getString(2));
-                conference.setLocation(rs.getString(3));
-                conference.setEventDate(rs.getDate(4));
-                conference.setDueDate(rs.getDate(5));
-                conference.setEditor(UserDB.getUser(rs.getString(6)));
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConferenceID(rs.getInt(3));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
             }
-            return conference;
+            return paper;
         }
         catch(SQLException e)
         {
@@ -104,110 +103,146 @@ public class PaperDB
         }
     }
 
-    public static int getLastConferenceID()
+    public static HashMap<Paper, Feedback> getListForConference(String conferenceName, int feedbackFlag)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int i = 1;
 
-        String query = "SELECT MAX(ConferenceID) FROM Conference";
-
-        try
+        if ( feedbackFlag == 1)
         {
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
+            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
 
-            if(rs.next())
+            try
             {
-                i = rs.getInt(1);
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, ConferenceDB.getConference(conferenceName).getConferenceID());
+                rs = ps.executeQuery();
+                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                while (rs.next())
+                {
+                    Paper paper = new Paper();
+                    paper.setPaperID(rs.getInt(1));
+                    paper.setPaperName(rs.getString(2));
+                    paper.setConferenceID(rs.getInt(3));
+                    paper.setPaperAbstract(rs.getString(4));
+                    paper.setPaperKeywords(rs.getString(5));
+                    paper.setInputStream(rs.getBinaryStream(6));
+                    paper.setSizeInBytes(rs.getInt(7));
+                    paper.setAuthorName(rs.getString(8));
+                    paper.setFileName(rs.getString(9));
+
+                    Feedback feedback = new Feedback();
+                    feedback.setFeedbackID(rs.getInt(1));
+                    feedback.setPaperID(rs.getInt(2));
+                    feedback.setReviewerName(rs.getString(3));
+                    feedback.setContentRate(rs.getInt(4));
+                    feedback.setInnovativeRate(rs.getInt(5));
+                    feedback.setQualityRate(rs.getInt(6));
+                    feedback.setDepthRate(rs.getInt(7));
+                    feedback.setCommentsBox(rs.getString(8));
+
+                    map.put(paper, feedback);
+                }
+                return map;
             }
-            return i;
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+
+            finally
+            {
+                DBUtil.closeResultSet(rs);
+                DBUtil.closePreparedStatement(ps);
+                pool.freeConnection(connection);
+            }
         }
-        catch(SQLException e)
+        else
         {
-            e.printStackTrace();
-            return 0;
-        }
-        finally
-        {
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            pool.freeConnection(connection);
+            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
+
+            try
+            {
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, ConferenceDB.getConference(conferenceName).getConferenceID());
+                rs = ps.executeQuery();
+                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                while (rs.next())
+                {
+                    Paper paper = new Paper();
+                    paper.setPaperID(rs.getInt(1));
+                    paper.setPaperName(rs.getString(2));
+                    paper.setConferenceID(rs.getInt(3));
+                    paper.setPaperAbstract(rs.getString(4));
+                    paper.setPaperKeywords(rs.getString(5));
+                    paper.setInputStream(rs.getBinaryStream(6));
+                    paper.setSizeInBytes(rs.getInt(7));
+                    paper.setAuthorName(rs.getString(8));
+                    paper.setFileName(rs.getString(9));
+
+                    map.put(paper, null);
+                }
+                return map;
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+
+            finally
+            {
+                DBUtil.closeResultSet(rs);
+                DBUtil.closePreparedStatement(ps);
+                pool.freeConnection(connection);
+            }
         }
     }
 
-
-    public static Conference getConference(String conferenceName)
-    {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Conference conference = new Conference();
-
-        String query = "SELECT * FROM Conference WHERE ConferenceName = ?";
-
-        try
-        {
-            ps = connection.prepareStatement(query);
-            ps.setString(1,conferenceName);
-            rs = ps.executeQuery();
-
-            if(rs.next())
-            {
-                conference.setName(rs.getString(2));
-                conference.setLocation(rs.getString(3));
-                conference.setEventDate(rs.getDate(4));
-                conference.setDueDate(rs.getDate(5));
-                conference.setEditor(UserDB.getUser(rs.getString(6)));
-            }
-            return conference;
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        finally
-        {
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            pool.freeConnection(connection);
-        }
-    }
-
-    
-
-
-    public static ArrayList<Conference> getAvailableConferences()
+    public static HashMap<Paper, Feedback> getListForReviewer(String reviewerName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM Conference WHERE EditorUserName is null";
+        String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ?";
 
         try
         {
             ps = connection.prepareStatement(query);
+            ps.setString(1, reviewerName);
             rs = ps.executeQuery();
-            ArrayList<Conference> conferences = new ArrayList<Conference>();
+            HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
             while (rs.next())
             {
-                Conference conference = new Conference();
-                conference.setConferenceID(rs.getInt(1));
-                conference.setName(rs.getString(2));
-                conference.setLocation(rs.getString(3));
-                conference.setEventDate(rs.getDate(4));
-                conference.setDueDate(rs.getDate(5));
-//                conference.setEditor(UserDB.getUser(rs.getString(6)));
+                Paper paper = new Paper();
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConferenceID(rs.getInt(3));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
 
-                conferences.add(conference);
+                Feedback feedback = new Feedback();
+                feedback.setFeedbackID(rs.getInt(1));
+                feedback.setPaperID(rs.getInt(2));
+                feedback.setReviewerName(rs.getString(3));
+                feedback.setContentRate(rs.getInt(4));
+                feedback.setInnovativeRate(rs.getInt(5));
+                feedback.setQualityRate(rs.getInt(6));
+                feedback.setDepthRate(rs.getInt(7));
+                feedback.setCommentsBox(rs.getString(8));
+
+                map.put(paper, feedback);
             }
-            return conferences;
+            return map;
         }
         catch(SQLException e)
         {
@@ -221,51 +256,104 @@ public class PaperDB
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
-
     }
 
-    public static ArrayList<Conference> getAllConferences()
+    public static HashMap<Paper, Feedback> getListForAuthor (String authorName, int feedbackFlag)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        //TODO Apply logic for Date here: Author can upload only til a certain date
-        String query = "SELECT * FROM Conference";
-
-        try
+        if ( feedbackFlag == 1)
         {
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<Conference> conferences = new ArrayList<Conference>();
-            while (rs.next())
+            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
+
+            try
             {
-                Conference conference = new Conference();
-                conference.setConferenceID(rs.getInt(1));
-                conference.setName(rs.getString(2));
-                conference.setLocation(rs.getString(3));
-                conference.setEventDate(rs.getDate(4));
-                conference.setDueDate(rs.getDate(5));
-//                conference.setEditor(UserDB.getUser(rs.getString(6)));
+                ps = connection.prepareStatement(query);
+                ps.setString(1, authorName);
+                rs = ps.executeQuery();
+                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                while (rs.next())
+                {
+                    Paper paper = new Paper();
+                    paper.setPaperID(rs.getInt(1));
+                    paper.setPaperName(rs.getString(2));
+                    paper.setConferenceID(rs.getInt(3));
+                    paper.setPaperAbstract(rs.getString(4));
+                    paper.setPaperKeywords(rs.getString(5));
+                    paper.setInputStream(rs.getBinaryStream(6));
+                    paper.setSizeInBytes(rs.getInt(7));
+                    paper.setAuthorName(rs.getString(8));
+                    paper.setFileName(rs.getString(9));
 
-                conferences.add(conference);
+                    Feedback feedback = new Feedback();
+                    feedback.setFeedbackID(rs.getInt(1));
+                    feedback.setPaperID(rs.getInt(2));
+                    feedback.setReviewerName(rs.getString(3));
+                    feedback.setContentRate(rs.getInt(4));
+                    feedback.setInnovativeRate(rs.getInt(5));
+                    feedback.setQualityRate(rs.getInt(6));
+                    feedback.setDepthRate(rs.getInt(7));
+                    feedback.setCommentsBox(rs.getString(8));
+
+                    map.put(paper, feedback);
+                }
+                return map;
             }
-            return conferences;
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
 
-        finally
-        {
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            pool.freeConnection(connection);
+            finally
+            {
+                DBUtil.closeResultSet(rs);
+                DBUtil.closePreparedStatement(ps);
+                pool.freeConnection(connection);
+            }
         }
+        else
+        {
+            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
 
+            try
+            {
+                ps = connection.prepareStatement(query);
+                ps.setString(1, authorName);
+                rs = ps.executeQuery();
+                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                while (rs.next())
+                {
+                    Paper paper = new Paper();
+                    paper.setPaperID(rs.getInt(1));
+                    paper.setPaperName(rs.getString(2));
+                    paper.setConferenceID(rs.getInt(3));
+                    paper.setPaperAbstract(rs.getString(4));
+                    paper.setPaperKeywords(rs.getString(5));
+                    paper.setInputStream(rs.getBinaryStream(6));
+                    paper.setSizeInBytes(rs.getInt(7));
+                    paper.setAuthorName(rs.getString(8));
+                    paper.setFileName(rs.getString(9));
+
+                    map.put(paper, null);
+                }
+                return map;
+            }
+            catch(SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+
+            finally
+            {
+                DBUtil.closeResultSet(rs);
+                DBUtil.closePreparedStatement(ps);
+                pool.freeConnection(connection);
+            }
+        }
     }
-
 }

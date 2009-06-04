@@ -41,8 +41,6 @@ public class Conference implements Serializable
         this.conferenceID = conferenceID;
     }
 
-
-
     /**
      * @return the name
      */
