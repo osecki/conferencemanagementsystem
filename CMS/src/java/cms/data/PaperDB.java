@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,7 @@ public class PaperDB
         PreparedStatement ps = null;
         String preparedQuery;
 
-        preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName, seeFeedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try
         {
@@ -45,6 +46,7 @@ public class PaperDB
             
             ps.setString(7, paper.getAuthorName());
             ps.setString(8, paper.getFileName());
+            ps.setInt(9, 0);
 
             return ps.executeUpdate()==1;
         }
@@ -103,7 +105,78 @@ public class PaperDB
         }
     }
 
-    public static HashMap<Paper, Feedback> getListForConference(String conferenceName, int feedbackFlag)
+    public static boolean releaseToAuthor (int paperID)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        String preparedQuery;
+
+        preparedQuery = "UPDATE paper SET seeFeedback = ? WHERE PaperID = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(preparedQuery);
+            ps.setInt(1, 1);
+            ps.setInt(2, paperID);
+            return ps.executeUpdate()==1;
+        }
+         catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static Paper downloadPaper(int paperID)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Paper paper = new Paper();
+
+        String query = "SELECT * FROM User WHERE PaperID = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, paperID);
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConferenceID(rs.getInt(3));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
+            }
+            return paper;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static HashMap<Paper, Vector<Feedback>> getListForConference(String conferenceName, int feedbackFlag)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -112,14 +185,16 @@ public class PaperDB
 
         if ( feedbackFlag == 1)
         {
-            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
+            String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
 
             try
             {
+                System.out.println("Conference Name:  " + conferenceName);
+                System.out.println("Selected Conference - " + ConferenceDB.getConference(conferenceName).getConferenceID());
                 ps = connection.prepareStatement(query);
                 ps.setInt(1, ConferenceDB.getConference(conferenceName).getConferenceID());
                 rs = ps.executeQuery();
-                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
                 while (rs.next())
                 {
                     Paper paper = new Paper();
@@ -134,16 +209,27 @@ public class PaperDB
                     paper.setFileName(rs.getString(9));
 
                     Feedback feedback = new Feedback();
-                    feedback.setFeedbackID(rs.getInt(1));
-                    feedback.setPaperID(rs.getInt(2));
-                    feedback.setReviewerName(rs.getString(3));
-                    feedback.setContentRate(rs.getInt(4));
-                    feedback.setInnovativeRate(rs.getInt(5));
-                    feedback.setQualityRate(rs.getInt(6));
-                    feedback.setDepthRate(rs.getInt(7));
-                    feedback.setCommentsBox(rs.getString(8));
+                    feedback.setFeedbackID(rs.getInt(11));
+                    feedback.setPaperID(rs.getInt(12));
+                    feedback.setReviewerName(rs.getString(13));
+                    feedback.setContentRate(rs.getInt(14));
+                    feedback.setInnovativeRate(rs.getInt(15));
+                    feedback.setQualityRate(rs.getInt(16));
+                    feedback.setDepthRate(rs.getInt(17));
+                    feedback.setCommentsBox(rs.getString(18));
 
-                    map.put(paper, feedback);
+                    if ( map.containsKey(paper) )
+                    {
+                        Vector<Feedback> tempValue = map.get(paper);
+                        tempValue.add(feedback);
+                        map.put(paper, tempValue);
+                    }
+                    else
+                    {
+                        Vector<Feedback> tempValue = new Vector<Feedback> ();
+                        tempValue.add(feedback);
+                        map.put(paper, tempValue);
+                    }
                 }
                 return map;
             }
@@ -162,14 +248,14 @@ public class PaperDB
         }
         else
         {
-            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
+            String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ?";
 
             try
             {
                 ps = connection.prepareStatement(query);
                 ps.setInt(1, ConferenceDB.getConference(conferenceName).getConferenceID());
                 rs = ps.executeQuery();
-                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
                 while (rs.next())
                 {
                     Paper paper = new Paper();
@@ -183,7 +269,18 @@ public class PaperDB
                     paper.setAuthorName(rs.getString(8));
                     paper.setFileName(rs.getString(9));
 
-                    map.put(paper, null);
+                    if ( map.containsKey(paper) )
+                    {
+                        Vector<Feedback> tempValue = map.get(paper);
+                        tempValue.add(null);
+                        map.put(paper, tempValue);
+                    }
+                    else
+                    {
+                        Vector<Feedback> tempValue = new Vector<Feedback> ();
+                        tempValue.add(null);
+                        map.put(paper, tempValue);
+                    }
                 }
                 return map;
             }
@@ -202,21 +299,21 @@ public class PaperDB
         }
     }
 
-    public static HashMap<Paper, Feedback> getListForReviewer(String reviewerName)
+    public static HashMap<Paper, Vector<Feedback>> getListForReviewer(String reviewerName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ?";
+        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ?";
 
         try
         {
             ps = connection.prepareStatement(query);
             ps.setString(1, reviewerName);
             rs = ps.executeQuery();
-            HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+            HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
             while (rs.next())
             {
                 Paper paper = new Paper();
@@ -231,16 +328,26 @@ public class PaperDB
                 paper.setFileName(rs.getString(9));
 
                 Feedback feedback = new Feedback();
-                feedback.setFeedbackID(rs.getInt(1));
-                feedback.setPaperID(rs.getInt(2));
-                feedback.setReviewerName(rs.getString(3));
-                feedback.setContentRate(rs.getInt(4));
-                feedback.setInnovativeRate(rs.getInt(5));
-                feedback.setQualityRate(rs.getInt(6));
-                feedback.setDepthRate(rs.getInt(7));
-                feedback.setCommentsBox(rs.getString(8));
-
-                map.put(paper, feedback);
+                feedback.setFeedbackID(rs.getInt(11));
+                feedback.setPaperID(rs.getInt(12));
+                feedback.setReviewerName(rs.getString(13));
+                feedback.setContentRate(rs.getInt(14));
+                feedback.setInnovativeRate(rs.getInt(15));
+                feedback.setQualityRate(rs.getInt(16));
+                feedback.setDepthRate(rs.getInt(17));
+                feedback.setCommentsBox(rs.getString(18));
+                if ( map.containsKey(paper) )
+                {
+                    Vector<Feedback> tempValue = map.get(paper);
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
+                else
+                {
+                    Vector<Feedback> tempValue = new Vector<Feedback> ();
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
             }
             return map;
         }
@@ -258,23 +365,24 @@ public class PaperDB
         }
     }
 
-    public static HashMap<Paper, Feedback> getListForAuthor (String authorName, int feedbackFlag)
+    public static HashMap<Paper, Vector<Feedback>> getListForAuthor (String authorName, int feedbackFlag)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        if ( feedbackFlag == 1)
-        {
-            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
-
-            try
+        try
             {
-                ps = connection.prepareStatement(query);
-                ps.setString(1, authorName);
-                rs = ps.executeQuery();
-                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
+        ps = connection.prepareStatement(query);
+        ps.setString(1, authorName);
+        rs = ps.executeQuery();
+
+        if ( feedbackFlag == 1 && rs.getInt(10) == 1)
+        {
+            
+                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
                 while (rs.next())
                 {
                     Paper paper = new Paper();
@@ -289,42 +397,35 @@ public class PaperDB
                     paper.setFileName(rs.getString(9));
 
                     Feedback feedback = new Feedback();
-                    feedback.setFeedbackID(rs.getInt(1));
-                    feedback.setPaperID(rs.getInt(2));
-                    feedback.setReviewerName(rs.getString(3));
-                    feedback.setContentRate(rs.getInt(4));
-                    feedback.setInnovativeRate(rs.getInt(5));
-                    feedback.setQualityRate(rs.getInt(6));
-                    feedback.setDepthRate(rs.getInt(7));
-                    feedback.setCommentsBox(rs.getString(8));
+                    feedback.setFeedbackID(rs.getInt(11));
+                    feedback.setPaperID(rs.getInt(12));
+                    feedback.setReviewerName(rs.getString(13));
+                    feedback.setContentRate(rs.getInt(14));
+                    feedback.setInnovativeRate(rs.getInt(15));
+                    feedback.setQualityRate(rs.getInt(16));
+                    feedback.setDepthRate(rs.getInt(17));
+                    feedback.setCommentsBox(rs.getString(18));
 
-                    map.put(paper, feedback);
+                    if ( map.containsKey(paper) )
+                    {
+                        Vector<Feedback> tempValue = map.get(paper);
+                        tempValue.add(feedback);
+                        map.put(paper, tempValue);
+                    }
+                    else
+                    {
+                        Vector<Feedback> tempValue = new Vector<Feedback> ();
+                        tempValue.add(feedback);
+                        map.put(paper, tempValue);
+                    }
                 }
                 return map;
-            }
-            catch(SQLException e)
-            {
-                e.printStackTrace();
-                return null;
-            }
-
-            finally
-            {
-                DBUtil.closeResultSet(rs);
-                DBUtil.closePreparedStatement(ps);
-                pool.freeConnection(connection);
-            }
+           
         }
         else
         {
-            String query = "SELECT * FROM Paper p inner join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
-
-            try
-            {
-                ps = connection.prepareStatement(query);
-                ps.setString(1, authorName);
-                rs = ps.executeQuery();
-                HashMap<Paper, Feedback> map = new HashMap<Paper, Feedback>();
+            
+                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
                 while (rs.next())
                 {
                     Paper paper = new Paper();
@@ -338,10 +439,23 @@ public class PaperDB
                     paper.setAuthorName(rs.getString(8));
                     paper.setFileName(rs.getString(9));
 
-                    map.put(paper, null);
+                    if ( map.containsKey(paper) )
+                    {
+                        Vector<Feedback> tempValue = map.get(paper);
+                        tempValue.add(null);
+                        map.put(paper, tempValue);
+                    }
+                    else
+                    {
+                        Vector<Feedback> tempValue = new Vector<Feedback> ();
+                        tempValue.add(null);
+                        map.put(paper, tempValue);
+                    }
                 }
                 return map;
-            }
+            
+        }
+        }
             catch(SQLException e)
             {
                 e.printStackTrace();
@@ -354,6 +468,5 @@ public class PaperDB
                 DBUtil.closePreparedStatement(ps);
                 pool.freeConnection(connection);
             }
-        }
     }
 }

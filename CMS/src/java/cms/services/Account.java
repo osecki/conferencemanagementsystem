@@ -65,7 +65,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean assignReviewer (String editorName, String paperName);
+    public boolean assignReviewer (String reviewerName, int paperID);
 
     /*
      * Method:  releaseToAuthor
@@ -75,7 +75,7 @@ public interface Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean releaseToAuthor (String paperName, String authorName);
+    public boolean releaseToAuthor (int paperID);
 
     public ArrayList<User> getAvailableEditors();
 }

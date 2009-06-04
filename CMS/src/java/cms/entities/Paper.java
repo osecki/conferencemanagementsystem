@@ -159,4 +159,23 @@ public class Paper implements Serializable
     public void setPaperID(int paperID) {
         this.paperID = paperID;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        Paper key = (Paper)o;
+
+        if ( key.getPaperID() == paperID )
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.paperID;
+        hash = 67 * hash + (this.paperName != null ? this.paperName.hashCode() : 0);
+        return hash;
+    }
 }

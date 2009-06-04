@@ -20,7 +20,7 @@ public class ListPaperService implements ListPaper
      * of paper objects containing all of the papers from this conference, or all
      * of the papers from the conference with feedback, depending on the flag.
     */
-    public HashMap<Paper, Feedback> listFromConference (String conferenceName, int feedbackFlag)
+    public HashMap<Paper, Vector<Feedback>> listFromConference (String conferenceName, int feedbackFlag)
     {
         return PaperDB.getListForConference(conferenceName, feedbackFlag);
     }
@@ -32,7 +32,7 @@ public class ListPaperService implements ListPaper
      * Algorithm:  The method will take in this information and return a vector
      * of paper objects containing all of the papers assigned to this author.
     */
-    public HashMap<Paper, Feedback> listAssignedToReviewer (String reviewerUserName)
+    public HashMap<Paper, Vector<Feedback>> listAssignedToReviewer (String reviewerUserName)
     {
         return PaperDB.getListForReviewer(reviewerUserName);
     }
@@ -45,7 +45,7 @@ public class ListPaperService implements ListPaper
      * of paper objects containing all of the papers by an Author, or all
      * of the papers by an Author with feedback, depending on the flag
     */
-    public HashMap<Paper, Feedback> listFromAuthor (String authorName, int feedbackFlag)
+    public HashMap<Paper, Vector<Feedback>> listFromAuthor (String authorName, int feedbackFlag)
     {
         return PaperDB.getListForAuthor(authorName, feedbackFlag);
     }

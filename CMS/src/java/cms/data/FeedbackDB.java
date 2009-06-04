@@ -10,25 +10,25 @@ import java.sql.*;
 
 public class FeedbackDB
 {
-    public static boolean addFeedbackAssignment(Feedback f)
+    public static boolean addFeedbackAssignment(int paperID, String reviewerUserName)
     {
+        // TODO Make this check first to see if it is already in there...
+
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-        String preparedQuery = "INSERT INTO feedback (PaperID, ReviewerUserName, contentRate, innovativeRate, qualityRate, depthRate, commentsBox, releaseToAuthor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String preparedQuery = "INSERT INTO feedback (PaperID, ReviewerUserName, contentRate, innovativeRate, qualityRate, depthRate, commentsBox) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try
         {
             ps = connection.prepareStatement(preparedQuery);
-            ps.setInt(1, f.getPaperID());
-            ps.setString(2, f.getReviewerName());
+            ps.setInt(1, paperID);
+            ps.setString(2, reviewerUserName);
             ps.setInt(3, 0);
             ps.setInt(4, 0);
             ps.setInt(5, 0);
             ps.setInt(6, 0);
             ps.setString(7, "");
-            ps.setInt(8, 0);
-  
             
             return ps.executeUpdate()==1;
         }
@@ -77,35 +77,7 @@ public class FeedbackDB
         }
     }
 
-    public static boolean releaseToAuthor (Feedback f)
-    {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
-        PreparedStatement ps = null;
-        String preparedQuery;
-
-        preparedQuery = "UPDATE feedback SET releaseToAuthro = ? WHERE FeedbackID = ?";
-
-        try
-        {
-            ps = connection.prepareStatement(preparedQuery);
-            ps.setInt(1, 1);
-            ps.setInt(2, f.getFeedbackID());
-            return ps.executeUpdate()==1;
-        }
-         catch(SQLException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        finally
-        {
-            DBUtil.closePreparedStatement(ps);
-            pool.freeConnection(connection);
-        }
-    }
-
-    public static Feedback getFeedback(String paperName, String reviewerName)
+    public static Feedback getFeedback(int paperID, String reviewerName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -118,7 +90,7 @@ public class FeedbackDB
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, paperName);
+            ps.setInt(1, paperID);
             ps.setString(2, reviewerName);
             rs = ps.executeQuery();
 
@@ -132,7 +104,6 @@ public class FeedbackDB
                 feedback.setQualityRate(rs.getInt(6));
                 feedback.setDepthRate(rs.getInt(7));
                 feedback.setCommentsBox(rs.getString(8));
-                //feedback.setReleaseToAuthor(rs.getInt(9));
             }
             return feedback;
         }

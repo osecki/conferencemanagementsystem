@@ -110,6 +110,7 @@ public class ConferenceDB
 
             if(rs.next())
             {
+                conference.setConferenceID(rs.getInt(1));
                 conference.setName(rs.getString(2));
                 conference.setLocation(rs.getString(3));
                 conference.setEventDate(rs.getDate(4));

@@ -4,6 +4,7 @@ import cms.data.ConferenceDB;
 import cms.data.UserDB;
 import cms.data.UserPassDB;
 import cms.data.FeedbackDB;
+import cms.data.PaperDB;
 import cms.entities.Conference;
 import cms.entities.User;
 import java.util.ArrayList;
@@ -99,9 +100,9 @@ public class AccountService implements Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean assignReviewer (String reviewerName, String paperName)
+    public boolean assignReviewer (String reviewerName, int paperID)
     {
-        return FeedbackDB.addFeedbackAssignment(FeedbackDB.getFeedback(paperName, reviewerName));
+        return FeedbackDB.addFeedbackAssignment(paperID, reviewerName);
     }
 
     /*
@@ -112,9 +113,9 @@ public class AccountService implements Account
      * database the necessary information to link these two entities together.
      * It will return a boolean signifying how it turned out.
     */
-    public boolean releaseToAuthor (String paperName, String authorName)
+    public boolean releaseToAuthor (int paperID)
     {
-        return FeedbackDB.releaseToAuthor(FeedbackDB.getFeedback(paperName, authorName));
+        return PaperDB.releaseToAuthor(paperID);
     }
 
     /*

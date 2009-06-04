@@ -28,5 +28,5 @@ public interface FileSystem
      * table for a paper with this name. It will return a Paper object with all
      * of its information.
     */
-    public Paper downloadPaper (String paperName);
+    public Paper downloadPaper (int paperID);
 }

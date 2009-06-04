@@ -5,7 +5,10 @@
 
 package cms.servlets;
 
+import cms.data.ConferenceDB;
+import cms.entities.User;
 import cms.services.AccountService;
+import cms.services.ListPaperService;
 import cms.services.ConferenceSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -15,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AdminPortalAssignEditorServlet extends HttpServlet
-{
+public class EditorPortalReleasePaperServlet extends HttpServlet
+{   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -27,54 +30,51 @@ public class AdminPortalAssignEditorServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String errMsg = null;
+        String errMsg;
+        boolean badData = false;
 
         //TODO Replace with dynamic binding
         AccountService a = new AccountService();
+        ListPaperService lp = new ListPaperService();
         ConferenceSystemService c = new ConferenceSystemService();
 
-        boolean badData = false;
-
-        if(request.getParameter("selectedEditor").length()==0 || request.getParameter("selectedConference").length()==0)
+        if(request.getParameter("selectedPapers2").length()==0)
         {
             badData = true;
         }
 
-        //System.out.println("Selected Editor: "+request.getParameter("selectedEditor")+", Selected Conference: "+request.getParameter("selectedConference"));
-
         synchronized(session)
         {
-            if(!badData)
-            {
-                if(a.assignEditor(c.getConferenceByID(Integer.parseInt(request.getParameter("selectedConference"))), request.getParameter("selectedEditor")))
+             if(!badData)
+             {
+                if( a.releaseToAuthor(Integer.parseInt(request.getParameter("selectedPapers2"))) )
                 {
-                    errMsg = "<font color=\"blue\">Editor successfully assigned to selected conference.";
+                    errMsg = "<font color=\"blue\">All feedback successfully released to the author";
                 }
                 else
                 {
-                    errMsg = "<font color=\"red\">There was a problem with the selection of Editor/Conference.";
+                    errMsg = "<font color=\"red\">There was a problem. Author's feedback could not be released.";
                 }
             }
             else
             {
-                errMsg = "<font color=\"red\">There was a problem with the selection of Editor/Conference.";
+                 errMsg = "<font color=\"red\">There was a problem. Author's feedback could not be released.";
             }
 
-            session.setAttribute("errMsg", errMsg);
-            session.setAttribute("availableEditors", a.getAvailableEditors());
-            session.setAttribute("availableConferences", c.getAvailableConferences());
+            session.setAttribute("errMsg",errMsg);
+            String editorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName(), 1));
+            session.setAttribute("getReviewers", a.getReviewers());
+            session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
 
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));
             session.setAttribute("password", request.getParameter("password"));
             session.setAttribute("emailAddress", request.getParameter("emailAddress"));
-            session.setAttribute("name", request.getParameter("name"));
-            session.setAttribute("location", request.getParameter("location"));
-            session.setAttribute("eventDate", request.getParameter("eventDate"));
-            session.setAttribute("dueDate", request.getParameter("dueDate"));
+
         }
 
-        String url = "/Admin/adminportal.jsp";
+        String url = "/Editor/editorportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);
