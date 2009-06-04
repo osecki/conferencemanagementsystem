@@ -44,8 +44,8 @@ public class FeedbackSystemService implements FeedbackSystem
      * entry in the database, it will grab the information from this entry, build
      * a Feedback object, and return it.
     */
-    public Feedback receive (String paperName, String reviewerName)
+    public Feedback receive (int paperID, String reviewerName)
     {
-        return FeedbackDB.getFeedback(paperName, reviewerName);
+        return FeedbackDB.getFeedback(paperID, reviewerName);
     }
 }
