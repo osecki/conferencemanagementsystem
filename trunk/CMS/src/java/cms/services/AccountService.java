@@ -3,6 +3,7 @@ package cms.services;
 import cms.data.ConferenceDB;
 import cms.data.UserDB;
 import cms.data.UserPassDB;
+import cms.data.FeedbackDB;
 import cms.entities.Conference;
 import cms.entities.User;
 import java.util.ArrayList;
@@ -100,8 +101,7 @@ public class AccountService implements Account
     */
     public boolean assignReviewer (String reviewerName, String paperName)
     {
-        // TODO
-        return true;
+        return FeedbackDB.addFeedbackAssignment(FeedbackDB.getFeedback(paperName, reviewerName));
     }
 
     /*
@@ -114,10 +114,15 @@ public class AccountService implements Account
     */
     public boolean releaseToAuthor (String paperName, String authorName)
     {
-        // TODO
-        return true;
+        return FeedbackDB.releaseToAuthor(FeedbackDB.getFeedback(paperName, authorName));
     }
 
+    /*
+     * Method:  getAvailableEditors
+     * Input:  None
+     * Output:  Arraylist of Users
+     * Algorithm:  The method will return a list of available Editors to match up to papers
+    */
     public ArrayList<User> getAvailableEditors()
     {
         return UserDB.getAvailableEditors();

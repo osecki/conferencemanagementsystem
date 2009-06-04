@@ -1,5 +1,6 @@
 package cms.services;
 import cms.entities.*;
+import cms.data.FeedbackDB;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -19,8 +20,7 @@ public class FeedbackSystemService implements FeedbackSystem
     */
     public boolean send (Feedback f)
     {
-        // TODO
-        return true;
+        return FeedbackDB.addActualFeedback(f);
     }
 
     /*
@@ -31,10 +31,9 @@ public class FeedbackSystemService implements FeedbackSystem
      * what is already stored for this feedback entry, and update any fields if
      * necessary. It will return a boolean reflecting the operation's success.
     */
-    public boolean edit (Feedback Object)
+    public boolean edit (Feedback f)
     {
-        // TODO
-        return true;
+        return FeedbackDB.addActualFeedback(f);
     }
 
     /*
@@ -47,7 +46,6 @@ public class FeedbackSystemService implements FeedbackSystem
     */
     public Feedback receive (String paperName, String reviewerName)
     {
-        // TODO
-        return null;
+        return FeedbackDB.getFeedback(paperName, reviewerName);
     }
 }

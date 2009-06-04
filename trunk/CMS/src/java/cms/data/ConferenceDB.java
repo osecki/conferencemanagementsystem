@@ -213,7 +213,6 @@ public class ConferenceDB
         }
     }
 
-
     public static ArrayList<Conference> getAvailableConferences()
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -300,5 +299,4 @@ public class ConferenceDB
         }
 
     }
-
 }

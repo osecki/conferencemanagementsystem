@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class UserDB
 {
-
     public static User getUser(String userName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -85,7 +84,6 @@ public class UserDB
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
-
     }
 
     public static User checkUser(String userName, String fullName, String emailAddress)
