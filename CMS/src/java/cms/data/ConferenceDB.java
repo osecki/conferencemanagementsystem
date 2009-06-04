@@ -131,6 +131,45 @@ public class ConferenceDB
         }
     }
 
+    public static Conference getConferenceFromEditor (String editorUserName)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Conference conference = new Conference();
+
+        String query = "SELECT * FROM Conference WHERE EditorUserName = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setString(1,editorUserName);
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                conference.setName(rs.getString(2));
+                conference.setLocation(rs.getString(3));
+                conference.setEventDate(rs.getDate(4));
+                conference.setDueDate(rs.getDate(5));
+                conference.setEditor(UserDB.getUser(rs.getString(6)));
+            }
+            return conference;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
     public static boolean addConference(Conference conference)
     {
         ConnectionPool pool = ConnectionPool.getInstance();

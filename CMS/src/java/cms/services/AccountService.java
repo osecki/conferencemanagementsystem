@@ -121,10 +121,21 @@ public class AccountService implements Account
      * Method:  getAvailableEditors
      * Input:  None
      * Output:  Arraylist of Users
-     * Algorithm:  The method will return a list of available Editors to match up to papers
+     * Algorithm:  The method will return a list of available Editors to match up to conferences
     */
     public ArrayList<User> getAvailableEditors()
     {
         return UserDB.getAvailableEditors();
+    }
+
+    /*
+     * Method:  getReviewers
+     * Input:  None
+     * Output:  Arraylist of Users
+     * Algorithm:  The method will return a list of Reviewers to match up to papers
+    */
+    public ArrayList<User> getReviewers()
+    {
+        return UserDB.getReviewers();
     }
 }
