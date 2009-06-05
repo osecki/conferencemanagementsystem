@@ -75,44 +75,32 @@ body {
     </tr>
     </table>
 
-      <table width="100%" border="0">      
-      <tr>
-        <td valign="top">
-        <h3>View Submitted Papers</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="submittedPapers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </td>
-        <td>
-        <h3>View Paper Feedback</h3>
-                <form id="assign" name="assign" method="post" action="">
-            <label>Paper :
-            <select name="feedbackPapers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </td>
-      </tr>
+<p align="center"><h4><font>${au_errMsg}</font></h4></p>
+
+<h3>View Papers Uploaded by Me</h3>
+
+    <table width="100%" border="1">
+        <tr>
+                <td>Paper Name</td>
+                <td>Paper Author</td>
+                <td>File Name</td>
+        </tr>
+        <c:forEach var="currPaper" items="${papersFromAuthor}">
+            <tr>
+                 <td>${currPaper.key.paperName}</td>
+                 <td>${currPaper.key.authorName}</td>
+                 <td><form id="assign" name="assign" method="post" action="<c:url value='/DownloadPaperServlet'/>"><input type="hidden" name="paperID" value="${currPaper.key.paperID}"><input type="submit" name="submit" id="submit" value="Download" /></form></td>
+            </tr>
+            <c:forEach var="currFeedback" items="${currPaper.value}">
+                    <tr>
+                    <td colspan="3">**Reviewer:  ${currFeedback.reviewerName}, Content:  ${currFeedback.contentRate}, Innovative:  ${currFeedback.innovativeRate}, Quality:  ${currFeedback.qualityRate}, Depth:  ${currFeedback.depthRate}</td>
+                    </tr>
+            </c:forEach>
+        </c:forEach>
     </table>
 
-    <p>&nbsp;</p>
-    <p align="center"><h4>${au_errMsg}</h4></p>
-	<!-- end #mainContent --></div>
-<!-- end #container --></div>
+    <p>&nbsp;</p>   
+</div>
+</div>
 </body>
 </html>

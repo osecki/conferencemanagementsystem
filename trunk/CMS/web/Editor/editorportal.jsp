@@ -87,6 +87,7 @@ body {
 
             </label>
             <br />
+            <br />
             <label>Reviewers:
             <select name="selectedReviewers">
             <c:forEach var="currReviewer" items="${getReviewers}">
@@ -118,9 +119,11 @@ body {
       </tr>
     </table>
 
+    <p align="center"><h4><font>${errMsg}</font></h4></p>
+
     <h3>View Conference Papers and their Current Reviewers</h3>
 
-    <table width="100%" border="0">
+    <table width="100%" border="1">
     <tr>
             <td>Paper Name</td>
             <td>Paper Author</td>
@@ -135,8 +138,8 @@ body {
     </tr>
 
         <c:forEach var="currFeedback" items="${currPaper.value}">
-                <tr colspan="3".
-                <td>${currFeedback.reviewerName} is currently reviewing this.</td>
+                <tr>
+                <td colspan="3">**Reviewer:  ${currFeedback.reviewerName}, Content:  ${currFeedback.contentRate}, Innovative:  ${currFeedback.innovativeRate}, Quality:  ${currFeedback.qualityRate}, Depth:  ${currFeedback.depthRate}</td>
                 </tr>
         </c:forEach>
 
@@ -145,7 +148,6 @@ body {
     </table>
 
     <p>&nbsp;</p>
-    <p align="center"><h4>${errMsg}</h4></p>
 	<!-- end #mainContent --></div>
 <!-- end #container --></div>
 </body>

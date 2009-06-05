@@ -45,64 +45,50 @@ body {
     <table width="100%" border="0">
       <tr>
         <td width="50%" valign="top">
-        <h3>View Assigned Papers</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </td>
-        <td width="50%" valign="top">
         <h3>Submit Feedback For Paper</h3>
-        <form id="assign" name="assign" method="post" action="">
-        <p>Content: 
+        <form id="assign" name="assign" method="post" action="<c:url value='/ReviewerPortalSendFeedbackServlet'/>">
+        <p>Content:
           <select name="content">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
-        Innovation: 
+        Innovation:
           <select name="innovative">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </p>
-        <p>Quality: 
+        <p>Quality:
           <select name="quality">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         Depth:
           <select name="depth">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </p>
-        <label>Comments:
-        <textarea name="commentBox" id="commentBox" cols="45" rows="5"></textarea>
-        <br />
-        Paper:
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
+        <label>Comments:<br>
+        <textarea name="commentBox" id="commentBox" cols="30" rows="5"></textarea>
+        <br /><br></label>
+        <label>Paper:
+            <select name="selectedPapers">
+            <c:forEach var="currPaper" items="${papersForReviewer}">
+                <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
+            </c:forEach>
             </select>
         </label>
             <br />
@@ -110,69 +96,53 @@ body {
 	          <input type="submit" name="submit" id="submit" value="Submit" />
 	        </p>
           </form>
-        </p></td>
-      </tr>
-      <tr>
-        <td valign="top">
-        <h3>View Paper Feedback        </h3>
-        <form id="assign" name="assign" method="post" action="">
-        <label>Paper :
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
-            </select>
-            </label>
-            <br />
-	        <p>
-	          <input type="submit" name="submit" id="submit" value="Submit" />
-	        </p>
-          </form>
-        </p>
         </td>
+
         <td valign="top">
         <h3>Edit Paper Feedback</h3>
-        <form id="assign" name="assign" method="post" action="">
+        <form id="assign" name="assign" method="post" action="<c:url value='/ReviewerPortalEditFeedbackServlet'/>">
         <p>Content:
-          <select name="content">
+          <select name="contentEdit">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         Innovation:
-          <select name="innovative">
+          <select name="innovativeEdit">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </p>
         <p>Quality:
-          <select name="quality">
+          <select name="qualityEdit">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         Depth:
-          <select name="depth">
+          <select name="depthEdit">
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="2">3</option>
-            <option value="2">4</option>
-            <option value="2">5</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </p>
-        <label>Comments:
-        <textarea name="commentBox" id="commentBox" cols="45" rows="5"></textarea>
-        <br />
-        Paper:
-            <select name="papers">
-            <option value="paper1">Paper 1</option>
-            <option value="paper2">Paper 2</option>
+        <label>Comments:<br />
+        <textarea name="commentBoxEdit" id="commentBoxEdit" cols="30" rows="5"></textarea>
+        <br /><br /></label>
+        <label>Paper:
+            <select name="selectedPapers2">
+            <c:forEach var="currPaper" items="${papersForReviewer}">
+                <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
+            </c:forEach>
             </select>
         </label>
             <br />
@@ -184,9 +154,32 @@ body {
       </tr>
     </table>
 
+    <p align="center"><h4><font>${errMsg}</font></h4></p>
+
+    <h3>View Papers Currently Assigned to Me</h3>
+
+    <table width="100%" border="1">
+        <tr>
+                <td>Paper Name</td>
+                <td>Paper Author</td>
+                <td>File Name</td>
+        </tr>
+        <c:forEach var="currPaper" items="${papersForReviewer}">
+            <tr>
+                 <td>${currPaper.key.paperName}</td>
+                 <td>${currPaper.key.authorName}</td>
+                 <td><form id="assign" name="assign" method="post" action="<c:url value='/DownloadPaperServlet'/>"><input type="hidden" name="paperID" value="${currPaper.key.paperID}"><input type="submit" name="submit" id="submit" value="Download" /></form></td>
+            </tr>
+            <c:forEach var="currFeedback" items="${currPaper.value}">
+                    <tr>
+                    <td colspan="3">**Reviewer:  ${currFeedback.reviewerName}, Content:  ${currFeedback.contentRate}, Innovative:  ${currFeedback.innovativeRate}, Quality:  ${currFeedback.qualityRate}, Depth:  ${currFeedback.depthRate}</td>
+                    </tr>
+            </c:forEach>
+        </c:forEach>
+    </table>
+
     <p>&nbsp;</p>
-    <p align="center"><h4>${errMsg}</h4></p>
-	<!-- end #mainContent --></div>
-<!-- end #container --></div>
+</div>
+</div>
 </body>
 </html>

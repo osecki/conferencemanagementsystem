@@ -68,6 +68,14 @@
         <servlet-name>DownloadPaperServlet</servlet-name>
         <servlet-class>cms.servlets.DownloadPaperServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReviewerPortalSendFeedbackServlet</servlet-name>
+        <servlet-class>cms.servlets.ReviewerPortalSendFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReviewerPortalEditFeedbackServlet</servlet-name>
+        <servlet-class>cms.servlets.ReviewerPortalEditFeedbackServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -135,6 +143,14 @@
     <servlet-mapping>
         <servlet-name>DownloadPaperServlet</servlet-name>
         <url-pattern>/DownloadPaperServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewerPortalSendFeedbackServlet</servlet-name>
+        <url-pattern>/ReviewerPortalSendFeedbackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewerPortalEditFeedbackServlet</servlet-name>
+        <url-pattern>/ReviewerPortalEditFeedbackServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
