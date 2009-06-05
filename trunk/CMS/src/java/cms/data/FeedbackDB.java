@@ -12,11 +12,45 @@ public class FeedbackDB
 {
     public static boolean addFeedbackAssignment(int paperID, String reviewerUserName)
     {
-        // TODO Make this check first to see if it is already in there...
-
+        // First check to see if it is already in there
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM Feedback WHERE PaperID = ? and ReviewerUserName = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, paperID);
+            ps.setString(2, reviewerUserName);
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if(rs.next())
+            {
+                count++;
+            }
+
+            if ( count > 0 )
+                return false;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+
+        // Now do actual insert, since it's not in there
+        pool = ConnectionPool.getInstance();
+        connection = pool.getConnection();
+        ps = null;
         String preparedQuery = "INSERT INTO feedback (PaperID, ReviewerUserName, contentRate, innovativeRate, qualityRate, depthRate, commentsBox) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try
@@ -86,7 +120,7 @@ public class FeedbackDB
         ResultSet rs = null;
         Feedback feedback = new Feedback();
 
-        String query = "SELECT * FROM Feedback WHERE PaperID = ?, ReviewerUserName = ?";
+        String query = "SELECT * FROM Feedback WHERE PaperID = ? and ReviewerUserName = ?";
 
         try
         {
@@ -94,7 +128,7 @@ public class FeedbackDB
             ps.setInt(1, paperID);
             ps.setString(2, reviewerName);
             rs = ps.executeQuery();
-
+            
             if(rs.next())
             {
                 feedback.setFeedbackID(rs.getInt(1));

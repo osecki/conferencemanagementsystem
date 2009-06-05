@@ -25,6 +25,18 @@ public class ListPaperService implements ListPaper
     }
 
     /*
+     * Method:  listFromConferenceToRelease
+     * Input:  A Conference name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the unreleased papers from this conference.
+    */
+    public HashMap<Paper, Vector<Feedback>> listFromConferenceToRelease (String conferenceName)
+    {
+        return PaperDB.getListForConferenceToRelease(conferenceName);
+    }
+
+    /*
      * Method:  listAssignedToReviewer
      * Input:  A Reviewer name
      * Output:  HashMap<Paper, Vector<Feedback>>
@@ -34,6 +46,19 @@ public class ListPaperService implements ListPaper
     public HashMap<Paper, Vector<Feedback>> listAssignedToReviewer (String reviewerUserName)
     {
         return PaperDB.getListForReviewer(reviewerUserName);
+    }
+
+    /*
+     * Method:  listAssignedToReviewerNoFeedback
+     * Input:  A Reviewer name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the papers assigned to this reviewer
+     * that do not yet have feedback.
+    */
+    public HashMap<Paper, Vector<Feedback>> listAssignedToReviewerNoFeedback (String reviewerUserName)
+    {
+        return PaperDB.getListForReviewerNoFeedback(reviewerUserName);
     }
 
     /*

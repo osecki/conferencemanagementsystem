@@ -21,6 +21,15 @@ public interface ListPaper
     public HashMap<Paper, Vector<Feedback>> listFromConference (String conferenceName);
 
     /*
+     * Method:  listFromConferenceToRelease
+     * Input:  A Conference name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the unreleased papers from this conference.
+    */
+    public HashMap<Paper, Vector<Feedback>> listFromConferenceToRelease (String conferenceName);
+
+    /*
      * Method:  listAssignedToReviewer
      * Input:  A Reviewer name
      * Output:  HashMap<Paper, Vector<Feedback>>
@@ -28,6 +37,16 @@ public interface ListPaper
      * of paper and feedback objects containing all of the papers assigned to this reviewer.
     */
     public HashMap<Paper, Vector<Feedback>> listAssignedToReviewer (String reviewerUserName);
+
+    /*
+     * Method:  listAssignedToReviewerNoFeedback
+     * Input:  A Reviewer name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the papers assigned to this reviewer
+     * that do not yet have feedback.
+    */
+    public HashMap<Paper, Vector<Feedback>> listAssignedToReviewerNoFeedback (String reviewerUserName);
 
     /*
      * Method:  listFromAuthor

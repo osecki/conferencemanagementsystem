@@ -244,19 +244,19 @@ public class PaperDB
         }
     }
 
-    public static HashMap<Paper, Vector<Feedback>> getListForReviewer(String reviewerName)
+    public static HashMap<Paper, Vector<Feedback>> getListForConferenceToRelease(String conferenceName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ?";
+        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.ConferenceID = ? and p.seeFeedback = 0";
 
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1, reviewerName);
+            ps.setInt(1, ConferenceDB.getConference(conferenceName).getConferenceID());
             rs = ps.executeQuery();
             HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
 
@@ -282,7 +282,181 @@ public class PaperDB
                 feedback.setQualityRate(rs.getInt(16));
                 feedback.setDepthRate(rs.getInt(17));
                 feedback.setCommentsBox(rs.getString(18));
+
+                if ( map.containsKey(paper) )
+                {
+                    Vector<Feedback> tempValue = map.get(paper);
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
+                else
+                {
+                    Vector<Feedback> tempValue = new Vector<Feedback> ();
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
+            }
+            return map;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static HashMap<Paper, Vector<Feedback>> getListForReviewer(String reviewerName)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
+
+        try
+        {
+            String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, reviewerName);
+            rs = ps.executeQuery();
+            
+
+            while (rs.next())
+            {
+                Paper paper = new Paper();
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConference(ConferenceDB.getConference(rs.getInt(3)));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
                 
+                map.put(paper, null);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+        
+        pool = ConnectionPool.getInstance();
+        connection = pool.getConnection();
+        ps = null;
+        rs = null;
+
+        try
+        {
+            String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID";
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                Paper paper = new Paper();
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConference(ConferenceDB.getConference(rs.getInt(3)));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
+
+                Feedback feedback = new Feedback();
+                feedback.setFeedbackID(rs.getInt(11));
+                feedback.setPaperID(rs.getInt(12));
+                feedback.setReviewerName(rs.getString(13));
+                feedback.setContentRate(rs.getInt(14));
+                feedback.setInnovativeRate(rs.getInt(15));
+                feedback.setQualityRate(rs.getInt(16));
+                feedback.setDepthRate(rs.getInt(17));
+                feedback.setCommentsBox(rs.getString(18));
+
+                if ( map.containsKey(paper) )
+                {
+                    Vector<Feedback> tempValue = map.get(paper);
+
+                    if ( tempValue == null)
+                        tempValue = new Vector<Feedback>();
+
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
+            }
+            return map;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
+
+    public static HashMap<Paper, Vector<Feedback>> getListForReviewerNoFeedback (String reviewerName)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE f.ReviewerUserName = ? and contentRate = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, reviewerName);
+            ps.setInt(2, 0);
+            rs = ps.executeQuery();
+            HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
+
+            while (rs.next())
+            {
+                Paper paper = new Paper();
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConference(ConferenceDB.getConference(rs.getInt(3)));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
+
+                Feedback feedback = new Feedback();
+                feedback.setFeedbackID(rs.getInt(11));
+                feedback.setPaperID(rs.getInt(12));
+                feedback.setReviewerName(rs.getString(13));
+                feedback.setContentRate(rs.getInt(14));
+                feedback.setInnovativeRate(rs.getInt(15));
+                feedback.setQualityRate(rs.getInt(16));
+                feedback.setDepthRate(rs.getInt(17));
+                feedback.setCommentsBox(rs.getString(18));
+
                 if ( map.containsKey(paper) )
                 {
                     Vector<Feedback> tempValue = map.get(paper);

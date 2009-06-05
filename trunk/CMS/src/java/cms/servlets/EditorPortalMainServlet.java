@@ -40,6 +40,7 @@ public class EditorPortalMainServlet extends HttpServlet
             session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
             session.setAttribute("getReviewers", a.getReviewers());
             session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
+            session.setAttribute("papersFromConferenceToRelease", lp.listFromConferenceToRelease(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
         }
 
         String url = "/Editor/editorportal.jsp";
