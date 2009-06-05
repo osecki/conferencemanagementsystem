@@ -13,7 +13,7 @@ public class Paper implements Serializable
 {
     private int paperID;
     private String paperName;
-    private int conferenceID;
+    private Conference conference;
     private String paperAbstract;
     private String paperKeywords;
     private String authorName;
@@ -31,7 +31,7 @@ public class Paper implements Serializable
         paperName = n;
         authorName = a;
         fileName = fp;
-        conferenceID = c;
+        conference = (Conference) ConferenceDB.getConference(c);
         paperAbstract = pa;
         paperKeywords = pk;
         inputStream = i;
@@ -97,15 +97,15 @@ public class Paper implements Serializable
     /**
      * @return the conferenceID
      */
-    public int getConferenceID() {
-        return conferenceID;
+    public Conference getConference() {
+        return conference;
     }
 
     /**
      * @param conferenceID the conferenceID to set
      */
-    public void setConferenceID(int conferenceID) {
-        this.conferenceID = conferenceID;
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 
     /**
@@ -159,12 +159,6 @@ public class Paper implements Serializable
      */
     public void setPaperID(int paperID) {
         this.paperID = paperID;
-    }
-
-    public String getConferenceName ()
-    {
-        Conference c = (Conference) ConferenceDB.getConference(this.conferenceID);
-        return c.getName();
     }
 
     @Override
