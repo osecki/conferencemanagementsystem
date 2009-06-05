@@ -86,7 +86,7 @@ body {
         <br /><br></label>
         <label>Paper:
             <select name="selectedPapers">
-            <c:forEach var="currPaper" items="${papersForReviewer}">
+            <c:forEach var="currPaper" items="${papersForReviewerNoFeedback}">
                 <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
             </c:forEach>
             </select>
