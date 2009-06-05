@@ -51,7 +51,7 @@ public class FeedbackDB
         PreparedStatement ps = null;
         String preparedQuery;
 
-        preparedQuery = "UPDATE feedback SET contentRate = ?, innovativeRate = ?, qualityRate = ?, depthRate = ?, commentsBox = ? WHERE FeedbackID = ?";
+        preparedQuery = "UPDATE feedback SET contentRate = ?, innovativeRate = ?, qualityRate = ?, depthRate = ?, commentsBox = ? WHERE PaperID = ? and ReviewerUserName = ?";
 
         try
         {
@@ -62,7 +62,8 @@ public class FeedbackDB
             ps.setInt(4, f.getDepthRate());
             ps.setString(5, f.getCommentsBox());
 
-            ps.setInt(6, f.getFeedbackID());
+            ps.setInt(6, f.getPaperID());
+            ps.setString(7, f.getReviewerName());
             return ps.executeUpdate()==1;
         }
          catch(SQLException e)

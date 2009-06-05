@@ -5,8 +5,8 @@
 
 package cms.servlets;
 
-//import cms.services.AccountService;
-//import cms.services.ConferenceSystemService;
+import cms.entities.User;
+import cms.services.ListPaperService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,14 +28,13 @@ public class ReviewerPortalMainServlet extends HttpServlet
     throws ServletException, IOException {
 
         //TODO replace with dynamic binding
-        //AccountService a = new AccountService();
-        //ConferenceSystemService c = new ConferenceSystemService();
+        ListPaperService lp = new ListPaperService();
 
         HttpSession session = request.getSession();
         synchronized(session)
         {
-            //session.setAttribute("availableEditors", a.getAvailableEditors());
-            //session.setAttribute("availableConferences", c.getAvailableConferences());
+            String reviewerUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            session.setAttribute("papersForReviewer", lp.listAssignedToReviewer(reviewerUserName));
         }
 
         String url = "/Reviewer/reviewerportal.jsp";
