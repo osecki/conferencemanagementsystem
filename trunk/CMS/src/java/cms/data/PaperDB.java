@@ -365,7 +365,7 @@ public class PaperDB
         }
     }
 
-    public static HashMap<Paper, Vector<Feedback>> getListForAuthor (String authorName, int feedbackFlag)
+    public static HashMap<Paper, Vector<Feedback>> getListForAuthor (String authorName)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -373,30 +373,32 @@ public class PaperDB
         ResultSet rs = null;
 
         try
-            {
-        String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
-        ps = connection.prepareStatement(query);
-        ps.setString(1, authorName);
-        rs = ps.executeQuery();
-
-        if ( feedbackFlag == 1 && rs.getInt(10) == 1)
         {
-            
-                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
-                while (rs.next())
-                {
-                    Paper paper = new Paper();
-                    paper.setPaperID(rs.getInt(1));
-                    paper.setPaperName(rs.getString(2));
-                    paper.setConferenceID(rs.getInt(3));
-                    paper.setPaperAbstract(rs.getString(4));
-                    paper.setPaperKeywords(rs.getString(5));
-                    paper.setInputStream(rs.getBinaryStream(6));
-                    paper.setSizeInBytes(rs.getInt(7));
-                    paper.setAuthorName(rs.getString(8));
-                    paper.setFileName(rs.getString(9));
+            String query = "SELECT * FROM Paper p left join Feedback f on p.PaperID = f.PaperID WHERE p.AuthorUserName = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, authorName);
+            rs = ps.executeQuery();
 
-                    Feedback feedback = new Feedback();
+            HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
+            while (rs.next())
+            {
+                Paper paper = new Paper();
+                paper.setPaperID(rs.getInt(1));
+                paper.setPaperName(rs.getString(2));
+                paper.setConferenceID(rs.getInt(3));
+                paper.setPaperAbstract(rs.getString(4));
+                paper.setPaperKeywords(rs.getString(5));
+                paper.setInputStream(rs.getBinaryStream(6));
+                paper.setSizeInBytes(rs.getInt(7));
+                paper.setAuthorName(rs.getString(8));
+                paper.setFileName(rs.getString(9));
+
+                Feedback feedback = null;
+
+                // Add real feedbakc only if it has been released to the author
+                if ( rs.getInt(10) == 1)
+                {
+                    feedback = new Feedback();
                     feedback.setFeedbackID(rs.getInt(11));
                     feedback.setPaperID(rs.getInt(12));
                     feedback.setReviewerName(rs.getString(13));
@@ -405,56 +407,23 @@ public class PaperDB
                     feedback.setQualityRate(rs.getInt(16));
                     feedback.setDepthRate(rs.getInt(17));
                     feedback.setCommentsBox(rs.getString(18));
-
-                    if ( map.containsKey(paper) )
-                    {
-                        Vector<Feedback> tempValue = map.get(paper);
-                        tempValue.add(feedback);
-                        map.put(paper, tempValue);
-                    }
-                    else
-                    {
-                        Vector<Feedback> tempValue = new Vector<Feedback> ();
-                        tempValue.add(feedback);
-                        map.put(paper, tempValue);
-                    }
                 }
-                return map;
-           
-        }
-        else
-        {
-            
-                HashMap<Paper, Vector<Feedback>> map = new HashMap<Paper, Vector<Feedback>>();
-                while (rs.next())
+
+                // Determine if this paper is already in the map
+                if ( map.containsKey(paper) )
                 {
-                    Paper paper = new Paper();
-                    paper.setPaperID(rs.getInt(1));
-                    paper.setPaperName(rs.getString(2));
-                    paper.setConferenceID(rs.getInt(3));
-                    paper.setPaperAbstract(rs.getString(4));
-                    paper.setPaperKeywords(rs.getString(5));
-                    paper.setInputStream(rs.getBinaryStream(6));
-                    paper.setSizeInBytes(rs.getInt(7));
-                    paper.setAuthorName(rs.getString(8));
-                    paper.setFileName(rs.getString(9));
-
-                    if ( map.containsKey(paper) )
-                    {
-                        Vector<Feedback> tempValue = map.get(paper);
-                        tempValue.add(null);
-                        map.put(paper, tempValue);
-                    }
-                    else
-                    {
-                        Vector<Feedback> tempValue = new Vector<Feedback> ();
-                        tempValue.add(null);
-                        map.put(paper, tempValue);
-                    }
+                    Vector<Feedback> tempValue = map.get(paper);
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
                 }
-                return map;
-            
-        }
+                else
+                {
+                    Vector<Feedback> tempValue = new Vector<Feedback> ();
+                    tempValue.add(feedback);
+                    map.put(paper, tempValue);
+                }
+            }
+            return map;
         }
             catch(SQLException e)
             {

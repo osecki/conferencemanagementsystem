@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
 import cms.services.FileSystemService;
 import cms.services.ConferenceSystemService;
+import cms.services.ListPaperService;
 import cms.services.AccountService;
 import cms.entities.User;
 import cms.entities.Paper;
@@ -48,6 +49,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
         //TODO Replace with dynamic binding
         FileSystemService fs = new FileSystemService();
         ConferenceSystemService c = new ConferenceSystemService();
+        ListPaperService lp = new ListPaperService();
         AccountService as = new AccountService();
 
         String au_errMsg = null;
@@ -145,6 +147,9 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
             }
 
             session.setAttribute("au_errMsg", au_errMsg);
+            session.setAttribute("allConferences", c.getAllConferences());
+            String authorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            session.setAttribute("papersFromAuthor", lp.listFromAuthor(authorUserName));
         }
 
         String url = "/Author/authorportal.jsp";

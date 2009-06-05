@@ -37,7 +37,7 @@ public class AuthorPortalMainServlet extends HttpServlet
         {
             session.setAttribute("allConferences", c.getAllConferences());
             String authorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
-            session.setAttribute("papersForReviewer", lp.listFromAuthor(authorUserName, 1));
+            session.setAttribute("papersFromAuthor", lp.listFromAuthor(authorUserName));
         }
 
         String url = "/Author/authorportal.jsp";

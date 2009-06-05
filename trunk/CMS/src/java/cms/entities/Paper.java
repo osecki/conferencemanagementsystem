@@ -1,4 +1,5 @@
 package cms.entities;
+import cms.data.ConferenceDB;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -158,6 +159,12 @@ public class Paper implements Serializable
      */
     public void setPaperID(int paperID) {
         this.paperID = paperID;
+    }
+
+    public String getConferenceName ()
+    {
+        Conference c = (Conference) ConferenceDB.getConference(this.conferenceID);
+        return c.getName();
     }
 
     @Override

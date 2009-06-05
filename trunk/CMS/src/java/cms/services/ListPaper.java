@@ -32,11 +32,11 @@ public interface ListPaper
 
     /*
      * Method:  listFromAuthor
-     * Input:  An Author name and Feedback flag
-     * Output:  Vector<Paper>
-     * Algorithm:  The method will take in this information and return a vector
-     * of paper objects containing all of the papers by an Author, or all
-     * of the papers by an Author with feedback, depending on the flag
+     * Input:  An Author name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a HashMap
+     * of paper and feedback objects containing all of the papers by an Author, with
+     * appropriate feedback if the editor has released it to them
     */
-    public HashMap<Paper, Vector<Feedback>> listFromAuthor (String authorName, int feedbackFlag);
+    public HashMap<Paper, Vector<Feedback>> listFromAuthor (String authorUserName);
 }
