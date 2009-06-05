@@ -105,7 +105,7 @@ body {
                 <form id="assign" name="assign" method="post" action="<c:url value='/EditorPortalReleasePaperServlet'/>">
         <label>Paper :
             <select name="selectedPapers2">
-            <c:forEach var="currPaper" items="${papersFromConference}">
+            <c:forEach var="currPaper" items="${papersFromConferenceToRelease}">
                 <option value="${currPaper.key.paperID}">${currPaper.key.paperName}</option>
             </c:forEach>
             </select>
