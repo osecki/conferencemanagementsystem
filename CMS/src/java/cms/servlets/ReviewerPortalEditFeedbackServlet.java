@@ -5,9 +5,10 @@
 
 package cms.servlets;
 
+import cms.entities.Feedback;
 import cms.entities.User;
-import cms.services.ConferenceSystemService;
 import cms.services.ListPaperService;
+import cms.services.FeedbackSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AuthorPortalMainServlet extends HttpServlet
-{
+public class ReviewerPortalEditFeedbackServlet extends HttpServlet
+{   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -27,20 +28,45 @@ public class AuthorPortalMainServlet extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
-        //TODO replace with dynamic binding
-        ConferenceSystemService c = new ConferenceSystemService();
-        ListPaperService lp = new ListPaperService();
-
         HttpSession session = request.getSession();
-        synchronized(session)
+        String errMsg;
+        boolean badData = false;
+
+        //TODO Replace with dynamic binding
+        ListPaperService lp = new ListPaperService();
+        FeedbackSystemService fs = new FeedbackSystemService();
+
+        if(request.getParameter("commentBoxEdit").length()==0 )
         {
-            session.setAttribute("allConferences", c.getAllConferences());
-            String authorUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
-            session.setAttribute("papersForReviewer", lp.listFromAuthor(authorUserName, 1));
+            badData = true;
         }
 
-        String url = "/Author/authorportal.jsp";
+        synchronized(session)
+        {
+            String reviewerUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
+            Feedback f = new Feedback(Integer.parseInt(request.getParameter("selectedPapers2")), reviewerUserName, Integer.parseInt(request.getParameter("contentEdit")), Integer.parseInt(request.getParameter("innovativeEdit")), Integer.parseInt(request.getParameter("qualityEdit")), Integer.parseInt(request.getParameter("depthEdit")), request.getParameter("commentBoxEdit"));
+
+             if(!badData)
+             {
+                if( fs.edit(f) )
+                {
+                    errMsg = "<font color=\"blue\">Your feedback has been edited for this paper.";
+                }
+                else
+                {
+                    errMsg = "<font color=\"red\">There was a problem. The feedback could not be edited. Please try again.";
+                }
+            }
+            else
+            {
+                 errMsg = "<font color=\"red\">There was a problem. The feedback could not be edited. Please try again.";
+            }
+
+            session.setAttribute("errMsg", errMsg);
+            session.setAttribute("papersForReviewer", lp.listAssignedToReviewer(reviewerUserName));
+        }
+
+        String url = "/Reviewer/reviewerportal.jsp";
         url = response.encodeURL(url);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);
