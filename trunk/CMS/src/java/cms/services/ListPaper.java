@@ -13,20 +13,19 @@ public interface ListPaper
 {
     /*
      * Method:  listFromConference
-     * Input:  A Conference name and Feedback flag
-     * Output:  Vector<Paper>
-     * Algorithm:  The method will take in this information and return a vector
-     * of paper objects containing all of the papers from this conference, or all
-     * of the papers from the conference with feedback, depending on the flag.
+     * Input:  A Conference name
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the papers from this conference.
     */
-    public HashMap<Paper, Vector<Feedback>> listFromConference (String conferenceName, int feedbackFlag);
+    public HashMap<Paper, Vector<Feedback>> listFromConference (String conferenceName);
 
     /*
      * Method:  listAssignedToReviewer
      * Input:  A Reviewer name
-     * Output:  Vector<Paper>
-     * Algorithm:  The method will take in this information and return a vector
-     * of paper objects containing all of the papers assigned to this author.
+     * Output:  HashMap<Paper, Vector<Feedback>>
+     * Algorithm:  The method will take in this information and return a Hashmap
+     * of paper and feedback objects containing all of the papers assigned to this reviewer.
     */
     public HashMap<Paper, Vector<Feedback>> listAssignedToReviewer (String reviewerUserName);
 
