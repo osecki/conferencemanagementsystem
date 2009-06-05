@@ -123,29 +123,33 @@ body {
 
     <h3>View Conference Papers and their Current Reviewers</h3>
 
-    <table width="100%" border="1">
-    <tr>
-            <td>Paper Name</td>
-            <td>Paper Author</td>
-            <td>File Name</td>
-    </tr>
-
     <c:forEach var="currPaper" items="${papersFromConference}">
-    <tr>
-         <td>${currPaper.key.paperName}</td>
-         <td>${currPaper.key.authorName}</td>
-         <td><form id="assign" name="assign" method="post" action="<c:url value='/DownloadPaperServlet'/>"><input type="hidden" name="paperID" value="${currPaper.key.paperID}"><input type="submit" name="submit" id="submit" value="Download" /></form></td>
-    </tr>
-
-        <c:forEach var="currFeedback" items="${currPaper.value}">
-                <tr>
-                <td colspan="3">**Reviewer:  ${currFeedback.reviewerName}, Content:  ${currFeedback.contentRate}, Innovative:  ${currFeedback.innovativeRate}, Quality:  ${currFeedback.qualityRate}, Depth:  ${currFeedback.depthRate}</td>
-                </tr>
-        </c:forEach>
-
-    </c:forEach>
-
+    <table width="100%" border="1">
+        <tr>
+                <td align="center" width ="25%"><b>Paper Name</b></td>
+                <td align="center" width ="25%"><b>Paper Author</b></td>
+                <td align="center" width ="25%"><b>Conference</b></td>
+                <td align="center" width ="25%"><b>File Name</b></td>
+        </tr>
     </table>
+    <table width="100%" border="1">
+        <tr>
+             <td align="center" width ="25%">${currPaper.key.paperName}</td>
+             <td align="center" width ="25%">${currPaper.key.authorName}</td>
+             <td align="center" width ="25%">${currPaper.key.conference.name}</td>
+             <td align="center" width ="25%"><form id="assign" name="assign" method="post" action="<c:url value='/DownloadPaperServlet'/>"><input type="hidden" name="paperID" value="${currPaper.key.paperID}"><input type="submit" name="submit" id="submit" value="Download" /></form></td>
+        </tr>
+        <tr><td colspan="4"><b>Keywords:</b>  ${currPaper.key.paperKeywords}</td></tr>
+        <tr><td colspan="4"><b>Abstract:</b>  ${currPaper.key.paperAbstract}</td></tr>
+        <c:forEach var="currFeedback" items="${currPaper.value}">
+            <c:if test="${currFeedback != null}">
+                <tr><td colspan="4">&nbsp;&nbsp;**<b>Reviewer:</b>  ${currFeedback.reviewerName}, <b>Content:</b>  ${currFeedback.contentRate}, <b>Innovative:</b>  ${currFeedback.innovativeRate}, <b>Quality:</b>  ${currFeedback.qualityRate}, <b>Depth:</b>  ${currFeedback.depthRate}</td></tr>
+                <tr><td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Comments:</b>  ${currFeedback.commentsBox}</td></tr>
+            </c:if>
+        </c:forEach>
+    </table>
+    <br /><br />
+    </c:forEach>
 
     <p>&nbsp;</p>
 	<!-- end #mainContent --></div>
