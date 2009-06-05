@@ -8,5 +8,5 @@ package cms.entities;
 
 public enum UserRole
 {
-    ADMINISTRATOR, EDITOR, REVIEWER, AUTHOR
+    ADMINISTRATOR, EDITOR, REVIEWER, AUTHOR, TEST
 }
