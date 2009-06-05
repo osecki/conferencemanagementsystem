@@ -35,6 +35,7 @@ public class ReviewerPortalMainServlet extends HttpServlet
         {
             String reviewerUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
             session.setAttribute("papersForReviewer", lp.listAssignedToReviewer(reviewerUserName));
+            session.setAttribute("papersForReviewerNoFeedback", lp.listAssignedToReviewerNoFeedback(reviewerUserName));
         }
 
         String url = "/Reviewer/reviewerportal.jsp";

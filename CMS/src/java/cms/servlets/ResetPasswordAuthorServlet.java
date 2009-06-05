@@ -56,9 +56,8 @@ public class ResetPasswordAuthorServlet extends HttpServlet
             {
                  resetErrMsg = "<font color=\"red\">There was a problem. Author password could not be reset.";
             }
-            
-            session.setAttribute("resetErrMsg",resetErrMsg);
 
+            session.setAttribute("resetErrMsg",resetErrMsg);
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));
             session.setAttribute("emailAddress", request.getParameter("emailAddress"));

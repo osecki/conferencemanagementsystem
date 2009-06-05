@@ -55,7 +55,7 @@ public class EditorPortalAssignReviewerServlet extends HttpServlet
                 }
                 else
                 {
-                    errMsg = "<font color=\"red\">There was a problem. Reviewer could not be assigned. Please try again.";
+                    errMsg = "<font color=\"red\">There was a problem. Reviewer could not be assigned. Might already be assigned to this paper. Please try again.";
                 }
             }
             else
@@ -68,6 +68,7 @@ public class EditorPortalAssignReviewerServlet extends HttpServlet
             session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
             session.setAttribute("getReviewers", a.getReviewers());
             session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
+            session.setAttribute("papersFromConferenceToRelease", lp.listFromConferenceToRelease(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
 
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));

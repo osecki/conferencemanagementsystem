@@ -67,6 +67,7 @@ public class EditorPortalCreateReviewerServlet extends HttpServlet
             session.setAttribute("papersFromConference", lp.listFromConference(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
             session.setAttribute("getReviewers", a.getReviewers());
             session.setAttribute("getConferenceName", ConferenceDB.getConferenceFromEditor(editorUserName).getName());
+            session.setAttribute("papersFromConferenceToRelease", lp.listFromConferenceToRelease(ConferenceDB.getConferenceFromEditor(editorUserName).getName()));
 
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));
