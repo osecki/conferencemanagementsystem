@@ -52,6 +52,10 @@ public class LoginRedirectServlet extends HttpServlet
         {
             url = "/ReviewerPortalMainServlet";
         }
+        else if((loggedInUser.getUserType().equalsIgnoreCase("Test")))
+        {
+            url = "/Test/index.jsp";
+        }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request,response);

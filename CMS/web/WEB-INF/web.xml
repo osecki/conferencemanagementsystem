@@ -203,6 +203,7 @@
             <role-name>AUTHOR</role-name>
             <role-name>EDITOR</role-name>
             <role-name>REVIEWER</role-name>
+            <role-name>TEST</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -230,9 +231,20 @@
 
     <security-constraint>
         <web-resource-collection>
+            <web-resource-name>Test Application</web-resource-name>
+            <url-pattern>/Test/*</url-pattern>
+            </web-resource-collection>
+        <!-- Authorize the advisor role -->
+        <auth-constraint>
+            <role-name>TEST</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
             <web-resource-name>Editor Application</web-resource-name>
             <url-pattern>/Editor/*</url-pattern>
-            </web-resource-collection>
+        </web-resource-collection>
         <!-- Authorize the Editor role -->
         <auth-constraint>
             <role-name>EDITOR</role-name>
