@@ -22,6 +22,9 @@ import cms.entities.User;
 import cms.entities.Paper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +53,6 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
         FileSystemService fs = new FileSystemService();
         ConferenceSystemService c = new ConferenceSystemService();
         ListPaperService lp = new ListPaperService();
-        AccountService as = new AccountService();
 
         String au_errMsg = null;
         boolean badData = false;
@@ -126,6 +128,16 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
             if ( sizeInBytes == 0 || uploadedStream == null || fileName == null || ! contentType.equals("application/pdf"))
                 badData = true;
 
+            // Get current date
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date currentDate = new Date();
+
+            // Get Conference due date
+            Date dueDate = c.getConferenceByID(Integer.parseInt(parameters.get("selectedConference"))).getDueDate();
+
+            if ( currentDate.after(dueDate) )
+                badData = true;
+
             if( ! badData )
             {
                 // Build up item to send
@@ -134,7 +146,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 
                 if( fs.uploadPaper(newPaper) )
                 {
-                    au_errMsg = "<font color=\"blue\">Paper successfully uploaded to the server..";
+                    au_errMsg = "<font color=\"blue\">Paper successfully uploaded to the server.";
                 }
                 else
                 {
@@ -143,7 +155,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
             }
             else
             {
-                au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
+                au_errMsg = "<font color=\"red\">There was a problem during the upload. Did you fill in all of the fields? Has the due date of " + dueDate + " passed? Please try again.";
             }
 
             session.setAttribute("au_errMsg", au_errMsg);
