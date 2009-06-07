@@ -54,7 +54,7 @@ public class LoginRedirectServlet extends HttpServlet
         }
         else if((loggedInUser.getUserType().equalsIgnoreCase("Test")))
         {
-            url = "/Test/index.jsp";
+            url = "/TestPortalMainServlet";
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
