@@ -87,14 +87,16 @@ body {
         	  <input type="text" name="location" id="location" value="${location}"/>
 	          </label>
 	        </p>
+
+            <style type="text/css">@import "http://xavisys.com//wp-content/uploads/2006/12/calendar.css";</style>
+            <script src="http://xavisys.com//wp-content/uploads/2006/12/calendar.js" type="text/javascript"></script>
+
 	        <label>Event Date
-        	  <input id="eventDate" size="10" maxlength="10" name="eventDate" type="text" value="${eventDate}"/><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime2', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
-			  <div id="chooserSpan3" class="dateChooser select-free" style="display: none; visibility: hidden; width: 160px;"></div>
+              <input type="text" name="eventDate" id="eventDate" value="${eventDate}" size="10" onfocus="cal.showCal(this);" />
 	          </label>
     	      <label>Due Date
-        	  <input id="dueDate" size="10" maxlength="10" name="dueDate" type="text" value="${dueDate}"/><img src="<c:url value='includes\calendar.gif'/>" onclick="showChooser(this, 'datetime3', 'chooserSpan3', 1950, 2010, Date.patterns.ShortDatePattern, false);">
-			  <div id="chooserSpan3" class="dateChooser select-free" style="display: none; visibility: hidden; width: 160px;"></div>
-	          </label>
+        	  <input type="text" name="dueDate" id="dueDate" value="${dueDate}" size="10" onfocus="cal.showCal(this);" />
+              </label>
 	        <p>
 	          <input type="submit" name="submit" id="submit" value="Submit" />
 	        </p>
