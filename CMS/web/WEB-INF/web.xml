@@ -76,6 +76,10 @@
         <servlet-name>ReviewerPortalEditFeedbackServlet</servlet-name>
         <servlet-class>cms.servlets.ReviewerPortalEditFeedbackServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TestPortalMainServlet</servlet-name>
+        <servlet-class>cms.servlets.TestPortalMainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginRedirectServlet</servlet-name>
         <url-pattern>/LoginRedirectServlet</url-pattern>
@@ -152,6 +156,10 @@
         <servlet-name>ReviewerPortalEditFeedbackServlet</servlet-name>
         <url-pattern>/ReviewerPortalEditFeedbackServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestPortalMainServlet</servlet-name>
+        <url-pattern>/TestPortalMainServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -186,6 +194,11 @@
     <security-role>
         <description>Editor Account</description>
         <role-name>EDITOR</role-name>
+    </security-role>
+
+    <security-role>
+        <description>Test Account</description>
+        <role-name>TEST</role-name>
     </security-role>
 
     <!-- Restrict access to all files other than index and register -->

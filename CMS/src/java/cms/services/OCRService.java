@@ -1,5 +1,8 @@
 package cms.services;
-import cms.entities.*;
+import cms.entities.Paper;
+import java.io.InputStream;
+import com.aspose.pdf.kit.PdfExtractor;
+import java.io.OutputStream;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -9,18 +12,38 @@ import cms.entities.*;
 
 public class OCRService implements OCR
 {
-    /*
-     * Method:  invokeOCR
-     * Input:  Paper Object
-     * Output:  Paper Object
-     * Algorithm:  The method will take in the Paper object and send off the file
-     * to the off the shelf OCR service. It will return hopefully a text file,
-     * which will be opened and parsed for its keywords and abstract. This
-     * information will be put into the Paper object and that one will be returned.
-    */
-    public Paper invokeOCR(Paper p)
+
+    public String getTextFromStream(InputStream is)
     {
-        // TODO
-        return null;
+        //Instantiate PdfExtractor object
+        PdfExtractor extractor = new PdfExtractor();
+//        String path = null;
+        OutputStream os = System.out;
+
+
+        try
+        {
+            //Bind the input PDF document to extractor
+            extractor.bindPdf(is);
+
+            //Extract text from the input PDF document
+            extractor.extractText();
+
+            //Save the extracted text to a text file
+            extractor.getText(os);
+        }
+        catch (Exception e)
+        {
+            return "From within the catch block";
+        }
+
+        return "This could be it";
+        
     }
+
+    public String getTextFromPaper(Paper p)
+    {
+        return getTextFromStream(p.getInputStream());
+    }
+
 }
