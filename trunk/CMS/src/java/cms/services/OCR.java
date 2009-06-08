@@ -15,5 +15,5 @@ public interface OCR
      * Algorithm:  The method will take in this string, extract the keywords and abstract
      * if they exist, enter them in the DB, and return a boolean explaining if it worked
     */
-    public boolean extractKeywordsAbstract (String firstPage);
+    public boolean extractKeywordsAbstract (String firstPage, int paperID);
 }

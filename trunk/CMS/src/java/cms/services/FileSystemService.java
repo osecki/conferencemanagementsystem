@@ -36,4 +36,15 @@ public class FileSystemService implements FileSystem
     {
         return PaperDB.downloadPaper(paperID);
     }
+
+    /*
+     * Method:  getLastpaperID
+     * Input:
+     * Output:  int
+     * Algorithm:  The method will get the max paperID that exists in the DB
+    */
+    public int getLastPaperID()
+    {
+        return PaperDB.getLastPaperID();
+    }
 }
