@@ -157,7 +157,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 }
                 else
                 {
-                    au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
+                    au_errMsg = "<font color=\"red\">There was a problem during the upload. Have you already uploaded a paper with this name to this conference? Please try again.";
                 }
 
                 // Now handle the OCR portion of the process
