@@ -1,13 +1,13 @@
-package cms.entities;
-
-import java.io.Serializable;
-import java.sql.Date;
-
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
+
+package cms.entities;
+
+import java.io.Serializable;
+import java.sql.Date;
 
 public class Conference implements Serializable
 {
@@ -104,5 +104,4 @@ public class Conference implements Serializable
     public void setEditor(User editor) {
         this.editor = editor;
     }
-
 }

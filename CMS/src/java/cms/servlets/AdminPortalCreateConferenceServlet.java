@@ -53,7 +53,7 @@ public class AdminPortalCreateConferenceServlet extends HttpServlet
             badData = true;
         }
 
-        if(request.getParameter("name").length()==0)
+        if(request.getParameter("name").length()==0 || request.getParameter("location").length() == 0 )
         {
             badData = true;
         }

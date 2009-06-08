@@ -1,7 +1,8 @@
 /*
- *   Group      : 3, Java Team Hunger Force
- *   Class      : CS575, Spring 2009
-*/
+ * Project:  Conference Management System (CMS)
+ * Group 3:  Java Team Hunger Force
+ * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
+ */
 
 package cms.data;
 

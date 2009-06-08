@@ -1,12 +1,11 @@
-package cms.entities;
-
 /*
- * Project:  Conference Management System (CMS)
- * Group 3:  Java Team Hunger Force
- * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
+
+package cms.entities;
 
 public enum UserRole
 {
-    ADMINISTRATOR, EDITOR, REVIEWER, AUTHOR, TEST
+    ADMINISTRATOR, EDITOR, REVIEWER, AUTHOR
 }

@@ -35,21 +35,6 @@ public class AccountService implements Account
     }
 
     /*
-     * Method:  login
-     * Input:  A user's username and password
-     * Output:  String
-     * Algorithm:  The method will take in this information and check to see if
-     * it is in any of the user role databases. If it is a correct login, it will
-     * return the name of user type for the system to handle it. It will return
-     * "Error" if there was a problem and "Incorrect" if the credentials don't
-     * exist.
-    */
-//    public String login (String username, String password)
-//    {
-//        return "";
-//    }
-
-    /*
      * Method:  resetPassword
      * Input:  A user's username and email address
      * Output:  String

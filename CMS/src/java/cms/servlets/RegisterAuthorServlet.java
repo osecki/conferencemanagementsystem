@@ -32,7 +32,7 @@ public class RegisterAuthorServlet extends HttpServlet
         //TODO Replace with dynamic binding
         AccountService a = new AccountService();
 
-        if(request.getParameter("r_userName").length()==0 || request.getParameter("r_password").length()==0)
+        if(request.getParameter("r_userName").length()==0 || request.getParameter("r_password").length()==0 || request.getParameter("r_fullName").length() != 0 || request.getParameter("r_emailAddress").length() == 0)
         {
             badData = true;
         }

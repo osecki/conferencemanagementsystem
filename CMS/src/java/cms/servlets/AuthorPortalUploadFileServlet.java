@@ -17,7 +17,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import cms.services.FileSystemService;
 import cms.services.ConferenceSystemService;
 import cms.services.ListPaperService;
-import cms.services.AccountService;
+import cms.services.OCRService;
 import cms.entities.User;
 import cms.entities.Paper;
 import com.asprise.util.pdf.PDFReader;
@@ -57,6 +57,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
         FileSystemService fs = new FileSystemService();
         ConferenceSystemService c = new ConferenceSystemService();
         ListPaperService lp = new ListPaperService();
+        OCRService ocr = new OCRService();
 
         String au_errMsg = null;
         boolean badData = false;
@@ -170,16 +171,14 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 out.close();
                 
                 PDFReader reader = new PDFReader(f);
-                reader.open(); // open the file.
-                int pages = reader.getNumberOfPages();
+                reader.open();
 
-                for (int i = 0; i < pages; i++)
-                {
-                    String text = reader.extractTextFromPage(i);
-                    System.out.println("Page " + i + ": " + text);
-                }
+                String firstPage = "";
+                if ( reader.getNumberOfPages() > 0 )
+                    firstPage = reader.extractTextFromPage(0);
 
-                // Grab keywords and abstract
+                // Grab keywords and abstract and commit to DB
+                //ocr.extractKeywordsAbstract(firstPage);
                 
                 reader.close();
 

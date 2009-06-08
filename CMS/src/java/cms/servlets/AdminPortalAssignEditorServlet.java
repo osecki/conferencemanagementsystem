@@ -40,11 +40,9 @@ public class AdminPortalAssignEditorServlet extends HttpServlet
             badData = true;
         }
 
-        //System.out.println("Selected Editor: "+request.getParameter("selectedEditor")+", Selected Conference: "+request.getParameter("selectedConference"));
-
         synchronized(session)
         {
-            if(!badData)
+            if( ! badData )
             {
                 if(a.assignEditor(c.getConferenceByID(Integer.parseInt(request.getParameter("selectedConference"))), request.getParameter("selectedEditor")))
                 {
