@@ -99,7 +99,7 @@ body {
 	          <input type="submit" name="submit" id="submit" value="Submit" />
 	        </p>
           </form>
-        </p>
+        
         
         <h3>Release Papers With Feedback</h3>
                 <form id="assign" name="assign" method="post" action="<c:url value='/EditorPortalReleasePaperServlet'/>">
