@@ -303,7 +303,6 @@ public class ConferenceDB
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        //TODO Apply logic for Date here: Author can upload only til a certain date
         String query = "SELECT * FROM Conference";
 
         try
@@ -319,7 +318,7 @@ public class ConferenceDB
                 conference.setLocation(rs.getString(3));
                 conference.setEventDate(rs.getDate(4));
                 conference.setDueDate(rs.getDate(5));
-//                conference.setEditor(UserDB.getUser(rs.getString(6)));
+                //conference.setEditor(UserDB.getUser(rs.getString(6)));
 
                 conferences.add(conference);
             }

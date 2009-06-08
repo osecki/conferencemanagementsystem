@@ -8,7 +8,6 @@ import cms.entities.Paper;
 import cms.entities.Feedback;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -18,12 +17,46 @@ public class PaperDB
 {
     public static boolean addPaper (Paper paper)
     {
+        // First check to see if it is already in there
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
-        String preparedQuery;
+        ResultSet rs = null;
+        String query = "SELECT * FROM Paper WHERE PaperName = ? and ConferenceID = ?";
 
-        preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName, seeFeedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, paper.getPaperName());
+            ps.setInt(2, paper.getConference().getConferenceID());
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if(rs.next())
+            {
+                count++;
+            }
+
+            if ( count > 0 )
+                return false;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+
+        // Now do actual insert, since it's not in there
+        pool = ConnectionPool.getInstance();
+        connection = pool.getConnection();
+        ps = null;
+        String preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName, seeFeedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try
         {
@@ -33,7 +66,6 @@ public class PaperDB
             ps.setString(3, paper.getPaperAbstract());
             ps.setString(4, paper.getPaperKeywords());
 
-            //File file = paper.getInputFile();
             InputStream inputStream;
 
             try {

@@ -159,8 +159,29 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                     au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
                 }
 
-                // TODO Now handle the OCR portion of the process
+                // Now handle the OCR portion of the process
+                File f = new File("temp.pdf");
+                OutputStream out = new FileOutputStream(f);
+                byte buf[] = new byte[1024];
+                int len;
+                while((len=uploadedStream2.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                out.close();
                 
+                PDFReader reader = new PDFReader(f);
+                reader.open(); // open the file.
+                int pages = reader.getNumberOfPages();
+
+                for (int i = 0; i < pages; i++)
+                {
+                    String text = reader.extractTextFromPage(i);
+                    System.out.println("Page " + i + ": " + text);
+                }
+
+                // Grab keywords and abstract
+                
+                reader.close();
 
 
             }
