@@ -37,10 +37,6 @@
         <servlet-class>cms.servlets.AuthorPortalUploadFileServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PaperOCRServlet</servlet-name>
-        <servlet-class>cms.servlets.PaperOCRServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EditorPortalMainServlet</servlet-name>
         <servlet-class>cms.servlets.EditorPortalMainServlet</servlet-class>
     </servlet>
@@ -111,10 +107,6 @@
     <servlet-mapping>
         <servlet-name>AuthorPortalUploadFileServlet</servlet-name>
         <url-pattern>/AuthorPortalUploadFileServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PaperOCRServlet</servlet-name>
-        <url-pattern>/PaperOCRServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditorPortalMainServlet</servlet-name>
