@@ -20,8 +20,12 @@ import cms.services.ListPaperService;
 import cms.services.AccountService;
 import cms.entities.User;
 import cms.entities.Paper;
+import com.asprise.util.pdf.PDFReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,6 +95,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
 
             // Variables to hold things during the process
             InputStream uploadedStream = null;
+            InputStream uploadedStream2 = null;
             String fileName = null;
             String contentType = "";
             int sizeInBytes = 0;
@@ -108,6 +113,7 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
 
                     try {
                         uploadedStream = item.getInputStream();
+                        uploadedStream2 = item.getInputStream();
                     } catch (Exception ex) {
                         Logger.getLogger(AuthorPortalUploadFileServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -152,6 +158,11 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 {
                     au_errMsg = "<font color=\"red\">There was a problem during the upload. Please try again.";
                 }
+
+                // TODO Now handle the OCR portion of the process
+                
+
+
             }
             else
             {
