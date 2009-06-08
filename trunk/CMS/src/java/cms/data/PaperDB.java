@@ -592,4 +592,94 @@ public class PaperDB
             pool.freeConnection(connection);
         }
     }
+
+    public static boolean addKeywordAbstract (String s)
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        String preparedQuery;
+
+        //        System.out.println(s);
+
+        String abstractString = "";
+        String keywordsString = "";
+
+        int abstractStart = s.indexOf("ABSTRACT");
+        if (abstractStart == -1)
+            abstractStart = s.indexOf("Abstract");
+
+        int categoriesStart = s.indexOf("Categories and Subject Descriptors");
+        if (categoriesStart == -1)
+            categoriesStart = s.indexOf("Categories and Subject Descriptors".toUpperCase());
+
+        int generalTermsStart = s.indexOf("General Terms");
+        if (generalTermsStart == -1)
+            generalTermsStart = s.indexOf("General Terms".toUpperCase());
+
+        int keywordsStart = s.indexOf("Keywords");
+        if (keywordsStart == -1)
+            keywordsStart = s.indexOf("Keywords".toUpperCase());
+
+        int introStart = s.indexOf("1. INTRODUCTION");
+        if (introStart == -1)
+            introStart = s.indexOf("INTRODUCTION".toUpperCase());
+        if (introStart == -1)
+            introStart = s.indexOf("Introduction".toUpperCase());
+
+        if ((abstractStart * categoriesStart) > 0)
+            abstractString = s.substring(abstractStart+"Abstract".length(), categoriesStart);
+
+        if ((keywordsStart * introStart) > 0)
+            keywordsString = s.substring(keywordsStart+"Keywords".length(), introStart);
+
+//        System.out.println("Abstract:");
+//        System.out.println(abstractString);
+//        System.out.println();
+//        System.out.println("Keywords:");
+//        System.out.println(keywordsString);
+//
+//        System.out.println(abstractStart+ " " + categoriesStart + " " + generalTermsStart + " " + keywordsStart);
+
+        preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName, seeFeedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+//        try
+//        {
+//            ps = connection.prepareStatement(preparedQuery);
+//            ps.setString(1, paper.getPaperName());
+//            ps.setInt(2, paper.getConference().getConferenceID());
+//            ps.setString(3, paper.getPaperAbstract());
+//            ps.setString(4, paper.getPaperKeywords());
+//
+//            //File file = paper.getInputFile();
+//            InputStream inputStream;
+//
+//            try {
+//                inputStream = paper.getInputStream();
+//                ps.setBinaryStream(5, inputStream, (int)(paper.getSizeInBytes()));
+//                ps.setInt(6, (int)paper.getSizeInBytes());
+//            } catch (Exception ex) {
+//                Logger.getLogger(PaperDB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            ps.setString(7, paper.getAuthorName());
+//            ps.setString(8, paper.getFileName());
+//            ps.setInt(9, 0);
+//
+//            return ps.executeUpdate()==1;
+//        }
+//         catch(SQLException e)
+//        {
+//            e.printStackTrace();
+//            return false;
+//        }
+//        finally
+//        {
+//            DBUtil.closePreparedStatement(ps);
+//            pool.freeConnection(connection);
+//        }
+
+        return false;
+
+    }
 }
