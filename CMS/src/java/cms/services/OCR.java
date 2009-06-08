@@ -1,6 +1,4 @@
 package cms.services;
-import cms.entities.Paper;
-import java.io.InputStream;
 
 /*
  * Project:  Conference Management System (CMS)
@@ -10,8 +8,5 @@ import java.io.InputStream;
 
 public interface OCR
 {
-
-    public String getTextFromStream(InputStream s);
-    public String getTextFromPaper(Paper p);
 
 }
