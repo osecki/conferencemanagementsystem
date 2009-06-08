@@ -593,7 +593,7 @@ public class PaperDB
         }
     }
 
-    public static boolean addKeywordAbstract (String s)
+    public static boolean addKeywordsAbstract (String s, int paperID)
     {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -627,59 +627,74 @@ public class PaperDB
         if (introStart == -1)
             introStart = s.indexOf("Introduction".toUpperCase());
 
-        if ((abstractStart * categoriesStart) > 0)
+        System.out.println("Abstract:");
+        System.out.println(abstractString);
+        System.out.println();
+        System.out.println("Keywords:");
+        System.out.println(keywordsString);
+
+        System.out.println(abstractStart+ " " + categoriesStart + " " + generalTermsStart + " " + keywordsStart);
+        
+
+        if (abstractStart > 0 && categoriesStart > 0)
             abstractString = s.substring(abstractStart+"Abstract".length(), categoriesStart);
 
-        if ((keywordsStart * introStart) > 0)
+        if (keywordsStart > 0 && introStart > 0)
             keywordsString = s.substring(keywordsStart+"Keywords".length(), introStart);
 
-//        System.out.println("Abstract:");
-//        System.out.println(abstractString);
-//        System.out.println();
-//        System.out.println("Keywords:");
-//        System.out.println(keywordsString);
-//
-//        System.out.println(abstractStart+ " " + categoriesStart + " " + generalTermsStart + " " + keywordsStart);
+        preparedQuery = "UPDATE paper SET Abstract = ?, Keywords = ? WHERE PaperID = ?";
 
-        preparedQuery = "INSERT INTO paper (PaperName, ConferenceID, Abstract, Keywords, PaperBLOB, PaperBLOBSize, AuthorUserName, FileName, seeFeedback) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try
+        {
+            ps = connection.prepareStatement(preparedQuery);
+            ps.setString(1, abstractString);
+            ps.setString(2, keywordsString);
+            ps.setInt(3, paperID);
+            return ps.executeUpdate()==1;
+        }
+         catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+    }
 
-//        try
-//        {
-//            ps = connection.prepareStatement(preparedQuery);
-//            ps.setString(1, paper.getPaperName());
-//            ps.setInt(2, paper.getConference().getConferenceID());
-//            ps.setString(3, paper.getPaperAbstract());
-//            ps.setString(4, paper.getPaperKeywords());
-//
-//            //File file = paper.getInputFile();
-//            InputStream inputStream;
-//
-//            try {
-//                inputStream = paper.getInputStream();
-//                ps.setBinaryStream(5, inputStream, (int)(paper.getSizeInBytes()));
-//                ps.setInt(6, (int)paper.getSizeInBytes());
-//            } catch (Exception ex) {
-//                Logger.getLogger(PaperDB.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            ps.setString(7, paper.getAuthorName());
-//            ps.setString(8, paper.getFileName());
-//            ps.setInt(9, 0);
-//
-//            return ps.executeUpdate()==1;
-//        }
-//         catch(SQLException e)
-//        {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        finally
-//        {
-//            DBUtil.closePreparedStatement(ps);
-//            pool.freeConnection(connection);
-//        }
+    public static int getLastPaperID()
+    {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int i = 1;
 
-        return false;
+        String query = "SELECT MAX(PaperID) FROM Paper";
 
+        try
+        {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            if(rs.next())
+            {
+                i = rs.getInt(1);
+            }
+            return i;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return 0;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
     }
 }
