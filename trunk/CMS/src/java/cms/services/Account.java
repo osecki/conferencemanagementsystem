@@ -22,18 +22,6 @@ public interface Account
      * boolean based on whether it is successful or not.
     */
     public boolean createAccount (String username, String userRole, String fullname, String emailaddress, String password);
-    
-    /*
-     * Method:  login
-     * Input:  A user's username and password
-     * Output:  String
-     * Algorithm:  The method will take in this information and check to see if
-     * it is in any of the user role databases. If it is a correct login, it will
-     * return the name of user type for the system to handle it. It will return
-     * "Error" if there was a problem and "Incorrect" if the credentials don't
-     * exist.
-    */
-//    public String login (String username, String password);
 
     /*
      * Method:  resetPassword
@@ -77,5 +65,19 @@ public interface Account
     */
     public boolean releaseToAuthor (int paperID);
 
+    /*
+     * Method:  getAvailableEditors
+     * Input:  None
+     * Output:  Arraylist of Users
+     * Algorithm:  The method will return a list of available Editors to match up to conferences
+    */
     public ArrayList<User> getAvailableEditors();
+
+    /*
+     * Method:  getReviewers
+     * Input:  None
+     * Output:  Arraylist of Users
+     * Algorithm:  The method will return a list of Reviewers to match up to papers
+    */
+    public ArrayList<User> getReviewers();
 }

@@ -38,7 +38,7 @@ public class EditorPortalCreateReviewerServlet extends HttpServlet
         ConferenceSystemService c = new ConferenceSystemService();
         ListPaperService lp = new ListPaperService();
 
-        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0)
+        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0 || request.getParameter("fullName").length() != 0 || request.getParameter("emailAddress").length() == 0)
         {
             badData = true;
         }

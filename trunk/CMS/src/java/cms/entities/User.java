@@ -1,16 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ *   Group      : 3, Java Team Hunger Force
+ *   Class      : CS575, Spring 2009
+*/
 
 package cms.entities;
-
 import java.io.Serializable;
 
-/**
- *
- * @author Piyush
- */
 public class User implements Serializable
 {
     private String userName;
@@ -63,6 +58,4 @@ public class User implements Serializable
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
-
 }

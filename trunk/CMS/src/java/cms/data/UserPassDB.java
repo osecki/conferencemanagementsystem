@@ -1,22 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:  Conference Management System (CMS)
+ * Group 3:  Java Team Hunger Force
+ * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
 package cms.data;
 
 import cms.entities.User;
-import cms.services.PwGen;
 import java.sql.*;
 
-
-/**
- *
- * @author Piyush
- */
 public class UserPassDB
 {
-
     public static boolean setUserPass(User user, String password)
     {
         ConnectionPool pool = ConnectionPool.getInstance();

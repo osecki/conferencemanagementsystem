@@ -1,12 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:  Conference Management System (CMS)
+ * Group 3:  Java Team Hunger Force
+ * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
-package cms.services;
+package cms.data;
 
 /**
- *
  * Source: http://bobcat.webappcabaret.net/javachina/jc/share/PwGen.htm
  */
 

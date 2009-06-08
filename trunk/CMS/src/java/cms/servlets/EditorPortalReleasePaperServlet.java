@@ -9,7 +9,6 @@ import cms.data.ConferenceDB;
 import cms.entities.User;
 import cms.services.AccountService;
 import cms.services.ListPaperService;
-import cms.services.ConferenceSystemService;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +35,6 @@ public class EditorPortalReleasePaperServlet extends HttpServlet
         //TODO Replace with dynamic binding
         AccountService a = new AccountService();
         ListPaperService lp = new ListPaperService();
-        ConferenceSystemService c = new ConferenceSystemService();
 
         if(request.getParameter("selectedPapers2").length()==0)
         {

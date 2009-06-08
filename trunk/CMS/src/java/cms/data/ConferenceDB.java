@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Project:  Conference Management System (CMS)
+ * Group 3:  Java Team Hunger Force
+ * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
 
 package cms.data;
@@ -10,10 +11,6 @@ import cms.entities.User;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author Piyush
- */
 public class ConferenceDB
 {
 
@@ -336,6 +333,5 @@ public class ConferenceDB
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
-
     }
 }

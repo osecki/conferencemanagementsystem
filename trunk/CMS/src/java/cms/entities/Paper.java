@@ -1,13 +1,13 @@
-package cms.entities;
-import cms.data.ConferenceDB;
-import java.io.InputStream;
-import java.io.Serializable;
-
 /*
  * Project:  Conference Management System (CMS)
  * Group 3:  Java Team Hunger Force
  * Team Members:  Jordan, Piyush, Keith, Brad, Danielle, Uri
  */
+
+package cms.entities;
+import cms.data.ConferenceDB;
+import java.io.InputStream;
+import java.io.Serializable;
 
 public class Paper implements Serializable
 {
