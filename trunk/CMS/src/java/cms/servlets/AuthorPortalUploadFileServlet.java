@@ -150,8 +150,10 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 // Build up item to send
                 User tempUser = (User)session.getAttribute("loggedInUser");
                 Paper newPaper = new Paper (parameters.get("paperName"), tempUser.getUserName(), fileName, c.getConferenceByID(Integer.parseInt(parameters.get("selectedConference"))).getConferenceID(), "", "", uploadedStream, sizeInBytes);
-                
-                if( fs.uploadPaper(newPaper) )
+
+                boolean paperUploadedSuccessfully = fs.uploadPaper(newPaper);
+
+                if(paperUploadedSuccessfully)
                 {
                     au_errMsg = "<font color=\"blue\">Paper successfully uploaded to the server.";
                 }
@@ -178,7 +180,12 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                     firstPage = reader.extractTextFromPage(0);
 
                 // Grab keywords and abstract and commit to DB
-                //ocr.extractKeywordsAbstract(firstPage);
+
+                if(paperUploadedSuccessfully)
+                {
+                    int lastPaper = fs.getLastPaperID();
+                    ocr.extractKeywordsAbstract(firstPage, lastPaper);
+                }
                 
                 reader.close();
 
