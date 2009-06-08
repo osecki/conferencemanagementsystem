@@ -29,4 +29,12 @@ public interface FileSystem
      * of its information.
     */
     public Paper downloadPaper (int paperID);
+
+    /*
+     * Method:  getLastpaperID
+     * Input:
+     * Output:  int
+     * Algorithm:  The method will get the max paperID that exists in the DB
+    */
+    public int getLastPaperID();
 }
