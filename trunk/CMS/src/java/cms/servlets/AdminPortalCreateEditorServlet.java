@@ -34,7 +34,7 @@ public class AdminPortalCreateEditorServlet extends HttpServlet
         AccountService a = new AccountService();
         ConferenceSystemService c = new ConferenceSystemService();
 
-        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0 || request.getParameter("fullName").length() != 0 || request.getParameter("emailAddress").length() == 0)
+        if(request.getParameter("userName").length()==0 || request.getParameter("password").length()==0 || request.getParameter("fullName").length() == 0 || request.getParameter("emailAddress").length() == 0)
         {
             badData = true;
         }
@@ -49,7 +49,7 @@ public class AdminPortalCreateEditorServlet extends HttpServlet
                 }
                 else
                 {
-                    errMsg = "<font color=\"red\">There was a problem. Editor account could not be created.";
+                    errMsg = "<font color=\"red\">There was a problem. Editor account could not be created. This editor may already exist.";
                 }
             }
             else

@@ -44,9 +44,18 @@ public class ReviewerPortalSendFeedbackServlet extends HttpServlet
         synchronized(session)
         {
             String reviewerUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
-            Feedback f = new Feedback(Integer.parseInt(request.getParameter("selectedPapers")), reviewerUserName, Integer.parseInt(request.getParameter("content")), Integer.parseInt(request.getParameter("innovative")), Integer.parseInt(request.getParameter("quality")), Integer.parseInt(request.getParameter("depth")), request.getParameter("commentBox"));
-            System.out.println("Sending Feedback:  " + Integer.parseInt(request.getParameter("selectedPapers")) + "|" + reviewerUserName + "|" + Integer.parseInt(request.getParameter("content"))+ "|" + Integer.parseInt(request.getParameter("innovative"))+ "|" + Integer.parseInt(request.getParameter("quality"))+ "|" + Integer.parseInt(request.getParameter("depth")) + "|" + request.getParameter("commentBox"));
-            
+
+
+            Feedback f = null;
+            try
+            {
+                f = new Feedback(Integer.parseInt(request.getParameter("selectedPapers")), reviewerUserName, Integer.parseInt(request.getParameter("content")), Integer.parseInt(request.getParameter("innovative")), Integer.parseInt(request.getParameter("quality")), Integer.parseInt(request.getParameter("depth")), request.getParameter("commentBox"));
+            }
+            catch (Exception e)
+            {
+                badData = true;
+            }
+
              if(!badData)
              {
                 if( fs.send(f) )

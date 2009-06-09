@@ -49,7 +49,7 @@ public class ResetPasswordAuthorServlet extends HttpServlet
                 }
                 else
                 {
-                    resetErrMsg = "<font color=\"red\">There was a problem. Author password could not be reset.";
+                    resetErrMsg = "<font color=\"red\">There was a problem. Author password could not be reset. Maybe this user isn't an author?";
                 }
             }
             else
@@ -61,7 +61,6 @@ public class ResetPasswordAuthorServlet extends HttpServlet
             session.setAttribute("fullName", request.getParameter("fullName"));
             session.setAttribute("userName", request.getParameter("userName"));
             session.setAttribute("emailAddress", request.getParameter("emailAddress"));
-
         }
 
         String url = "/resetpassword.jsp";

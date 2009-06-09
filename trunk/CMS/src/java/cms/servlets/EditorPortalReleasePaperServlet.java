@@ -36,7 +36,7 @@ public class EditorPortalReleasePaperServlet extends HttpServlet
         AccountService a = new AccountService();
         ListPaperService lp = new ListPaperService();
 
-        if(request.getParameter("selectedPapers2").length()==0)
+        if(request.getParameter("selectedPapers2") == null || request.getParameter("selectedPapers2").length()==0)
         {
             badData = true;
         }

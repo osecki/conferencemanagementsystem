@@ -50,6 +50,11 @@ public class AccountService implements Account
         try
         {
             user = UserDB.checkUser(userName, fullName, emailAddress);
+
+            // Make sure it is an author
+            if ( ! user.getUserType().equals("AUTHOR") )
+                return "Error";
+
             String newPass = UserPassDB.setRandomPassword(user);
 
             if ( newPass.equals("Error"))
