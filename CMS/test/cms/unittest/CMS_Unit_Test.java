@@ -110,7 +110,7 @@ public class CMS_Unit_Test extends TestCase
 		Assert.assertEquals(false, a.createAccount("jmo5", "Cadet", "Jordan Osecki", "jmo1@drexel.edu", "pass1")); // Incorrect Userrole
 
 		// Testing method resetPassword()
-		Assert.assertNotNull(a.resetPassword("jmo1", "Jordan Osecki", "jmo1@drexel.edu")); // Normal request for user in system
+		Assert.assertNotSame("Error", a.resetPassword("jmo1", "Jordan Osecki", "jmo1@drexel.edu")); // Normal request for user in system
 		Assert.assertEquals("Error", a.resetPassword("jmo0", "Jordan Osecki", "jmo1@drexel.edu")); // Username doesn't match any records
 		Assert.assertEquals("Error", a.resetPassword("jmo1", "Jordan Osecki0", "jmo1@drexel.edu")); // Name doesn't match any records
 		Assert.assertEquals("Error", a.resetPassword("jmo1", "Jordan Osecki", "jmo1@drexel.edu0")); // E-mail doesn't match any records
@@ -122,22 +122,21 @@ public class CMS_Unit_Test extends TestCase
 		Assert.assertEquals(false, a.assignEditor(new Conference ("CS Conf", "Phila, PA", new Date(2009, 10, 25), new Date(2009, 10, 20)), "jmo25")); // Editor doesn't exist
 
 		// Testing method assignReviewer()
-		InputStream is = new InputStream();
-        fi.uploadPaper(new Paper ("Cool Paper", "jmo1", "/home/pap.doc", 1, "Abs", "Key", new InputStream(), 1000));
-		Assert.assertEquals(true, a.assignReviewer("jmo3", "Cool Paper")); // Normal
-		Assert.assertEquals(false, a.assignReviewer("jmo35", "Cool Paper")); // Wrong Reviewer
-		Assert.assertEquals(false, a.assignReviewer("jmo3", "Cool Paper2")); // Wrong Paper
+		Assert.assertEquals(true, a.assignReviewer("jmo3", 1)); // Normal
+		Assert.assertEquals(false, a.assignReviewer("jmo35", 1)); // Wrong Reviewer
+		Assert.assertEquals(false, a.assignReviewer("jmo3", 1000)); // Wrong Paper
 
 		// Testing method releaseToAuthor()
-		Assert.assertEquals(true, a.releaseToAuthor("Cool Paper", "jmo1")); // Normal
-		Assert.assertEquals(false, a.releaseToAuthor("Cool Paper2", "jmo1")); // Wrong Paper
-		Assert.assertEquals(false, a.releaseToAuthor("Cool Paper", "jmo15")); // Wrong Author
+		Assert.assertEquals(true, a.releaseToAuthor(5)); // Normal
+		Assert.assertEquals(false, a.releaseToAuthor(1000)); // Wrong Paper
 
 		// Testing method getAvailableEditors()
 		Assert.assertNotNull(a.getAvailableEditors()); // Test that an object is returned
+        Assert.assertEquals(1, a.getAvailableEditors());
 
         // Testing method getReviewers()
 		Assert.assertNotNull(a.getReviewers()); // Test that an object is returned
+        Assert.assertEquals(3, a.getReviewers());
 
 		System.out.println(" ");
 	}
@@ -149,21 +148,21 @@ public class CMS_Unit_Test extends TestCase
 		System.out.println("Testing ... Conference System Services Interface ...");
 
 		// Testing method addConference()
-		Assert.assertEquals(true, cc.addConference(new Conference ("AI Conf", "Phila, PA", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // Normal
-		Assert.assertEquals(false, cc.addConference(new Conference ("AI Conf", "Phila, PA", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // Try to do one that exists
-		Assert.assertEquals(false, cc.addConference(new Conference ("", "Phila, PA", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // No name
-		Assert.assertEquals(false, cc.addConference(new Conference ("AI Conf", "", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // No location
-		Assert.assertEquals(false, cc.addConference(new Conference ("AI Conf", "Phila, PA", new Date(2009, 5, 20), new Date(2009, 5, 25)))); // Dates in wrong order
+		Assert.assertEquals(true, cc.addConference(new Conference ("Wiki Conf", "Phila, PA", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // Normal
+		Assert.assertEquals(false, cc.addConference(new Conference ("Wiki Conf", "Phila, PA", new Date(2009, 5, 25), new Date(2009, 5, 20)))); // Try to do one that exists
 
 		// Testing method getAvailableConferences()
 		Assert.assertNotNull(cc.getAvailableConferences()); // Test that an object is returned
+        Assert.assertEquals(1, cc.getAvailableConferences());
 
         // Testing method getConferenceByID()
 		Assert.assertNotNull(cc.getConferenceByID(1)); // Test that an object is returned
+        Assert.assertEquals("AI Conference", cc.getConferenceByID(1).getName());
         Assert.assertNull(cc.getConferenceByID(10000)); // Test here it is null
 
         // Testing method getAllConferences()
 		Assert.assertNotNull(cc.getAllConferences()); // Test that an object is returned
+        Assert.assertEquals(5, cc.getAllConferences());
 
 		System.out.println(" ");
 	}
@@ -175,19 +174,28 @@ public class CMS_Unit_Test extends TestCase
 		System.out.println("Testing ... Feedback System Services Interface ...");
 
 		// Testing method send()
-		Assert.assertEquals(true, fe.send(new Feedback("Cool Paper", "jmo3", 5, 5, 5, 5, "Comment"))); // Normal
-		Assert.assertEquals(false, fe.send(new Feedback("Cool Paper2", "jmo3", 5, 5, 5, 5, "Comment"))); // Paper doesn't exist
-		Assert.assertEquals(false, fe.send(new Feedback("Cool Paper", "jmo366", 5, 5, 5, 5, "Comment"))); // Reviewer doesn't exist
+        Feedback f = new Feedback(1, "jmo3", 1, 2, 3, 4, "WOW");
+		Assert.assertEquals(true, fe.send(f)); // Normal
+        f.setPaperID(1000);
+		Assert.assertEquals(false, fe.send(f)); // Paper doesn't exist
+        f.setPaperID(1);
+        f.setReviewerName("jmo366");
+		Assert.assertEquals(false, fe.send(f)); // Reviewer doesn't exist
 
 		// Testing method edit()
-		Assert.assertEquals(true, fe.send(new Feedback("Cool Paper", "jmo3", 4, 4, 4, 4, "Comment"))); // Normal
-		Assert.assertEquals(false, fe.send(new Feedback("Cool Paper2", "jmo3", 5, 5, 5, 5, "Comment"))); // Paper doesn't exist
-		Assert.assertEquals(false, fe.send(new Feedback("Cool Paper", "jmo366", 5, 5, 5, 5, "Comment"))); // Reviewer doesn't exist
+		Feedback f2 = new Feedback(1, "jmo3", 5, 5, 5, 5, "WOWZERS");
+		Assert.assertEquals(true, fe.edit(f2)); // Normal
+        f.setPaperID(1000);
+		Assert.assertEquals(false, fe.edit(f2)); // Paper doesn't exist
+        f.setPaperID(1);
+        f.setReviewerName("jmo366");
+		Assert.assertEquals(false, fe.edit(f2)); // Reviewer doesn't exist
 
 		// Testing method receive()
-		Assert.assertNotNull(fe.receive("Cool Paper", "jmo3")); // Normal
-		Assert.assertNull(fe.receive("Cool Paper2", "jmo3")); // Wrong Paper
-		Assert.assertNull(fe.receive("Cool Paper", "jmo366")); // Wrong reviewer
+		Assert.assertNotNull(fe.receive(1, "jmo3")); // Normal
+        Assert.assertEquals("WOWZERS", fe.receive(1, "jmo3").getCommentsBox());
+		Assert.assertNull(fe.receive(1000, "jmo3")); // Wrong Paper
+		Assert.assertNull(fe.receive(1, "jmo366")); // Wrong reviewer
 
 		System.out.println(" ");
 	}
@@ -198,18 +206,19 @@ public class CMS_Unit_Test extends TestCase
 		// Testing FileSystem Service
 		System.out.println("Testing ... File System Services Interface ...");
 
-		// Testing method uploadPaper()
-		Assert.assertEquals(true, fi.uploadPaper(new Paper ("New Paper", "jmo1", "/home/pap.doc", "CS Conf", "Abs", "Key"))); // Normal
-		Assert.assertEquals(false, fi.uploadPaper(new Paper ("", "jmo1", "/home/pap.doc", "CS Conf", "Abs", "Key"))); // No title
-		Assert.assertEquals(false, fi.uploadPaper(new Paper ("New Paper", "jmo100", "/home/pap.doc", "CS Conf", "Abs", "Key"))); // Incorrect author
-		Assert.assertEquals(false, fi.uploadPaper(new Paper ("New Paper", "jmo1", "/home/pap.doc", "CS Conf222", "Abs", "Key"))); // Incorrect conference
+        // Testing method downloadPaper()
+        Paper temp = fi.downloadPaper(1);
+		Assert.assertNotNull(temp); // Normal
+        Assert.assertEquals("AI Paper", temp.getPaperName());
+		Assert.assertNull(fi.downloadPaper(1000)); // Wrong name
 
-		// Testing method downloadPaper()
-		Assert.assertNotNull(fi.downloadPaper("New Paper")); // Normal
-		Assert.assertNull(fi.downloadPaper("New Paper2")); // Wrong name
+		// Testing method uploadPaper()
+		Assert.assertEquals(true, fi.uploadPaper(new Paper ("New Paper", "jmo1", "test.pdf", 1, "Abs", "Key", temp.getInputStream(), 54737))); // Normal
+		Assert.assertEquals(false, fi.uploadPaper(new Paper ("New Paper", "jmo100", "test.pdf", 1, "Abs", "Key", temp.getInputStream(), 54737))); // Incorrect author
 
         // Testing method getLastPaperByID()
 		Assert.assertNotNull(fi.getLastPaperID()); // Test that an object is returned
+        Assert.assertEquals(6, fi.getLastPaperID());
 
 		System.out.println(" ");
 	}
@@ -221,12 +230,14 @@ public class CMS_Unit_Test extends TestCase
 		System.out.println("Testing ... List Paper Services Interface ...");
 
 		// Testing method listFromConference()
-		Assert.assertNotNull(lp.listFromConference("CS Conf", 1)); // Normal
-		Assert.assertNull(lp.listFromConference("CS Conf22", 1)); // Non-existent conference
+		Assert.assertNotNull(lp.listFromConference("AI Conference")); // Normal
+        Assert.assertEquals(4, lp.listFromConference("AI Conference"));
+		Assert.assertNull(lp.listFromConference("BLAH")); // Non-existent conference
 
         // Testing method listFromConferenceToRelease()
-		Assert.assertNotNull(lp.listFromConferenceToRelease("CS Conf", 1)); // Normal
-		Assert.assertNull(lp.listFromConferenceToRelease("CS Conf22", 1)); // Non-existent conference
+		Assert.assertNotNull(lp.listFromConferenceToRelease("AI Conference")); // Normal
+        Assert.assertEquals(3, lp.listFromConferenceToRelease("AI Conference"));
+		Assert.assertNull(lp.listFromConferenceToRelease("BLAH")); // Non-existent conference
 
 		// Testing method listAssignedToReviewer()
 		Assert.assertNotNull(lp.listAssignedToReviewer("jmo3")); // Normal
@@ -237,8 +248,9 @@ public class CMS_Unit_Test extends TestCase
 		Assert.assertNull(lp.listAssignedToReviewerNoFeedback("jmo34234")); // Non-existent reviewer
 
 		// Testing method listFromAuthor()
-		Assert.assertNotNull(lp.listFromAuthor("jmo1", 1)); // Normal
-		Assert.assertNull(lp.listFromAuthor("jmo523453", 1)); // Non-existent author
+		Assert.assertNotNull(lp.listFromAuthor("jmo1")); // Normal
+        Assert.assertEquals(1, lp.listFromAuthor("jmo1"));
+		Assert.assertNull(lp.listFromAuthor("jmo523453")); // Non-existent author
 
 		System.out.println(" ");
 	}
@@ -250,7 +262,7 @@ public class CMS_Unit_Test extends TestCase
 		System.out.println("Testing ... OCR Services Interface ...");
 
 		// Testing method invokeOCR()
-		Assert.assertNotNull(ocr.extractKeywordsAbstract(new Paper("Awesome Paper", "jmo1", "/home/papAwe.doc", "CS Conf", "", ""))); // Normal
+		Assert.assertEquals(true, ocr.extractKeywordsAbstract("BLAA ABSTRACT BODY Categories and Subject Descriptors Keywords BODY2 INTRODUCTION", 6)); // Normal
 
 		System.out.println(" ");
 	}
@@ -268,6 +280,8 @@ public class CMS_Unit_Test extends TestCase
 		System.out.println("A web services application produced by Group 3, Java Team Hunger Force.");
 		System.out.println("Created for the CS575 Software Design class at Drexel, Spring 2009.");
 		System.out.println(" ");
+        System.out.println("This suite assumes that the database has been pre-populated with the script included with submission.");
+        System.out.println(" ");
 		System.out.println("The six service interfaces and their respective methods will be tested below.");
 		System.out.println(" ");
 
