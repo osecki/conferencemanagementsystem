@@ -170,9 +170,47 @@ public class ConferenceDB
 
     public static boolean addConference(Conference conference)
     {
+        // First check to see if it is already in there
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM Conference WHERE ConferenceName = ? and ConferenceLocation = ? and EventDate = ? and DueDate = ?";
+
+        try
+        {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, conference.getName());
+            ps.setString(2, conference.getLocation());
+            ps.setDate(3, conference.getEventDate());
+            ps.setDate(4, conference.getDueDate());
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if(rs.next())
+            {
+                count++;
+            }
+
+            if ( count > 0 )
+                return false;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        finally
+        {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            pool.freeConnection(connection);
+        }
+
+        // Now do actual insert, since it's not in there
+        pool = ConnectionPool.getInstance();
+        connection = pool.getConnection();
+        ps = null;
         boolean isNullEditor = false;
         String preparedQuery;
         User editor = null;

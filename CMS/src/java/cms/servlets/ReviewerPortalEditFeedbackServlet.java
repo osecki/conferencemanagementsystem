@@ -44,7 +44,17 @@ public class ReviewerPortalEditFeedbackServlet extends HttpServlet
         synchronized(session)
         {
             String reviewerUserName = ((User)session.getAttribute("loggedInUser")).getUserName();
-            Feedback f = new Feedback(Integer.parseInt(request.getParameter("selectedPapers2")), reviewerUserName, Integer.parseInt(request.getParameter("contentEdit")), Integer.parseInt(request.getParameter("innovativeEdit")), Integer.parseInt(request.getParameter("qualityEdit")), Integer.parseInt(request.getParameter("depthEdit")), request.getParameter("commentBoxEdit"));
+
+            Feedback f = null;
+            try
+            {
+                f = new Feedback(Integer.parseInt(request.getParameter("selectedPapers2")), reviewerUserName, Integer.parseInt(request.getParameter("contentEdit")), Integer.parseInt(request.getParameter("innovativeEdit")), Integer.parseInt(request.getParameter("qualityEdit")), Integer.parseInt(request.getParameter("depthEdit")), request.getParameter("commentBoxEdit"));
+            }
+            catch (Exception e)
+            {
+                badData = true;
+            }
+
 
              if(!badData)
              {

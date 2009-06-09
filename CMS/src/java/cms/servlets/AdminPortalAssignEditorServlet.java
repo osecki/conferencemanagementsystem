@@ -35,7 +35,7 @@ public class AdminPortalAssignEditorServlet extends HttpServlet
 
         boolean badData = false;
 
-        if(request.getParameter("selectedEditor").length()==0 || request.getParameter("selectedConference").length()==0)
+        if(request.getParameter("selectedEditor") == null || request.getParameter("selectedConference") == null || request.getParameter("selectedEditor").length()==0 || request.getParameter("selectedConference").length()==0)
         {
             badData = true;
         }

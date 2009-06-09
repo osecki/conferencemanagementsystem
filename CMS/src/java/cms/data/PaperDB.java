@@ -600,8 +600,6 @@ public class PaperDB
         PreparedStatement ps = null;
         String preparedQuery;
 
-        //        System.out.println(s);
-
         String abstractString = "";
         String keywordsString = "";
 
@@ -613,10 +611,6 @@ public class PaperDB
         if (categoriesStart == -1)
             categoriesStart = s.indexOf("Categories and Subject Descriptors".toUpperCase());
 
-        int generalTermsStart = s.indexOf("General Terms");
-        if (generalTermsStart == -1)
-            generalTermsStart = s.indexOf("General Terms".toUpperCase());
-
         int keywordsStart = s.indexOf("Keywords");
         if (keywordsStart == -1)
             keywordsStart = s.indexOf("Keywords".toUpperCase());
@@ -626,15 +620,6 @@ public class PaperDB
             introStart = s.indexOf("INTRODUCTION".toUpperCase());
         if (introStart == -1)
             introStart = s.indexOf("Introduction".toUpperCase());
-
-        System.out.println("Abstract:");
-        System.out.println(abstractString);
-        System.out.println();
-        System.out.println("Keywords:");
-        System.out.println(keywordsString);
-
-        System.out.println(abstractStart+ " " + categoriesStart + " " + generalTermsStart + " " + keywordsStart);
-        
 
         if (abstractStart > 0 && categoriesStart > 0)
             abstractString = s.substring(abstractStart+"Abstract".length(), categoriesStart);

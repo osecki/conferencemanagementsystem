@@ -64,15 +64,15 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
 
         try
         {
-            if( ! ServletFileUpload.isMultipartContent(request) )//|| request.getParameter("paperName").length()==0 || request.getParameter("dataFile").length()==0)
+            if( ! ServletFileUpload.isMultipartContent(request) )
             {
-                au_errMsg="<font color=\"red\">One or more fields were left blank. +";// + request.getParameter("paperName")+" " +request.getParameter("dataFile");
+                au_errMsg="<font color=\"red\">One or more fields were left blank.";
                 badData = true;
             }
         }
         catch(NullPointerException e)
         {
-            au_errMsg="<font color=\"red\">One or more fields were left blank. ++"; //+ request.getParameter("paperName")+" " +request.getParameter("dataFile");
+            au_errMsg="<font color=\"red\">One or more fields were left blank.";
             badData = true;
         }
       
@@ -138,6 +138,9 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
             // Get current date
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date currentDate = new Date();
+
+            if ( parameters.get("selectedConference") == null )
+                badData = true;
 
             // Get Conference due date
             Date dueDate = c.getConferenceByID(Integer.parseInt(parameters.get("selectedConference"))).getDueDate();

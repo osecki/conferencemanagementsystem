@@ -40,7 +40,7 @@ public class EditorPortalAssignReviewerServlet extends HttpServlet
         ListPaperService lp = new ListPaperService();
         FeedbackSystemService fs = new FeedbackSystemService();
 
-        if(request.getParameter("selectedReviewers").length()==0 || request.getParameter("selectedPapers").length()==0)
+        if(request.getParameter("selectedReviewers") == null || request.getParameter("selectedPapers") == null || request.getParameter("selectedReviewers").length()==0 || request.getParameter("selectedPapers").length()==0)
         {
             badData = true;
         }
