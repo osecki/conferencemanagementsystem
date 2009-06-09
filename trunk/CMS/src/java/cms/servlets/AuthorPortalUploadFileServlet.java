@@ -136,17 +136,19 @@ public class AuthorPortalUploadFileServlet extends HttpServlet
                 badData = true;
 
             // Get current date
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date currentDate = new Date();
+            Date dueDate = null;
 
             if ( parameters.get("selectedConference") == null )
                 badData = true;
+            else
+            {
+                // Get Conference due date
+                dueDate = c.getConferenceByID(Integer.parseInt(parameters.get("selectedConference"))).getDueDate();
 
-            // Get Conference due date
-            Date dueDate = c.getConferenceByID(Integer.parseInt(parameters.get("selectedConference"))).getDueDate();
-
-            if ( currentDate.after(dueDate) )
-                badData = true;
+                if ( currentDate.after(dueDate) )
+                    badData = true;
+            }
 
             if( ! badData )
             {

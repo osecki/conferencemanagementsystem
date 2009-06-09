@@ -182,8 +182,8 @@ public class ConferenceDB
             ps = connection.prepareStatement(query);
             ps.setString(1, conference.getName());
             ps.setString(2, conference.getLocation());
-            ps.setDate(3, conference.getEventDate());
-            ps.setDate(4, conference.getDueDate());
+            ps.setDate(3, new java.sql.Date(conference.getEventDate().getTime()));
+            ps.setDate(4, new java.sql.Date(conference.getDueDate().getTime()));
             rs = ps.executeQuery();
 
             int count = 0;
@@ -240,8 +240,8 @@ public class ConferenceDB
             ps = connection.prepareStatement(preparedQuery);
             ps.setString(1, conference.getName());
             ps.setString(2, conference.getLocation());
-            ps.setDate(3, conference.getEventDate());
-            ps.setDate(4, conference.getDueDate());
+            ps.setDate(3, new java.sql.Date(conference.getEventDate().getTime()));
+            ps.setDate(4, new java.sql.Date(conference.getDueDate().getTime()));
             if(!isNullEditor)
             {
                 ps.setString(5, editorUserName);
