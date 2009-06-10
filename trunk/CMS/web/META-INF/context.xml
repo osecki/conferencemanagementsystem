@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/CMS">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" logAbandoned="true" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/projectDB" password="sesame" removeAbandoned="true" removeAbandonedTimeout="60" type="javax.sql.DataSource" url="jdbc:mysql://76.99.63.83:3306/project575?autoReconnect=true" username="AppUser"/>
-  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionName="AppUser" connectionPassword="sesame" connectionURL="jdbc:mysql://76.99.63.83:3306/project575" debug="99" driverName="com.mysql.jdbc.Driver" roleNameCol="UserTypeName" userCredCol="Password" userNameCol="UserName" userRoleTable="User" userTable="UserPass"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" logAbandoned="true" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/projectDB" password="sesame" removeAbandoned="true" removeAbandonedTimeout="60" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/cms?autoReconnect=true" username="AppUser"/>
+  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionName="AppUser" connectionPassword="sesame" connectionURL="jdbc:mysql://localhost:3306/cms" debug="99" driverName="com.mysql.jdbc.Driver" roleNameCol="UserTypeName" userCredCol="Password" userNameCol="UserName" userRoleTable="User" userTable="UserPass"/>
 </Context>
